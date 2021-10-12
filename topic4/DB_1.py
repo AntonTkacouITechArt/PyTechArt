@@ -81,7 +81,7 @@ class SQLManager:
                             id SERIAL PRIMARY KEY,
                             name VARCHAR(100),
                             description TEXT NULL,
-                            price DECIMAL(50,3),
+                            price DECIMAL(50,3) CHECK (price > -1),
                             department_id INT,
                             FOREIGN KEY (department_id) REFERENCES Departments(id)
                         );

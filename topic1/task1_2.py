@@ -22,7 +22,7 @@ def validate_data(data: dict) -> bool:
             for el in marks:
                 if not isinstance(el, int):
                     raise TypeError
-                elif 1 <= el <= 10:
+                elif not (1 <= el <= 10):
                     raise ValueError
                 else:
                     pass

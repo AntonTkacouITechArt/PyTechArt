@@ -20,15 +20,18 @@ def validate_data(data: dict) -> bool:
                 raise TypeError
 
             for el in marks:
-                if not isinstance(el, int):
+                if not isinstance(el, int) or isinstance(el, bool):
                     raise TypeError
                 elif not (1 <= el <= 10):
                     raise ValueError
                 else:
                     pass
 
-            if not obj_name.isalpha():
+            # if not obj_name.isalpha():
+            #     raise ValueError
+            if not isinstance(obj_name, str):
                 raise ValueError
+
 
         if not student_name.isalpha():
             raise ValueError

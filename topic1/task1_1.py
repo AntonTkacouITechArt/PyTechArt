@@ -1,5 +1,5 @@
 def get_max_and_min(data: typing.Set[typing.Union[decimal.Decimal,
-                fractions.Fraction, str]]) -> collections.namedtuple:
+                    fractions.Fraction, str]]) -> collections.namedtuple:
     """Get a set of float(ex: 231.2312) and str data("1 \ 5" or "3.00000003") ->
      return namedtuple with attribute .max_value and .min_value """
     buff = list()

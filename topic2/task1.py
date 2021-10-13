@@ -44,8 +44,8 @@ class Department:
         all_salary = sum(self.employees.values())
         department_budget = float(self.budget) - all_salary
         if department_budget < 0:
-            raise Department.BudgetError("""the department 
-            has a negative budget""")
+            raise Department.BudgetError("""the
+            department has a negative budget""")
         return department_budget
 
     @property
@@ -77,39 +77,3 @@ class Department:
         temp = Department(name, employees, all_budget)
         _ = temp.get_budget_plan()
         return temp
-
-
-# if __name__ == '__main__':
-#     data = {
-#         'AntonT': 400.0,
-#         'Valeria': 400.0,
-#         'Vlad': 1000.0,
-#         'AntonL': 1500.0,
-#         'Pavel': 3000.0,
-#     }
-#     data1 = {
-#         'AntonT1': 4500.0,
-#         'Valeria1': 400.0,
-#         'Vlad1': 1000.0,
-#         'AntonL1': 1500.0,
-#         'Pavel1': 3000.0,
-#     }
-#     data2 = {
-#         'Steve': 1000.0,
-#         'Peter': 400.0,
-#         'Gramm': 1000.0,
-#         'Andersen': 1500.0,
-#         'Paul': 3000.0,
-#     }
-#
-#     dep1 = Department("ITeach", data, 10000)
-#     dep2 = Department("ITeac", data, 12000)
-#     dep3 = Department("ITeach2", data1, 12000)
-#     dep4 = Department("AnderLow", data2, 20000)
-#     print(f"Budget department: {dep1.get_budget_plan}")
-#     # dep3 = Department.merge_departments(dep1, dep2)
-#     a = dep1 + dep2 + dep3 + dep4
-#     print(a)
-#
-#     dep_test = Department.merge_departments(dep1, dep2, dep4)
-#     # print(dep_test.name)

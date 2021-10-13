@@ -77,3 +77,4 @@ class Department:
         temp = Department(name, employees, all_budget)
         _ = temp.get_budget_plan()
         return temp
+

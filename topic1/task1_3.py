@@ -23,7 +23,7 @@ def fib_generator():
     next = 1
     for _ in range(0, 100):
         yield prev
-        next, prev  = prev + next
+        next, prev  = prev + next, next
 
 
 def strange_decorator(func):

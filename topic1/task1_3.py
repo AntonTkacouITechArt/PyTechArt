@@ -6,15 +6,10 @@ class FibIterator:
         self.next = 1
 
     def __next__(self):
-        if self.counter < self.limit:
+        while self.counter < self.limit:
+            yield self.prev
+            self.prev, self.next = self.next, self.next + self.prev
             self.counter += 1
-            buff1 = self.prev
-            buff2 = self.next
-            self.next += self.prev
-            self.prev = buff2
-            return buff1
-        else:
-            raise StopIteration
 
     def __iter__(self):
         self.counter = 0
@@ -37,13 +32,12 @@ def strange_decorator(func):
     def wrapper(*args, **kwargs):
         if (len(args) + len(kwargs)) > 10:
             raise ValueError
-        if len(kwargs) != 0:
-            for k, v in kwargs.items():
-                if type(v) is bool:
-                    raise TypeError
+        if len(kwargs) != 0 and any(isinstance(v, bool) for v in kwargs.values()):
+            raise TypeError
+            # for k, v in kwargs.items():
+            #     if isinstance(v, bool):
         a = func(*args, **kwargs)
-        if type(a) is int:
+        if isinstance(a, int):
             a += 13
         return a
-
     return wrapper

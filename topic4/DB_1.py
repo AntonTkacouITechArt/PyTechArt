@@ -225,7 +225,6 @@ class SQLManager:
         print(data)
         return data
 
-    # no query, just think
     def select_6(self):
         self.cur.execute("""
             SELECT 
@@ -314,7 +313,6 @@ class SQLManager:
         print(data)
         return data
 
-    # check stucture creating
     def select_14(self):
         self.cur.execute("""
                         SELECT Shops.name, Items.name FROM Items

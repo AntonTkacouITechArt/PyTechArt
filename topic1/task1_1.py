@@ -1,3 +1,4 @@
+import collections, typing, fractions, decimal
 min_max_tuple = collections.namedtuple('min_max_tuple',
                                        ['max_value', 'min_value'])
 def get_max_and_min(data: typing.Set[typing.Union[decimal.Decimal,
@@ -10,8 +11,7 @@ def get_max_and_min(data: typing.Set[typing.Union[decimal.Decimal,
             buff.append(el)
         else:
             if '\\' in el:
-                num_and_den = list(map(lambda x: int(x), el.split('\\')))
-                buff.append(fractions.Fraction(num_and_den[0],num_and_den[1]))
+                buff.append(fractions.Fraction(el.replace('\\', '/').replace(' ', '')))
             elif '.' in el:
                 buff.append(decimal.Decimal(el))
     return min_max_tuple(max(buff), min(buff))
@@ -22,9 +22,7 @@ if __name__ == '__main__':
         32.231,
         23.41,
         1.0,
-        "1 \ 4",
-        "1 \\ 2",
-        "1 \ 1",
+        "1 \\ 5",
         "20.13",
         "23.231",
         "100.00",

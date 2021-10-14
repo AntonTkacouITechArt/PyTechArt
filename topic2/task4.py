@@ -15,7 +15,7 @@ def pep8_warrior(class_name, bases, attrs):
     return type(class_name, bases, a)
 
 
-class PEp8Warrior(type):
+class Pep8Warrior(type):
     def __new__(self, class_name, bases, attrs):
         a = {}
         for name, val in attrs.items():

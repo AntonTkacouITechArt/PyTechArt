@@ -109,10 +109,12 @@ class SQLManager:
                 INSERT INTO Departments(sphere, staff_amount, shop_id) 
                 VALUES (%s,%s,%s);
             """, ('Furniture', 250, 1))
+        self.__commit()
         self.cur.execute("""
                 INSERT INTO Departments(sphere, staff_amount, shop_id) 
                 VALUES (%s,%s,%s);
             """, ('Furniture', 300, 2))
+        self.__commit()
         self.cur.execute("""
                 INSERT INTO Departments(sphere, staff_amount, shop_id) 
                 VALUES (%s,%s,%s);
@@ -123,18 +125,26 @@ class SQLManager:
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Table', 'Cheap wooden table', 300, 1))
+        self.__commit()
+
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Table', None, 750, 2))
+        self.__commit()
+
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Bed', 'Amazing wooden bed', 1200, 2))
+        self.__commit()
+
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Cup', None, 10, 3))
+        self.__commit()
+
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);

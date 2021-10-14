@@ -1,4 +1,7 @@
 class Department:
+    """Class Department vars:budget(int), employees(Dict[str, float]), name(str)
+    methods:get_budget_plan(float), average_salary(float),
+    merge_departments(Department) """
     class BudgetError(ValueError):
         """Budget below zero"""
 
@@ -40,9 +43,10 @@ class Department:
         _ = temp.get_budget_plan()
         return temp
 
+    
     def get_budget_plan(self) -> float:
-        all_salary = sum(self.employees.values())
-        department_budget = float(self.budget) - all_salary
+        """Return budget_plan(float) = all_budget - all_salary"""
+        department_budget = self.budget - sum(self.employees.values())
         if department_budget < 0:
             raise Department.BudgetError("""the
             department has a negative budget""")
@@ -50,9 +54,8 @@ class Department:
 
     @property
     def average_salary(self) -> float:
-        avg_salary = sum(self.employees.values()) / len(self.employees)
-        avg_salary = round(avg_salary, 2)
-        return avg_salary
+        """Return avg_salary(float) rounding to 2"""
+        return round(sum(self.employees.values()) / len(self.employees), 2)
 
     @classmethod
     def merge_departments(cls, *departments: 'Department') -> 'Department':

@@ -1,4 +1,6 @@
 def pep8_warrior(class_name, bases, attrs):
+    """Metaclass(change_name): var:UpperCase, func:LowerCase, dunder:
+    NoChange, close class:CamelCase """
     a = {}
     for name, val in attrs.items():
         if name.startswith('__'):
@@ -6,9 +8,7 @@ def pep8_warrior(class_name, bases, attrs):
         elif isinstance(val, types.FunctionType):
             a[name.lower()] = val
         elif isinstance(val, type):
-            buff = name.split('_')
-            buff = [el.title() for el in buff]
-            buff = ''.join(buff)
+            buff = ''.join([el.title() for el in name.split('_')])
             a[buff] = val
         else:
             a[name.upper()] = val
@@ -16,6 +16,8 @@ def pep8_warrior(class_name, bases, attrs):
 
 
 class Pep8Warrior(type):
+    """Metaclass(change_name): var:UpperCase, func:LowerCase, dunder:
+        NoChange, close class:CamelCase """
     def __new__(self, class_name, bases, attrs):
         a = {}
         for name, val in attrs.items():
@@ -24,9 +26,7 @@ class Pep8Warrior(type):
             elif isinstance(val, types.FunctionType):
                 a[name.lower()] = val
             elif isinstance(val, type):
-                buff = name.split('_')
-                buff = [el.title() for el in buff]
-                buff = ''.join(buff)
+                buff = ''.join([el.title() for el in name.split('_')])
                 a[buff] = val
             else:
                 a[name.upper()] = val

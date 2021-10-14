@@ -8,12 +8,6 @@ class SQLManager:
         self.user = db_user
         self.password = password
         self.host = hostname
-        self.conn = None
-        self.cur = None
-
-    # PRIVATE FUNC
-
-    def __set_conn(self):
         try:
             self.conn = psycopg2.connect(user=self.user,
                                          password=self.password,
@@ -21,43 +15,11 @@ class SQLManager:
             print(f"Successfully connect to {self.dbname}")
         except (Exception, Error) as error:
             print("Error with work with PostgreSQL", error)
-
-    def __set_cur(self):
         try:
             self.cur = self.conn.cursor()
             print(f"Successfully set cursor")
         except (Exception, Error) as error:
             print("Error with work with PostgreSQL", error)
-
-    def __close_cur(self):
-        try:
-            self.cur.close()
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
-
-    def __close_conn(self):
-        try:
-            self.conn.close()
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
-
-    def __commit(self):
-        try:
-            self.conn.commit()
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
-
-    # USER METHODS
-
-    def connect_to_db(self):
-        self.__set_conn()
-        self.__set_cur()
-        print("You successfully connect to DB")
-
-    def disconnect_from_db(self):
-        self.__close_cur()
-        self.__close_conn()
-        print("You successfully disconnect from DB")
 
     # CREATE METHOD
 
@@ -86,7 +48,7 @@ class SQLManager:
                             FOREIGN KEY (department_id) REFERENCES Departments(id)
                         );
                          """)
-            self.__commit()
+            self.cur.commit()
             print("You are successfully create tables")
         except (Exception, Error) as error:
             print("Error with work with PostgreSQL", error)
@@ -98,58 +60,58 @@ class SQLManager:
             INSERT INTO Shops(name, address, staff_amount) 
             VALUES (%s,%s,%s);
             """, ('Auchan', None, 250))
-        self.__commit()
+        self.cur.commit()
         self.cur.execute("""
             INSERT INTO Shops(name, address, staff_amount) 
             VALUES (%s,%s,%s);
             """, ('IKEA', 'Street Žirnių g. 56, Vilnius, Lithuania.', 500))
-        self.__commit()
+        self.cur.commit()
 
         self.cur.execute("""
                 INSERT INTO Departments(sphere, staff_amount, shop_id) 
                 VALUES (%s,%s,%s);
             """, ('Furniture', 250, 1))
-        self.__commit()
+        self.cur.commit()
         self.cur.execute("""
                 INSERT INTO Departments(sphere, staff_amount, shop_id) 
                 VALUES (%s,%s,%s);
             """, ('Furniture', 300, 2))
-        self.__commit()
+        self.cur.commit()
         self.cur.execute("""
                 INSERT INTO Departments(sphere, staff_amount, shop_id) 
                 VALUES (%s,%s,%s);
             """, ('Dishes', 200, 2))
-        self.__commit()
+        self.cur.commit()
 
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Table', 'Cheap wooden table', 300, 1))
-        self.__commit()
+        self.cur.commit()
 
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Table', None, 750, 2))
-        self.__commit()
+        self.cur.commit()
 
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Bed', 'Amazing wooden bed', 1200, 2))
-        self.__commit()
+        self.cur.commit()
 
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Cup', None, 10, 3))
-        self.__commit()
+        self.cur.commit()
 
         self.cur.execute("""
                 INSERT INTO Items(name, description, price, department_id) 
                 VALUES (%s,%s,%s,%s);
             """, ('Plate', 'Glass plate', 20, 3))
-        self.__commit()
+        self.cur.commit()
         print(
             "You are successfully insert data into Shops, Departments, Items")
 
@@ -310,7 +272,7 @@ class SQLManager:
             self.cur.execute("""
                 UPDATE Items SET price = price + 100 WHERE name ~ '(^(B|b))|((E|e)$)'; 
             """)
-            self.__commit()
+            self.cur.commit()
         except (Exception, Error) as error:
             print("Error with work with PostgreSQL", error)
 
@@ -321,7 +283,7 @@ class SQLManager:
             DELETE FROM Items
             WHERE price > 500 AND description IS NULL;
         """)
-        self.__commit()
+        self.cur.commit()
         print("You are successfully delete data from tables")
 
     def delete_2(self):
@@ -334,7 +296,7 @@ class SQLManager:
                 WHERE Shops.address is NULL
             )
         """)
-        self.__commit()
+        self.cur.commit()
         print("You are successfully delete data from tables")
 
     def delete_3(self):
@@ -346,7 +308,7 @@ class SQLManager:
                 OR staff_amount > 275
             );
         """)
-        self.__commit()
+        self.cur.commit()
         print("You are successfully delete data from tables")
 
     def delete_4(self):
@@ -355,7 +317,7 @@ class SQLManager:
             TRUNCATE TABLE Departments CASCADE;
             TRUNCATE TABLE Items CASCADE;
         """)
-        self.__commit()
+        self.cur.commit()
         print("You are successfully delete data from tables")
 
     # DROP METHOD
@@ -365,7 +327,7 @@ class SQLManager:
             self.cur.execute("""DROP TABLE IF EXISTS Shops CASCADE ;""")
             self.cur.execute("""DROP TABLE IF EXISTS Departments CASCADE;""")
             self.cur.execute("""DROP TABLE IF EXISTS Items CASCADE;""")
-            self.__commit()
+            self.cur.commit()
             print("You are successfully drop tables")
         except (Exception, Error) as error:
             print("Error with work with PostgreSQL", error)

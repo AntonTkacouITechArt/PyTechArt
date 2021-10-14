@@ -8,50 +8,40 @@ class SQLManager:
         self.user = db_user
         self.password = password
         self.host = hostname
-        try:
-            self.conn = psycopg2.connect(user=self.user,
+        self.conn = psycopg2.connect(user=self.user,
                                          password=self.password,
                                          host=self.host, database=self.dbname)
-            print(f"Successfully connect to {self.dbname}")
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
-        try:
-            self.cur = self.conn.cursor()
-            print(f"Successfully set cursor")
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
+        self.cur = self.conn.cursor()
 
     # CREATE METHOD
 
     def create_table(self):
-        try:
-            self.cur.execute("""
-                        CREATE TABLE IF NOT EXISTS Shops(
-                            id SERIAL PRIMARY KEY,
-                            name VARCHAR(100),
-                            address TEXT NULL,
-                            staff_amount INT CHECK (staff_amount > -1)
-                        ); 
-                        CREATE TABLE IF NOT EXISTS Departments(
-                            id SERIAL PRIMARY KEY ,
-                            sphere VARCHAR(100),
-                            staff_amount INT CHECK (staff_amount > -1),
-                            shop_id INT,
-                            FOREIGN KEY (shop_id) REFERENCES Shops(id)
-                        );
-                        CREATE TABLE IF NOT EXISTS Items(
-                            id SERIAL PRIMARY KEY,
-                            name VARCHAR(100),
-                            description TEXT NULL,
-                            price DECIMAL(50,3) CHECK (price > -1),
-                            department_id INT,
-                            FOREIGN KEY (department_id) REFERENCES Departments(id)
-                        );
-                         """)
-            self.cur.commit()
-            print("You are successfully create tables")
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
+
+        self.cur.execute("""
+                    CREATE TABLE IF NOT EXISTS Shops(
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(100),
+                        address TEXT NULL,
+                        staff_amount INT CHECK (staff_amount > -1)
+                    ); 
+                    CREATE TABLE IF NOT EXISTS Departments(
+                        id SERIAL PRIMARY KEY ,
+                        sphere VARCHAR(100),
+                        staff_amount INT CHECK (staff_amount > -1),
+                        shop_id INT,
+                        FOREIGN KEY (shop_id) REFERENCES Shops(id)
+                    );
+                    CREATE TABLE IF NOT EXISTS Items(
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(100),
+                        description TEXT NULL,
+                        price DECIMAL(50,3) CHECK (price > -1),
+                        department_id INT,
+                        FOREIGN KEY (department_id) REFERENCES Departments(id)
+                    );
+                     """)
+        self.cur.commit()
+
 
     # INSERT METHOD
 
@@ -112,8 +102,6 @@ class SQLManager:
                 VALUES (%s,%s,%s,%s);
             """, ('Plate', 'Glass plate', 20, 3))
         self.cur.commit()
-        print(
-            "You are successfully insert data into Shops, Departments, Items")
 
 
     def select_1(self):
@@ -122,7 +110,6 @@ class SQLManager:
             WHERE description IS NOT NULL;
         """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_2(self):
@@ -131,7 +118,6 @@ class SQLManager:
                     WHERE staff_amount > 200;
                 """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_3(self):
@@ -140,7 +126,6 @@ class SQLManager:
                     WHERE name ~ '^(I|i)';
                 """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_4(self):
@@ -150,7 +135,6 @@ class SQLManager:
                     WHERE Departments.sphere = 'Furniture';
                 """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_5(self):
@@ -161,7 +145,6 @@ class SQLManager:
                     WHERE Items.description IS NOT NULL;
                 """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_6(self):
@@ -178,7 +161,6 @@ class SQLManager:
             INNER JOIN Shops ON Shops.id = Departments.shop_id;
         """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_7(self):
@@ -189,7 +171,6 @@ class SQLManager:
                     OFFSET 3;
                 """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_8(self):
@@ -199,7 +180,6 @@ class SQLManager:
                             INNER JOIN Shops ON Shops.id = Departments.shop_id;
                         """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_9(self):
@@ -208,7 +188,6 @@ class SQLManager:
                             LEFT JOIN Departments ON Items.department_id = Departments.id
                     """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_10(self):
@@ -217,7 +196,6 @@ class SQLManager:
                             RIGHT JOIN Departments ON Items.department_id = Departments.id
                         """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_11(self):
@@ -226,7 +204,6 @@ class SQLManager:
                             FULL JOIN Departments ON Items.department_id = Departments.id
                     """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_12(self):
@@ -236,7 +213,6 @@ class SQLManager:
                             INNER JOIN Shops ON Shops.id = Departments.shop_id;
                     """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_13(self):
@@ -249,7 +225,6 @@ class SQLManager:
                 GROUP BY (Shops.name);
                     """)
         data = self.cur.fetchall()
-        print(data)
         return data
 
     def select_14(self):
@@ -268,13 +243,11 @@ class SQLManager:
     # UPDATE METHOD
 
     def update_data(self):
-        try:
-            self.cur.execute("""
-                UPDATE Items SET price = price + 100 WHERE name ~ '(^(B|b))|((E|e)$)'; 
-            """)
-            self.cur.commit()
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
+        self.cur.execute("""
+            UPDATE Items SET price = price + 100 WHERE name ~ '(^(B|b))|((E|e)$)'; 
+        """)
+        self.cur.commit()
+
 
     # DELETE METHODS
 
@@ -284,7 +257,6 @@ class SQLManager:
             WHERE price > 500 AND description IS NULL;
         """)
         self.cur.commit()
-        print("You are successfully delete data from tables")
 
     def delete_2(self):
         self.cur.execute("""
@@ -297,7 +269,6 @@ class SQLManager:
             )
         """)
         self.cur.commit()
-        print("You are successfully delete data from tables")
 
     def delete_3(self):
         self.cur.execute("""
@@ -309,7 +280,6 @@ class SQLManager:
             );
         """)
         self.cur.commit()
-        print("You are successfully delete data from tables")
 
     def delete_4(self):
         self.cur.execute("""
@@ -318,16 +288,12 @@ class SQLManager:
             TRUNCATE TABLE Items CASCADE;
         """)
         self.cur.commit()
-        print("You are successfully delete data from tables")
 
     # DROP METHOD
 
     def drop_table(self):
-        try:
-            self.cur.execute("""DROP TABLE IF EXISTS Shops CASCADE ;""")
-            self.cur.execute("""DROP TABLE IF EXISTS Departments CASCADE;""")
-            self.cur.execute("""DROP TABLE IF EXISTS Items CASCADE;""")
-            self.cur.commit()
-            print("You are successfully drop tables")
-        except (Exception, Error) as error:
-            print("Error with work with PostgreSQL", error)
+        self.cur.execute("""DROP TABLE IF EXISTS Shops CASCADE ;""")
+        self.cur.execute("""DROP TABLE IF EXISTS Departments CASCADE;""")
+        self.cur.execute("""DROP TABLE IF EXISTS Items CASCADE;""")
+        self.cur.commit()
+

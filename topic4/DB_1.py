@@ -85,46 +85,23 @@ class SQLManager:
 
 
     def select_data(self, choice:typing.Optional[int]):
-        if choice == 1:
-            self.cur.execute("""
-                        SELECT * FROM Items
-                        WHERE description IS NOT NULL;
-                    """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 2:
-            self.cur.execute("""
-                                SELECT DISTINCT sphere FROM Departments
-                                WHERE staff_amount > 200;
-                            """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 3:
-            self.cur.execute("""
-                        SELECT address FROM Shops
-                        WHERE name ~ '^(I|i)';
-                    """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 4:
-            self.cur.execute("""
-                        SELECT Items.name FROM Items
-                        INNER JOIN Departments ON Departments.id = Items.department_id
-                        WHERE Departments.sphere = 'Furniture';
-                    """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 5:
-            self.cur.execute("""
-                        SELECT Shops.name FROM Shops
-                        INNER JOIN Departments ON Departments.shop_id = Shops.id
-                        INNER JOIN Items ON Items.department_id = Departments.id
-                        WHERE Items.description IS NOT NULL;
-                    """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 6:
-            self.cur.execute("""
+        data = None
+        select_query = [
+            """SELECT * FROM Items WHERE description IS NOT NULL;""",
+            """SELECT DISTINCT sphere FROM Departments WHERE staff_amount > 200;""",
+            """SELECT address FROM Shops WHERE name ~ '^(I|i)';""",
+            """
+                SELECT Items.name FROM Items
+                INNER JOIN Departments ON Departments.id = Items.department_id
+                WHERE Departments.sphere = 'Furniture';
+            """,
+            """
+                SELECT Shops.name FROM Shops
+                INNER JOIN Departments ON Departments.shop_id = Shops.id
+                INNER JOIN Items ON Items.department_id = Departments.id
+                WHERE Items.description IS NOT NULL;
+            """,
+            """
                 SELECT 
                     Items.name, description, price,
                     'department_' || sphere AS dep_sphere,
@@ -135,78 +112,63 @@ class SQLManager:
                 FROM Items
                 INNER JOIN Departments ON Departments.id = Items.department_id
                 INNER JOIN Shops ON Shops.id = Departments.shop_id;
-            """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 7:
-            self.cur.execute("""
-                        SELECT id FROM Items
-                        ORDER BY name
-                        LIMIT 2
-                        OFFSET 3;
-                    """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 8:
-            self.cur.execute("""
-                                SELECT Items.name, Shops.name FROM Items
-                                INNER JOIN Departments ON Items.department_id = Departments.id
-                                INNER JOIN Shops ON Shops.id = Departments.shop_id;
-                            """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 9:
-            self.cur.execute("""
-                                SELECT Items.name, Departments.id FROM Items
-                                LEFT JOIN Departments ON Items.department_id = Departments.id
-                        """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 10:
-            self.cur.execute("""
-                                SELECT Items.name, Departments.id FROM Items
-                                RIGHT JOIN Departments ON Items.department_id = Departments.id
-                            """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 11:
-            self.cur.execute("""
-                                SELECT Items.name, Departments.id FROM Items
-                                FULL JOIN Departments ON Items.department_id = Departments.id
-                        """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 12:
-            self.cur.execute("""
-                                SELECT Items.name, Shops.name FROM Items
-                                CROSS JOIN Departments
-                                INNER JOIN Shops ON Shops.id = Departments.shop_id;
-                        """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 13:
-            self.cur.execute("""
-                    SELECT Shops.name, COUNT(*) as count_goods, SUM(price),
-                    MAX(price), MIN(price),
-                    AVG(price) FROM Items
-                    INNER JOIN Departments ON Departments.id = Items.department_id
-                    INNER JOIN Shops ON Shops.id = Departments.shop_id
-                    GROUP BY (Shops.name);
-                        """)
-            data = self.cur.fetchall()
-            return data
-        elif choice == 14:
-            self.cur.execute("""
-                            SELECT Shops.name, Items.name FROM Items
-                            INNER JOIN Departments ON Departments.id = Items.department_id
-                            INNER JOIN Shops ON Shops.id = Departments.shop_id;
-                        """)
-            data = self.cur.fetchall()
-            new_data = {}
-            for el in data:
-                new_data.setdefault(el[0], []).append(el[1])
-            return new_data
+            """,
+            """
+                SELECT id FROM Items
+                ORDER BY name
+                LIMIT 2
+                OFFSET 3;
+            """,
+            """
+                SELECT Items.name, Shops.name FROM Items
+                INNER JOIN Departments ON Items.department_id = Departments.id
+                INNER JOIN Shops ON Shops.id = Departments.shop_id;
+            """,
+            """
+                SELECT Items.name, Departments.id FROM Items
+                LEFT JOIN Departments ON Items.department_id = Departments.id
+            """,
+            """
+                SELECT Items.name, Departments.id FROM Items
+                RIGHT JOIN Departments ON Items.department_id = Departments.id
+            """,
+            """
+                SELECT Items.name, Departments.id FROM Items
+                FULL JOIN Departments ON Items.department_id = Departments.id
+            """,
+            """
+                SELECT Items.name, Shops.name FROM Items
+                CROSS JOIN Departments
+                INNER JOIN Shops ON Shops.id = Departments.shop_id;
+            """,
+            """
+                SELECT Shops.name, COUNT(*) as count_goods, SUM(price),
+                MAX(price), MIN(price),
+                AVG(price) FROM Items
+                INNER JOIN Departments ON Departments.id = Items.department_id
+                INNER JOIN Shops ON Shops.id = Departments.shop_id
+                GROUP BY (Shops.name);
+            """,
+            """
+                SELECT Shops.name, Items.name FROM Items
+                INNER JOIN Departments ON Departments.id = Items.department_id
+                INNER JOIN Shops ON Shops.id = Departments.shop_id;
+            """,
 
+        ]
+        with self.conn.cursor() as curs:
+            if choice in range(1,15):
+                curs.execute(select_query[choice - 1])
+                if choice == 14:
+                    new_data = curs.fetchall()
+                    data = {}
+                    for el in new_data:
+                        data.setdefault(el[0], []).append(el[1])
+                else:
+                    curs.execute(select_query[choice-1])
+                    data = curs.fetchall()
+
+        return data
 
     # UPDATE METHOD
 
@@ -219,41 +181,34 @@ class SQLManager:
 
     # DELETE METHODS
 
-    def delete_data(self):
-        self.cur.execute("""
-                    DELETE FROM Items
-                    WHERE price > 500 AND description IS NULL;
-                """)
-        self.cur.commit()
-
-        self.cur.execute("""
-            DELETE FROM Items WHERE id IN 
+    def delete_data(self, choice:typing.Optional[int]):
+        delete_query = [
+            """DELETE FROM Items WHERE price > 500 AND description IS NULL;""",
+            """DELETE FROM Items WHERE id IN 
             (
                 SELECT Items.id FROM Items
                 INNER JOIN Departments ON Departments.id = Items.department_id
                 INNER JOIN Shops ON Shops.id = department_id
                 WHERE Shops.address is NULL
-            )
-        """)
-        self.cur.commit()
-
-        self.cur.execute("""
-            DELETE FROM Items
-            WHERE Items.id IN (
-                SELECT id FROM Departments
-                WHERE staff_amount < 225 
-                OR staff_amount > 275
-            );
-        """)
-        self.cur.commit()
-
-        self.cur.execute("""
-            TRUNCATE TABLE Shops CASCADE;
-            TRUNCATE TABLE Departments CASCADE;
-            TRUNCATE TABLE Items CASCADE;
-        """)
-        self.cur.commit()
-
+            )""",
+            """
+                DELETE FROM Items
+                WHERE Items.id IN (
+                    SELECT id FROM Departments
+                    WHERE staff_amount < 225 
+                    OR staff_amount > 275
+                );
+            """,
+            """
+                TRUNCATE TABLE Shops CASCADE;
+                TRUNCATE TABLE Departments CASCADE;
+                TRUNCATE TABLE Items CASCADE;
+            """
+        ]
+        with self.conn.cursor() as curs:
+            if choice in range(1,5):
+                self.cur.execute(delete_query[choice - 1])
+                self.cur.commit()
     # DROP METHOD
 
     def drop_table(self):

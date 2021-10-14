@@ -98,6 +98,7 @@ class SQLManager:
             INSERT INTO Shops(name, address, staff_amount) 
             VALUES (%s,%s,%s);
             """, ('Auchan', None, 250))
+        self.__commit()
         self.cur.execute("""
             INSERT INTO Shops(name, address, staff_amount) 
             VALUES (%s,%s,%s);
@@ -142,40 +143,6 @@ class SQLManager:
         print(
             "You are successfully insert data into Shops, Departments, Items")
 
-    # SELECT METHODS and SWITCHER
-
-    def switcher_select_menu(self, choice: int):
-        data = None
-        if choice == 1:
-            data = self.select_1()
-        elif choice == 2:
-            data = self.select_2()
-        elif choice == 3:
-            data = self.select_3()
-        elif choice == 4:
-            data = self.select_4()
-        elif choice == 5:
-            data = self.select_5()
-        elif choice == 6:
-            data = self.select_6()
-        elif choice == 7:
-            data = self.select_7()
-        elif choice == 8:
-            data = self.select_8()
-        elif choice == 9:
-            data = self.select_9()
-        elif choice == 10:
-            data = self.select_10()
-        elif choice == 11:
-            data = self.select_11()
-        elif choice == 12:
-            data = self.select_12()
-        elif choice == 13:
-            data = self.select_13()
-        elif choice == 14:
-            data = self.select_14()
-        else:
-            print("You input incorrect number, try again!")
 
     def select_1(self):
         self.cur.execute("""
@@ -339,19 +306,6 @@ class SQLManager:
 
     # DELETE METHODS
 
-    def switch_delete_menu(self, choice):
-        """Delete menu"""
-        if choice == 1:
-            self.delete_1()
-        elif choice == 2:
-            self.delete_2()
-        elif choice == 3:
-            self.delete_3()
-        elif choice == 4:
-            self.delete_4()
-        else:
-            print("You input incorrect number, try again!")
-
     def delete_1(self):
         self.cur.execute("""
             DELETE FROM Items
@@ -405,92 +359,3 @@ class SQLManager:
             print("You are successfully drop tables")
         except (Exception, Error) as error:
             print("Error with work with PostgreSQL", error)
-
-    # STATIC FUNC
-
-
-def select_menu():
-    """Function menu"""
-    print("3.1) Все поля по товарам, у которых есть описание.")
-    print(
-        "3.2) Все направления отделов, в которых более 200 сотрудников. Избегать повторений.")
-    print(
-        "3.3) Все адреса магазинов с названием, начинающихся на английскую букву “i” без учета регистра.")
-    print(
-        '3.4) Все названия товаров, которые продаются в отделах с мебелью (Furniture).')
-    print("3.5) Названия магазинов, где в продаже есть товары с описанием.")
-    print(
-        "3.6) Для каждого товара все его поля (кроме id) + все поля его отдела (кроме id), причем для всех полей "
-        "отдела в ответе должна быть приписка department_{название_поля}, + все поля его магазина (кроме id) с "
-        "припиской shop_{название_поля}.")
-    print(
-        "3.7) Идентификаторы 3 - 4 по счету товаров из выборки, отсортированной по имени товара.")
-    print(
-        "3.8) Названия товаров и названия их отделов, если и товар, и отдел существуют.")
-    print(
-        "3.9) Названия товаров и названия их отделов. Если отдела не существует, то в его поле должен быть NULL.")
-    print(
-        "3.10) Названия товаров и названия их отделов. Если в каком-то отделе нет товаров, то он должен попасть в "
-        "ответ, а в колонке названия товара должен быть NULL.")
-    print(
-        "3.11) Названия товаров и названия их отделов. Если отдел у товара не указан, то в его поле должен быть "
-        "NULL. Если есть отдел без товаров - он должен появиться в ответе со значением NULL в колонке товара.")
-    print(
-        "3.12) Все возможные сочетания названий товаров и названий отделов независимо от связей.")
-    print(
-        "3.13) Количество товаров, сумму цен, максимальную цену, минимальную цену, среднюю цену для каждого "
-        "магазина, где количество товаров больше одного.")
-    print("3.14) Названия магазинов и массив названий всех товаров в них.")
-    print("Выйти из меню select нажмите 0")
-
-
-def delete_menu():
-    print("""5.1) Все товары, у которых цена больше 500 и у которых нет описания.""")
-    print('5.2) Все товары, у которых магазин не имеет адреса.')
-    print('5.3) Все товары, у которых id совпадает с id отделов, имеющих менее 225 или более 275 cотрудников.')
-    print('5.4) Все данные из всех трех таблиц.')
-
-    # TEST FUNC
-
-
-def select_test():
-    global sql1
-    while True:
-        select_menu()
-        try:
-            choice = int(input("Input number > ..."))
-            if choice == 0:
-                break
-            else:
-                sql1.switcher_select_menu(choice)
-        except Exception as error:
-            print(f"{error}")
-
-
-def delete_test():
-    global sql1
-    while True:
-        delete_menu()
-        try:
-            choice = int(input("Input number > ..."))
-            if choice == 0:
-                break
-            else:
-                sql1.switch_delete_menu(choice)
-        except Exception as error:
-            print(f"{error}")
-
-
-if __name__ == '__main__':
-    sql1 = SQLManager(dbname="test", db_user="postgres", password="1111", hostname="127.0.0.1")
-    sql1.connect_to_db()
-    sql1.create_table()
-    sql1.insert_data()
-    select_test()
-    x = input('Pause press any key to continue ....')
-    sql1.update_data()
-    x = input('Pause press any key to continue ....')
-    delete_test()
-    x = input('Pause press any key to continue ....')
-    sql1.drop_table()
-    sql1.disconnect_from_db()

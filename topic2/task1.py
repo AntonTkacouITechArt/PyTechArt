@@ -19,17 +19,15 @@ class Department:
     def __or__(self, other: 'Department') -> 'Department':
         a = self.get_budget_plan()
         b = other.get_budget_plan()
-        if a > 0 and b > 0:
-            if a >= b:
-                return self
-            else:
-                return other
+        if a >= b:
+            return self
+        else:
+            return other
 
     def __add__(self, other: 'Department') -> 'Department':
         budget = self.budget + other.budget
-        employees = {}
-        employees.update(self.employees)
-        employees.update(other.employees)
+        employees = {**self.employees, **other.employees}
+
         if self.average_salary > other.average_salary:
             name = self.name + ' - ' + other.name
         elif self.average_salary == other.average_salary:
@@ -39,11 +37,11 @@ class Department:
                 name = other.name + ' - ' + self.name
         else:
             name = other.name + ' - ' + self.name
+
         temp = Department(name, employees, budget)
         _ = temp.get_budget_plan()
         return temp
 
-    
     def get_budget_plan(self) -> float:
         """Return budget_plan(float) = all_budget - all_salary"""
         department_budget = self.budget - sum(self.employees.values())
@@ -59,6 +57,7 @@ class Department:
 
     @classmethod
     def merge_departments(cls, *departments: 'Department') -> 'Department':
+        """Merge 2 or more departments -> 1 department"""
         all_budget = 0
         name = ''
         employees = {}
@@ -68,16 +67,13 @@ class Department:
             employees.update(department.employees)
             sorted_list.append(
                 tuple([department.average_salary, department.name]))
-
-        # print(sorted_list)
-        # a = sorted_list.sort(key=lambda i: i[0], reverse=True)
         sorted_list = sorted(sorted_list, key=lambda i: i[0], reverse=True)
         sorted_list = sorted(sorted_list, key=lambda i: i[1])
         for other_name in sorted_list:
             name += other_name[1]
             if sorted_list[-1][1] != other_name[1]:
                 name += ' - '
+
         temp = Department(name, employees, all_budget)
         _ = temp.get_budget_plan()
         return temp
-

@@ -155,7 +155,8 @@ class AlchemyManager:
             ).all(),
             3: self.session.query(Items).filter(
                 text(
-                    'id IN (SELECT id FROM department WHERE staff_amount < 225 OR staff_amount > 275);')
+                    """id IN (SELECT id FROM department 
+                    WHERE staff_amount < 225 OR staff_amount > 275);""")
             ).all(),
             4: self.session.execute('''
         TRUNCATE TABLE shops CASCADE;

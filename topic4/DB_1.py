@@ -167,7 +167,6 @@ class SQLManager:
                 else:
                     curs.execute(select_query[choice-1])
                     data = curs.fetchall()
-
         return data
 
     # UPDATE METHOD
@@ -208,7 +207,6 @@ class SQLManager:
         with self.conn.cursor() as curs:
             if choice in range(1,5):
                 self.cur.execute(delete_query[choice - 1])
-                self.cur.commit()
     # DROP METHOD
 
     def drop_table(self):

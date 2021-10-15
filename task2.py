@@ -109,16 +109,20 @@ class AlchemyManager:
             1: self.session.query(Items).filter(
                 text("description is not NULL")).all(),
             2: self.session.query(Departments.sphere).distinct(
-                Departments.sphere).all(),
+                Departments.sphere).filter(Departments.staff_amount > 200
+                                           ).all(),
             3: self.session.query(Shops.address).from_statement(
                 text("SELECT * FROM Shops WHERE name ~ '^(I|i)';")
             ).all(),
-            4: self.session.query(Items.name).join(Items.departments).filter(
+            4: self.session.query(Items.name).join(
+                Departments, Departments.id == Items.department_id).filter(
                 Departments.sphere == 'Furniture'
             ).all(),
             5: self.session.query(
-                Shops.name).join(Departments, Shops.id).join(
-                Items, Departments.id).filter(Ite.description is not None),
+                Shops.name).join(
+                Departments, Departments.shop_id == Shops.id).join(
+                Items, Departments.id == Items.department_id).filter(
+                Items.description is not None).all(),
             6: self.session.query(Items, Departments, Shops).from_statement(
                 text("""
             SELECT 
@@ -134,8 +138,12 @@ class AlchemyManager:
         """)
             ).all(),
             7: self.session.query(Items.id).order_by(Items.name).limit(
-                2).offset(3),
-            8: self.session.query(Items.name, Departments.id),
+                2).offset(3).all(),
+            8: self.session.query(Items.name, Departments.id).join(
+                Departments, Departments.id == Items.department_id).all(),
+            9: self.session.query(Items.name, Departments.id).outerjoin(
+                Departments, Departments.id == Items.department_id).all(),
+            # 10: self.session.query()
         }
         if choice in range(1, 15):
             data = query_dict[choice - 1]

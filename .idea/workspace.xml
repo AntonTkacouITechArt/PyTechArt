@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8b2f577-823e-4d54-8a7c-e3149137e7f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/topic3/kek228.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topic3/dataxlsx.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/topic3/dataxlsx.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/topic3/exmaple.json" beforeDir="false" afterPath="$PROJECT_DIR$/topic3/exmaple.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/topic3/task3_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/topic3/task3_1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/topic3/task3_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/topic3/task3_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -155,11 +156,22 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/PyTechArt$task4.coverage" NAME="task4 Coverage Results" MODIFIED="1634111507702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic2" />
-    <SUITE FILE_PATH="coverage/PyTechArt$task3_2.coverage" NAME="task3_2 Coverage Results" MODIFIED="1634208091534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic3" />
+    <SUITE FILE_PATH="coverage/PyTechArt$task3_2.coverage" NAME="task3_2 Coverage Results" MODIFIED="1634284790005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic3" />
     <SUITE FILE_PATH="coverage/PyTechArt$task1_2.coverage" NAME="task1_2 Coverage Results" MODIFIED="1634069427998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic1" />
-    <SUITE FILE_PATH="coverage/PyTechArt$task3_1.coverage" NAME="task3_1 Coverage Results" MODIFIED="1634203917105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic3" />
+    <SUITE FILE_PATH="coverage/PyTechArt$task3_1.coverage" NAME="task3_1 Coverage Results" MODIFIED="1634284715837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic3" />
     <SUITE FILE_PATH="coverage/PyTechArt$task1.coverage" NAME="task1 Coverage Results" MODIFIED="1634112058676" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/topic2" />
   </component>
 </project>

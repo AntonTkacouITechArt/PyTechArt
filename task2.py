@@ -15,9 +15,9 @@ class AlchemyManager:
     def __init__(self, db_type: typing.Optional[str],
                  db_lib: typing.Optional[str], login: typing.Optional[str],
                  password: typing.Optional[str], db_name: typing.Optional[str],
-                 port: typing.Optional[str] = '127.0.0.1') -> self:
+                 host: typing.Optional[str] = '127.0.0.1') -> self:
         # params
-        self.port = port
+        self.host = host
         self.db_name = db_name
         self.password = password
         self.login = login
@@ -25,8 +25,12 @@ class AlchemyManager:
         self.db_type = db_type
 
         # engine
+        # self.engine = sqlalchemy.create_engine(
+        #     f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
+        #     echo=True,
+        # )
         self.engine = sqlalchemy.create_engine(
-            f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
+            f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
             echo=True,
         )
         self.Session = sessionmaker(bind=self.engine)
@@ -178,3 +182,11 @@ class AlchemyManager:
 
     def drop_tables(self):
         Base.metadata.drop_all(bind=self.engine)
+
+
+
+if __name__ == '__main__':
+    m = AlchemyManager(db_type='postgresql', db_lib='psycopg2',login='postgres',
+                       password='1111',db_name='test')
+    m.create_table()
+    # f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',

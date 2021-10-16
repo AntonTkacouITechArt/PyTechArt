@@ -1,3 +1,4 @@
+import typing
 class Department:
     """Class Department vars:budget(int), employees(Dict[str, float]), name(str)
     methods:get_budget_plan(float), average_salary(float),
@@ -39,7 +40,7 @@ class Department:
             name = other.name + ' - ' + self.name
 
         temp = Department(name, employees, budget)
-        _ = temp.get_budget_plan()
+        _ = temp.get_budget_plan() # check raise
         return temp
 
     def get_budget_plan(self) -> float:
@@ -58,22 +59,34 @@ class Department:
     @classmethod
     def merge_departments(cls, *departments: 'Department') -> 'Department':
         """Merge 2 or more departments -> 1 department"""
-        all_budget = 0
-        name = ''
-        employees = {}
-        sorted_list = []
-        for department in departments:
-            all_budget += department.budget
-            employees.update(department.employees)
-            sorted_list.append(
-                tuple([department.average_salary, department.name]))
+        all_budget = sum(department.budget for department in departments)
+        employees = {k:v for department in departments
+                        for k,v in department.employees.items()}
+        sorted_list = ((department.average_salary, department.name)
+                        for department in departments)
         sorted_list = sorted(sorted_list, key=lambda i: i[0], reverse=True)
         sorted_list = sorted(sorted_list, key=lambda i: i[1])
-        for other_name in sorted_list:
-            name += other_name[1]
-            if sorted_list[-1][1] != other_name[1]:
-                name += ' - '
-
+        name = ' - '.join((other_name[1] for other_name in sorted_list))
         temp = Department(name, employees, all_budget)
-        _ = temp.get_budget_plan()
+        _ = temp.get_budget_plan() # check raise
         return temp
+
+
+if __name__ == '__main__':
+    data1 = {
+        'Anton':400,
+        'Nikita':5000,
+        'Egor':5000
+    }
+    data2 = {
+        'Sasha':3000,
+        'Dima':10000,
+        'Peter':2500,
+    }
+    a = Department('ITechArt',data1,20000)
+    b = Department('ITechArt1',data1,32000)
+    c = Department('ITechAr',data1,32000)
+    d = Department('NoName', data2,20000)
+    f = Department('And', data2, 20000)
+    e = Department.merge_departments(a,b,c,d,f)
+    print(e)

@@ -5,12 +5,11 @@ import typing
 @dataclasses.dataclass(order=True)
 class Student:
     """Student class for name(str), avg_mark(float), age(int), subject(List[str])"""
-    name: str = dataclasses.field(repr=True, compare=False)
+    name: str = dataclasses.field(compare=False)
     first_letter: str = dataclasses.field(init=False,
                                           repr=False,
                                           compare=False)
-    average_mark: float = dataclasses.field(compare=True,
-                                            repr=True)
+    average_mark: float = dataclasses.field()
     age: int = dataclasses.field(default=18, repr=False,
                                  compare=False)
     subjects: typing.List[str] = dataclasses.field(default_factory=list,

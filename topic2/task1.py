@@ -26,22 +26,8 @@ class Department:
             return other
 
     def __add__(self, other: 'Department') -> 'Department':
-        budget = self.budget + other.budget
-        employees = {**self.employees, **other.employees}
+        return Department.merge_departments([self,other])
 
-        if self.average_salary > other.average_salary:
-            name = self.name + ' - ' + other.name
-        elif self.average_salary == other.average_salary:
-            if self.name >= other.name:
-                name = self.name + ' - ' + other.name
-            else:
-                name = other.name + ' - ' + self.name
-        else:
-            name = other.name + ' - ' + self.name
-
-        temp = Department(name, employees, budget)
-        _ = temp.get_budget_plan() # check raise
-        return temp
 
     def get_budget_plan(self) -> float:
         """Return budget_plan(float) = all_budget - all_salary"""

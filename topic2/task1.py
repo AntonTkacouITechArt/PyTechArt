@@ -54,7 +54,10 @@ class Department:
         sorted_list = sorted(sorted_list, key=lambda i: i[1])
         name = ' - '.join((other_name[1] for other_name in sorted_list))
         temp = Department(name, employees, all_budget)
-        _ = temp.get_budget_plan() # check raise
+        try:
+            _ = temp.get_budget_plan() # check raise
+        except Department.BudgetError:
+            raise
         return temp
 
 

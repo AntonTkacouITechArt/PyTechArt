@@ -1,5 +1,5 @@
 from sqlalchemy import Column, MetaData, Integer, String, Text, ForeignKey, \
-    update, insert, relationship, text
+    update, insert, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import mapper, Session, sessionmaker
 from Items import Items
@@ -29,10 +29,11 @@ class AlchemyManager:
         #     f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
         #     echo=True,
         # )
-        self.engine = sqlalchemy.create_engine(
-            f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
-            echo=True,
-        )
+        # self.engine = sqlalchemy.create_engine(
+        #     f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
+        #     echo=True,
+        # )
+        self.engine = sqlalchemy.create_engine(f'sqlite://home/anton/MyGit/PyTechArt')
         self.Session = sessionmaker(bind=self.engine)
         self.session = Session()
         self.commit = self.session.commit()

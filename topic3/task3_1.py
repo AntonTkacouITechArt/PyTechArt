@@ -1,4 +1,6 @@
-import typing,re
+import typing, re
+
+
 class RegParser:
     ADDRESS_REGEX = '((?:[A-Z][a-z]*, )?(?:[A-Z][a-z]*(?: city| City)?, )?[_\w\s-]+(?:, | str., )?(?:\d+\s*[-/\\,|]\s*\d+))'
     CONTACT_REGEX = '(?P<age>age=[\w\s-]+;?)?(?P<name>name=[\w\s-]+;?)?(?P<surname>surname=[\w\s-]+;?)?(?P<city>city=[\w\s-]+;?)?'
@@ -7,22 +9,22 @@ class RegParser:
 
     @classmethod
     def find(cls, text: typing.Optional[str], choice: typing.Optional[int]):
+        """Find address, contact, price"""
         data = None
         if choice == 1:
             data = re.findall(RegParser.ADDRESS_REGEX, text)
         elif choice == 2:
             # fixing empty string(None) and truble with regex
-            exp = re.compile(RegParser.CONTACT_REGEX)
-            print(exp.findall(text))
-            a = exp.findall(text)
-
-            return data
+            data = exp.findall(RegParser.CONTACT_REGEX, text)
+            print(data)
         elif choice == 3:
-            groups_combinations = re.findall(RegParser.PRICE_REGEX,text)
-            x = [num.replace(',','.') for group in groups_combinations
+            groups_combinations = re.findall(RegParser.PRICE_REGEX, text)
+            print(groups_combinations)
+            x = [num.replace(',', '.') for group in groups_combinations
                  for num in group if num != '']
-            data = [int(num) if '.' not in num else float(num.replace(',','.'))
-                    for num in x ]
+            data = [
+                int(num) if '.' not in num else float(num.replace(',', '.'))
+                for num in x]
         return data
 
 

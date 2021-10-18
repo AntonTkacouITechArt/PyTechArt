@@ -1,8 +1,8 @@
 import typing
-import  requests
+import requests
 import json
 from bs4 import BeautifulSoup
-import scrapy
+# import scrapy
 
 def func_1(name_currency:typing.Optional[str]) -> typing.Optional[float]:
     """Get three-digit alphabetic currency(str) code and return BYN currency rate(float)"""
@@ -45,12 +45,10 @@ def func_2():
     # soup = BeautifulSoup(response.text, 'html.parser')
     # print(soup.prettify())
     # # print(soup.tag['class']='place-list__item-name')
-    res = scrapy.fetch('https://yandex.by/pogoda/region/149')
-    print(res)
     pass
 
 
 if __name__ == '__main__':
-    # print(func_1('USD'))
-    # print(func_1('RUB'))
-    func_2()
+    print(func_1('USD'))
+    print(func_1('RUB'))
+    # func_2()

@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import Error
 import typing
 
+
 class SQLManager:
     def __init__(self, dbname, db_user, password, hostname):
         self.dbname = dbname
@@ -9,8 +10,8 @@ class SQLManager:
         self.password = password
         self.host = hostname
         self.conn = psycopg2.connect(user=self.user,
-                                         password=self.password,
-                                         host=self.host, database=self.dbname)
+                                     password=self.password,
+                                     host=self.host, database=self.dbname)
         self.cur = self.conn.cursor()
 
     # CREATE METHOD
@@ -41,7 +42,6 @@ class SQLManager:
                      """)
         self.cur.commit()
 
-
     # INSERT METHOD
 
     def insert_data(self):
@@ -62,12 +62,11 @@ class SQLManager:
             """
         departments_data = (
             ('Furniture', 250, 1),
-            ('Furniture', 300, 2)
+            ('Furniture', 300, 2),
             ('Dishes', 200, 2)
         )
         self.cur.executemany(query_insert_into_departments, departments_data)
         self.cur.commit()
-
 
         query_insert_into_items = """
                 INSERT INTO Items(name, description, price, department_id) 
@@ -83,13 +82,13 @@ class SQLManager:
         self.cur.executemany(items_data)
         self.cur.commit()
 
-
-    def select_data(self, choice:typing.Optional[int]):
+    def select_data(self, choice: typing.Optional[int]):
         data = None
         select_query = [
             """SELECT * FROM Items WHERE description IS NOT NULL;""",
-            """SELECT DISTINCT sphere FROM Departments WHERE staff_amount > 200;""",
-            """SELECT address FROM Shops WHERE name ~ '^(I|i)';""",
+            """SELECT DISTINCT sphere FROM Departments 
+            WHERE staff_amount > 200;""",
+            """SELECT address FROM Shops WHERE name ILIKE 'i%';""",
             """
                 SELECT Items.name FROM Items
                 INNER JOIN Departments ON Departments.id = Items.department_id
@@ -157,7 +156,7 @@ class SQLManager:
 
         ]
         with self.conn.cursor() as curs:
-            if choice in range(1,15):
+            if choice in range(1, 15):
                 curs.execute(select_query[choice - 1])
                 if choice == 14:
                     new_data = curs.fetchall()
@@ -165,7 +164,7 @@ class SQLManager:
                     for el in new_data:
                         data.setdefault(el[0], []).append(el[1])
                 else:
-                    curs.execute(select_query[choice-1])
+                    curs.execute(select_query[choice - 1])
                     data = curs.fetchall()
         return data
 
@@ -173,14 +172,14 @@ class SQLManager:
 
     def update_data(self):
         self.cur.execute("""
-            UPDATE Items SET price = price + 100 WHERE name ~ '(^(B|b))|((E|e)$)'; 
+            UPDATE Items SET price = price + 100 
+            WHERE name ILIKE 'b%' OR name ILIKE '%e'; 
         """)
         self.cur.commit()
 
-
     # DELETE METHODS
 
-    def delete_data(self, choice:typing.Optional[int]):
+    def delete_data(self, choice: typing.Optional[int]):
         delete_query = [
             """DELETE FROM Items WHERE price > 500 AND description IS NULL;""",
             """DELETE FROM Items WHERE id IN 
@@ -205,8 +204,9 @@ class SQLManager:
             """
         ]
         with self.conn.cursor() as curs:
-            if choice in range(1,5):
+            if choice in range(1, 5):
                 self.cur.execute(delete_query[choice - 1])
+
     # DROP METHOD
 
     def drop_table(self):
@@ -214,4 +214,3 @@ class SQLManager:
         self.cur.execute("""DROP TABLE IF EXISTS Departments CASCADE;""")
         self.cur.execute("""DROP TABLE IF EXISTS Items CASCADE;""")
         self.cur.commit()
-

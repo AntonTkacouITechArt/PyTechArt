@@ -1,5 +1,5 @@
 from base import Base
-from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Text, CheckConstraint
 from sqlalchemy.orm import relationship
 
 class Shops(Base):
@@ -10,7 +10,7 @@ class Shops(Base):
     staff_amount = Column(Integer())
     __table_args__ = (
         CheckConstraint('staff_amount > -1',
-                        name='shops_staff_amount_check')
+                        name='shops_staff_amount_check'),
     )
     departments = relationship(
         'Departments', cascade='all, delete, delete-orphan'

@@ -6,15 +6,18 @@ import csv
 class GetWeatherSpider(scrapy.Spider):
     name = 'get_weather'
     allowed_domains = ['yandex.by']
-    csvfile = open('City_URL.csv', 'r', newline='')
-    reader = csv.DictReader(csvfile)
+    reader = None
     urls = []
     names = []
-    for row in reader:
-        urls.append(row['URL'])
-        names.append(row['City'])
+    counter = 0
+    with open('/home/anton/MyGit/PyTechArt/topic5/BelarusWeather/City_URL.csv',
+              'r',
+              newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            urls.append(row['URL'])
+            names.append(row['City'])
     start_urls = urls
-    csvfile.close()
 
     def __init__(self):
         self.outfile = open('City_Weather.csv', 'w', newline='')
@@ -25,15 +28,13 @@ class GetWeatherSpider(scrapy.Spider):
         self.outfile.close()
 
     def parse(self, response):
-        # tag from link below
-        # https://yandex.by/pogoda/baranavichy?via=reg
-        temperatura = response.xpath('//div[@class="temp fact__temp fact__temp_size_s"]/span[@class="temp__value temp__value_with-unit"/text()]').extract()
-        print(temperatura)
-        result = list(zip(GetWeatherSpider.names, temperatura))
-        print(result)
-        for row in result:
+        temperature = response.xpath(
+            '//div[contains(@class, "temp fact__temp")]/span[contains(@class,"temp__value")]/text()').extract()
+        for temp in temperature:
             scraped_info = {
-                row[0]: row[1],
+                GetWeatherSpider.names[GetWeatherSpider.counter]: temp,
             }
-            self.writer.writerow([row[0], row[1]])
+            self.writer.writerow(
+                [GetWeatherSpider.names[GetWeatherSpider.counter], temp])
+            GetWeatherSpider.counter += 1
             yield scraped_info

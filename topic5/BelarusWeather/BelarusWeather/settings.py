@@ -14,9 +14,6 @@ BOT_NAME = 'BelarusWeather'
 SPIDER_MODULES = ['BelarusWeather.spiders']
 NEWSPIDER_MODULE = 'BelarusWeather.spiders'
 
-FEED_FORMAT="csv"
-FEED_URI="BelarusWeather.csv"
-
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

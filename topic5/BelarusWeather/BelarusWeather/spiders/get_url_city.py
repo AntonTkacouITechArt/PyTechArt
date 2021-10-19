@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import scrapy, csv
+import csv
+import scrapy
 
 
 class GetUrlCitySpider(scrapy.Spider):
@@ -20,17 +21,13 @@ class GetUrlCitySpider(scrapy.Spider):
         self.outfile.close()
 
     def parse(self, response):
-        print('Start processing response:' + response.url)
-        print('Example name city:' + response.css(
-            '.place-list__item-name').extract_first())
-        print('Example url city' + response.css(
-            '.place-list__item-name::attr(href)').extract_first())
         names = response.css('.place-list__item-name::text').extract()
         urls = response.css('.place-list__item-name::attr(href)').extract()
         rows_data = list(zip(names, urls))
         for row in rows_data:
-            scraped_info = {
-                row[0]: 'https://yandex.by/pogoda' + row[1],
-            }
-            self.writer.writerow([row[0], 'https://yandex.by' + row[1]])
-            yield scraped_info
+            if row[0] != 'Беларусь':
+                scraped_info = {
+                    row[0]: 'https://yandex.by/pogoda' + row[1],
+                }
+                self.writer.writerow([row[0], 'https://yandex.by' + row[1]])
+                yield scraped_info

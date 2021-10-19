@@ -1,3 +1,7 @@
+from base import Base
+from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy.orm import relationship
+
 class Shops(Base):
     __tablename__ = 'shops'
     id = Column(Integer(), primary_key=True, autoincrement=True)

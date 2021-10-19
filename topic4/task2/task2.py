@@ -1,10 +1,10 @@
 from sqlalchemy import Column, MetaData, Integer, String, Text, ForeignKey, \
     update, insert, text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import mapper, Session, sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 from Items import Items
 from Shops import Shops
 from Departments import Departments
+from base import Base
 import typing
 
 
@@ -33,7 +33,8 @@ class AlchemyManager:
         #     f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
         #     echo=True,
         # )
-        self.engine = sqlalchemy.create_engine(f'sqlite://home/anton/MyGit/PyTechArt')
+        self.engine = sqlalchemy.create_engine(
+            f'sqlite://home/anton/MyGit/PyTechArt')
         self.Session = sessionmaker(bind=self.engine)
         self.session = Session()
         self.commit = self.session.commit()
@@ -42,7 +43,6 @@ class AlchemyManager:
     # CREATE METHODS
     def create_table(self):
         # sqlalchemy
-        Base = declarative_base()
         Base.metadata.create_all(engine)
 
     # INSERT METHODS
@@ -185,9 +185,9 @@ class AlchemyManager:
         Base.metadata.drop_all(bind=self.engine)
 
 
-
 if __name__ == '__main__':
-    m = AlchemyManager(db_type='postgresql', db_lib='psycopg2',login='postgres',
-                       password='1111',db_name='test')
+    m = AlchemyManager(db_type='postgresql', db_lib='psycopg2',
+                       login='postgres',
+                       password='1111', db_name='test')
     m.create_table()
     # f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',

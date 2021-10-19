@@ -1,3 +1,8 @@
+from base import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+
 class Departments(Base):
     __tablename__ = 'departments'
     id = Column(Integer(), primary_key=True, autoincrement=True)

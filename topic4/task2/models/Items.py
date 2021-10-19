@@ -1,5 +1,6 @@
-
-
+from base import Base
+from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy.orm import relationship
 
 class Items(Base):
     __tablename__ = 'items'

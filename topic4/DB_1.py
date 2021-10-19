@@ -149,11 +149,12 @@ class SQLManager:
                 GROUP BY (Shops.name);
             """,
             """
-                SELECT Shops.name, Items.name FROM Items
-                INNER JOIN Departments ON Departments.id = Items.department_id
-                INNER JOIN Shops ON Shops.id = Departments.shop_id;
+                SELECT Shops.name, ARRAY[i.name, i.description, i.price::text]
+                FROM Shops s
+                LEFT JOIN Departments d ON d.shop_id = s.id
+                LEFT JOIN Items i ON i.department_id = d.id; 
+                
             """,
-
         ]
         with self.conn.cursor() as curs:
             if choice in range(1, 15):

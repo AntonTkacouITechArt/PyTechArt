@@ -126,3 +126,5 @@ dmypy.json
 *.xml
 
 .idea/PyTechArt.iml
+
+*.iml

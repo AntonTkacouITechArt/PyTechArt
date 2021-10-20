@@ -1,12 +1,6 @@
 class RegParser:
-    # marks of ^ and $
-    # ADDRESS_REGEX = r'(^(?:(?:\s)?(?:[A-z]*, )?(?:[A-z]*(?: [Cc]ity)?, )?)[_\w\s-]+(?:, |str., )?(?:\d+\s*[-\\,|]\s*\d+)$)'
-    ADDRESS_REGEX = r'(^(?:(?:\s)?(?:[A-z]*, )?(?:[A-z]*(?: [Cc]ity)?, )?)[_\w\s-]+(?:, |str., )?(?:\d+\s*[-\/\\,|]\s*\d+)$)'
-    # CONTACT_REGEX = r'(?P<age>age=[\w\s-]+;?)?(?P<name>name=[\w\s-]+;?)?(?P<surname>surname=[\w\s-]+;?)?(?P<city>city=[\w\s-]+;?)?'
-    CONTACT_REGEX = r'((?:\s)?(?P<age>age=[\d]+;?)?(?P<name>name=[\w\s-]+;?)?(?P<surname>surname=[\w\s-]+;?)?(?P<city>city=[\w\s-]+;?)?)'
-    # CONTACT_REGEX = '(name=[\w\s-]+;?)?(age=[\w\s-]+;?)?(city=[\w\s-]+;?)?(surname=[\w\s-]+;?)?'
-    # PRICE_REGEX = r'(?:(?<=[$€] )(\d+(?:\.|,\d+)?\d*))|(?:(\d+(?:\.|,\d+)?\d*)(?=\s*BYN))'
-    # PRICE_REGEX = r'(?:(?<=[$€] )(\d+(?:\.|,\d+)?\d*))|(?:(\d+(?:\.|,\d+)?\d*)(?=\s*BYN))'
+    ADDRESS_REGEX = r'(?:^(?:[A-Z][a-z]*, )?(?:[A-Z][a-z]*(?: [Cc]ity)?, )?)[_\w\s-]+(?:, |str., )?(?:\d+\s*[-\/\\,|]\s*\d+)$'
+    CONTACT_REGEX = r'^(?:(?P<age>age=[\d]+;?)|(?P<name>name=[\w\s-]+;?)|(?P<surname>surname=[\w\s-]+;?)|(?P<city>city=[\w\s-]+;?)){1,4}$'
     PRICE_REGEX = r'(?:(?<=[$€] )(\d+(?:\.|,\d+)?\d*))|(?:(\d+(?:\.|,\d+)?\d*)(?=[ ]*BYN))'
 
     @classmethod
@@ -16,12 +10,18 @@ class RegParser:
         if choice == 1:
             data = re.findall(RegParser.ADDRESS_REGEX, text, re.MULTILINE)
         elif choice == 2:
-            # fixing empty string(None) and truble with regex
-            data = re.findall(RegParser.CONTACT_REGEX, text, re.MULTILINE)
-            # print(data)
+            newdata = re.findall(RegParser.CONTACT_REGEX, text, re.MULTILINE)
+            data = []
+            for person in newdata:
+                dict_per = {}
+                for info in person:
+                    if info != '':
+                        el = info.replace(';', '').split('=')
+                        dict_per.update({el[0]: el[1]})
+                data.append(dict_per)
         elif choice == 3:
-            groups_combinations = re.findall(RegParser.PRICE_REGEX, text, re.MULTILINE)
-            # print(groups_combinations)
+            groups_combinations = re.findall(RegParser.PRICE_REGEX, text,
+                                             re.MULTILINE)
             x = [num.replace(',', '.') for group in groups_combinations
                  for num in group if num != '']
             data = [
@@ -30,7 +30,17 @@ class RegParser:
         return data
 
 # if __name__ == '__main__':
-#     text1 = 'Belarus, Minsk city, Tolstoy str., 8 - 0303 Germany, Berlin City, Gauven, 23 - 1203'
+#     # text1 = 'Belarus, Minsk city, Tolstoy str., 8 - 0303 Germany, Berlin City, Gauven, 23 - 1203'
+#     text1 = """Russia, Moscow City, Tolstoy- 123_456 str., 123 | 16
+# russia, Moscow City, Tolstoy str., 123 | 16
+# Russia, moscow City, Tolstoy str., 123 | 16
+# Russia, Moscow City, Tolstoy str., 123 | 16
+# Russia, Moscow City, Tolstoystr., 123 | 16
+# Russia, Moscow, Tolstoy, 123 , 16
+# Moscow, Tolstoy, 123-16
+# Moscow, Tolstoy, 123\16
+#  Moscow, Tolstoy, 123\16
+# Moscow, Tolstoy, 123\16"""
 #     text2 = 'name=Alex;age=20;city=Minsk city;surname=Larkin'
 #     # text3 = '$ 123, price = 12.123 BYN or € 6,03 and 3.14 BYN'
 #     text3 = """$ 123, price = 12.123 BYN or € 6,03 and 3.14"""
@@ -39,7 +49,7 @@ class RegParser:
 # age=22
 #
 # surname=Smith;name=Alex;city=Minsk-city;age=20
-# surname=Smith,name=Alex,city=Minsk-city,age=20"""
+# surname=Smith,name=Alex,city=Minsk-city,age=20
+#  surname=Smith;name=Alex;city=Minsk-city;age=20"""
 #
-#
-#     print(RegParser.find(text4, 2))
+#     print(RegParser.find(text1, 1))

@@ -37,7 +37,6 @@ class RegParser:
         return data
 
 if __name__ == '__main__':
-    # text1 = 'Belarus, Minsk city, Tolstoy str., 8 - 0303 Germany, Berlin City, Gauven, 23 - 1203'
     text1 = """Russia, Moscow City, Tolstoy- 123_456 str., 123 | 16
 russia, Moscow City, Tolstoy str., 123 | 16
 Russia, moscow City, Tolstoy str., 123 | 16
@@ -48,17 +47,14 @@ Moscow, Tolstoy, 123-16
 Moscow, Tolstoy, 123\16
  Moscow, Tolstoy, 123\16
 Moscow, Tolstoy, 123\16"""
-    text2 = 'name=Alex;age=20;city=Minsk city;surname=Larkin'
-    # text3 = '$ 123, price = 12.123 BYN or € 6,03 and 3.14 BYN'
-    text3 = """$ 123, price = 12.123 BYN or € 6,03 and 3.14"""
-    text4 = """age=20;name=Alex;city=Minsk city
+    text2 = """age=20;name=Alex;city=Minsk city
 age=20;name=Alex;city=Minsk city;surname=Smith;age=22
 age=22
 
 surname=Smith;name=Alex;city=Minsk-city;age=20
 surname=Smith,name=Alex,city=Minsk-city,age=20
  surname=Smith;name=Alex;city=Minsk-city;age=20"""
-    text5="""$ 123, price = 12.123 BYN or € 6,03 and 3.14.
+    text3="""$ 123, price = 12.123 BYN or € 6,03 and 3.14.
 1321, $ 213. 21312 $ das 312,32
 BYN 4242,32 $ 23.2 322, BYN 323,32 BYN
 23. BYN 32, BYN   3232,23     BYN 

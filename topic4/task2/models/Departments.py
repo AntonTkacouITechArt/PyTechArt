@@ -10,10 +10,15 @@ class Departments(Base):
     staff_amount = Column(Integer())
     shop_id = Column(ForeignKey('shops.id'))
     shops = relationship(
-        'Shops', cascade='all, delete, delete-orphan'
+        'Shops',
+        cascade='all, delete, delete-orphan',
+        single_parent=True,
+        back_populates="departments",
     )
     items = relationship(
-        'Items', cascade='all, delete, delete-orphan'
+        'Items',
+        cascade='all, delete, delete-orphan',
+        back_populates="departments",
     )
     __table_args__ = (
         CheckConstraint('staff_amount > -1',

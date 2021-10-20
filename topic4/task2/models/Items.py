@@ -11,7 +11,10 @@ class Items(Base):
     price = Column(Numeric(50, 3))
     department_id = Column(ForeignKey('departments.id'))
     departments = relationship(
-        'Departments', cascade='all, delete, delete-orphan'
+        'Departments',
+        cascade='all, delete, delete-orphan',
+        single_parent=True,
+        back_populates='items'
     )
     __table_args__ = (
         CheckConstraint('price > -1', name='items_price_check'),

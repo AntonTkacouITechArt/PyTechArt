@@ -13,5 +13,7 @@ class Shops(Base):
                         name='shops_staff_amount_check'),
     )
     departments = relationship(
-        'Departments', cascade='all, delete, delete-orphan'
+        'Departments',
+        cascade='all, delete, delete-orphan',
+        back_populates='shops',
     )

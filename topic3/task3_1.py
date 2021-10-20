@@ -1,11 +1,10 @@
 import re, typing
 class RegParser:
-    ADDRESS_REGEX = r'(?:^(?:[A-Z][a-z]*, )?(?:[A-Z][a-z]*(?: [Cc]ity)?, )?)[_\w\s-]+(?:, |str., )?(?:\d+\s*[-\/\\,|]\s*\d+)$'
-    CONTACT_REGEX = r'^(?:(?P<age>age=[\d]+;?)|(?P<name>name=[\w\s-]+;?)|(?P<surname>surname=[\w\s-]+;?)|(?P<city>city=[\w\s-]+;?)){1,4}$'
-    # PRICE_REGEX = r'(?:(?<=[$€] )(\d+(?:\.|,\d+)?\d*))|(?:(\d+(?:\.|,\d+)?\d*)(?=[ ]*BYN))'
+    ADDRESS_REGEX = r'(?:^(?:[A-Z][a-z]*, )?(?:[A-Z][a-z]*(?: [Cc]ity)?, )?)[_\w\s-]+(?:, | str., )?(?:\d+\s*[-\/\\,|]\s*\d+)$'
+    # CONTACT_REGEX = r'^(?:(?P<age>age=[\d]+;?)|(?P<name>name=[\w\s-]+;?)|(?P<surname>surname=[\w\s-]+;?)|(?P<city>city=[\w\s-]+;?)){1,4}$'
+    CONTACT_REGEX = r'^(?:(?:(?P<age>age=[\d]+)(?:;)?)|(?:(?:(?P<name>name=[\w\s-]+)(?:;)?))|(?:(?P<surname>surname=[\w\s-]+)(?:;)?)|(?:(?P<city>city=[\w\s-]+)(?:;)?)){1,4}$'
     PRICE_REGEX = r'(?:(?<=[$€] )(?:\d+(?:\.|,\d+)?\d*))|(?:(?:\d+(?:\.|,\d+)?\d*)(?=[ ]*BYN))'
-    # PRICE_REGEX = r'((?:(?<=[$€] )(\d+(?:(?:\.|\,)\d+)?\d*))|(?:(\d+(?:(?:\.|\,)\d+)?\d*)(?=[ ]*BYN)))'
-    # PRICE_REGEX = r'((?:(?<=[$€] )(?:\d+(?:(?:\.|\,)\d+)?\d*))|(?:(?:\d+(?:(?:\.|\,)\d+)?\d*)(?=[ ]*BYN)))'
+
     @classmethod
     def find(cls, text: typing.Optional[str], choice: typing.Optional[int]):
         """Find address, contact, price"""
@@ -32,7 +31,9 @@ class RegParser:
             # data = [
             #     int(num) if '.' not in num else float(num.replace(',', '.'))
             #     for num in x]
-            data = [int(num) if ',' not in num and '.' not in num else float(num.replace(',','.'))  for num in groups_combinations ]
+            data = [int(num) if ',' not in num and '.' not in num
+                    else float(num.replace(',','.'))
+                    for num in groups_combinations ]
         return data
 
 if __name__ == '__main__':
@@ -62,4 +63,4 @@ surname=Smith,name=Alex,city=Minsk-city,age=20
 BYN 4242,32 $ 23.2 322, BYN 323,32 BYN
 23. BYN 32, BYN   3232,23     BYN 
 $  342,323 """
-    print(RegParser.find(text5, 3))
+    print(RegParser.find(text4, 2))

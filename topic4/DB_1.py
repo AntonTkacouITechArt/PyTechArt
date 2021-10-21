@@ -119,35 +119,34 @@ class SQLManager:
                 OFFSET 3;
             """,
             """
-                SELECT Items.name, Shops.name FROM Items
-                INNER JOIN Departments ON Items.department_id = Departments.id
-                INNER JOIN Shops ON Shops.id = Departments.shop_id;
-            """,
+                SELECT Items.name, Departments.id FROM Items
+                INNER JOIN Departments ON Items.department_id = Departments.id;
+            """,#
             """
                 SELECT Items.name, Departments.id FROM Items
                 LEFT JOIN Departments ON Items.department_id = Departments.id
-            """,
+            """,#
             """
                 SELECT Items.name, Departments.id FROM Items
                 RIGHT JOIN Departments ON Items.department_id = Departments.id
-            """,
+            """,#
             """
                 SELECT Items.name, Departments.id FROM Items
                 FULL JOIN Departments ON Items.department_id = Departments.id
-            """,
+            """,#
             """
-                SELECT Items.name, Shops.name FROM Items
-                CROSS JOIN Departments
-                INNER JOIN Shops ON Shops.id = Departments.shop_id;
-            """,
+                SELECT Items.name, Departments.id FROM Items
+                CROSS JOIN Departments;
+            """,#
             """
                 SELECT Shops.name, COUNT(*) as count_goods, SUM(price),
                 MAX(price), MIN(price),
                 AVG(price) FROM Items
                 INNER JOIN Departments ON Departments.id = Items.department_id
                 INNER JOIN Shops ON Shops.id = Departments.shop_id
-                GROUP BY (Shops.name);
-            """,
+                GROUP BY (Shops.name)
+                HAVING count_goods > 1;
+            """,#
             """
                 SELECT Shops.name, ARRAY[i.name, i.description, i.price::text]
                 FROM Shops s

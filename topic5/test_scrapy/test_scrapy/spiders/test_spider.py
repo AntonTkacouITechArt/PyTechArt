@@ -9,7 +9,7 @@ class TestSpiderSpider(scrapy.Spider):
 
     def parse(self, response):
         for url in response.css('.place-list__item-name'):
-            if 'Беларусь' != url.xpath('/text()'):
+            if 'Беларусь' != url.xpath('text()'):
                 yield response.follow(url.xpath('@href').get(),
                                       callback=self.parse_weather)
 

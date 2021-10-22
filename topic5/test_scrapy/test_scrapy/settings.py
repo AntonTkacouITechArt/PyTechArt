@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Scrapy settings for BelarusWeather project
+# Scrapy settings for test_scrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,19 +7,24 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'BelarusWeather'
+BOT_NAME = 'test_scrapy'
 
-SPIDER_MODULES = ['BelarusWeather.spiders']
-NEWSPIDER_MODULE = 'BelarusWeather.spiders'
+SPIDER_MODULES = ['test_scrapy.spiders']
+NEWSPIDER_MODULE = 'test_scrapy.spiders'
 
+FEED_EXPORT_ENCODING = "utf-8"
+FEED_EXPORT_FIELDS = ['city', 'weather']
+
+FEED_FORMAT = "csv"
+FEED_URI = "City_Weather.csv"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'BelarusWeather (+http://yandex.by)'
+#USER_AGENT = 'test_scrapy (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-# ROBOTSTXT_OBEY = True
 ROBOTSTXT_OBEY = False
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -48,13 +51,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'BelarusWeather.middlewares.BelarusweatherSpiderMiddleware': 543,
+#    'test_scrapy.middlewares.TestScrapySpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'BelarusWeather.middlewares.BelarusweatherDownloaderMiddleware': 543,
+#    'test_scrapy.middlewares.TestScrapyDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -66,7 +69,7 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'BelarusWeather.pipelines.BelarusweatherPipeline': 300,
+#    'test_scrapy.pipelines.TestScrapyPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

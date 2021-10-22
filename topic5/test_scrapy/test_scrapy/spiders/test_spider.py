@@ -1,4 +1,5 @@
 import scrapy
+from scrapy.loader import ItemLoader
 from test_scrapy.items import CityWeather
 
 class TestSpiderSpider(scrapy.Spider):
@@ -7,21 +8,15 @@ class TestSpiderSpider(scrapy.Spider):
     start_urls = ['https://yandex.by/pogoda/region/149',]
 
     def parse(self, response):
-        names = response.css('.place-list__item-name::text').extract()
-        links = response.css('.place-list__item-name::attr(href)').extract()
-        data = list(zip(links, names))
-        for col in data:
-            if col[1] != 'Беларусь': 
-                url = 'https://yandex.by' + col[0]
-                name = col[1]
-                yield scrapy.Request(url,callback = self.parse_weather, meta={'name': name})
+        for url in response.css('.place-list__item-name'):
+            if 'Беларусь' != url.xpath('/text()'):
+                yield response.follow(url.xpath('@href').get(),
+                                      callback=self.parse_weather)
 
     def parse_weather(self, response):
-        temperature = response.xpath(
-            '//div[contains(@class, "temp fact__temp")]/span[contains(@class,"temp__value")]/text()').extract()
-        item = CityWeather()
-        item['city'] = response.meta.get('name')
-        item['weather'] = temperature
-        yield item
+        item = ItemLoader(item = CityWeather(), response = response)
+        item.add_xpath('city', """//li[contains(@class, "breadcrumbs__item")]/span[contains(@class, "breadcrumbs__title")]/text()""")
+        item.add_xpath('weather', """//div[contains(@class, "temp fact__temp")]/span[contains(@class,"temp__value")]/text()""")
+        yield item.load_item()
 
 

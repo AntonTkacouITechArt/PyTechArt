@@ -8,10 +8,8 @@ class TestSpiderSpider(scrapy.Spider):
     start_urls = ['https://yandex.by/pogoda/region/149',]
 
     def parse(self, response):
-        for url in response.css('.place-list__item-name'):
-            if 'Беларусь' != url.xpath('text()'):
-                yield response.follow(url.xpath('@href').get(),
-                                      callback=self.parse_weather)
+        return (response.follow(url.xpath('@href').get(), callback=self.parse_weather) 
+        for url in response.css('.place-list__item-name') if 'Беларусь' != url.xpath('text()'))
 
     def parse_weather(self, response):
         item = ItemLoader(item = CityWeather(), response = response)

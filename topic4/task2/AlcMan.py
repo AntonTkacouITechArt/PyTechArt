@@ -178,9 +178,21 @@ class AlchemyManager:
         # TRUNCATE TABLE items CASCADE;
         # '''),
         # }
+        delete_query = [
+            lambda x: x.query(Items).filter(
+                and_(Items.price > 500, Items.description.is_(None))
+            ),
+            lambda x: x.query(Items).filter(
+                Shops.address.is_(None)
+            ),
+            lambda x: x.query(Items).filter(
+                text(
+                    """id IN (SELECT id FROM department
+                    WHERE staff_amount < 225 OR staff_amount > 275);""")
+            ).all()
+        ]
         if choice in range(1, 4):
-            i = self.session.query(Items).filter(and_(Items.price > 500,
-                    Items.description is None)).delete()
+            i = delete_query[choice-1](self.session).delete()
 
             # self.session.delete(i)
             self.session.commit()

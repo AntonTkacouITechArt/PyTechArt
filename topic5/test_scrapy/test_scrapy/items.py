@@ -6,7 +6,7 @@
 import scrapy
 
 def serialize_weather(value):
-    return value[0].replace('-','-')
+    return value[0].replace('−','-')
 
 
 class CityWeather(scrapy.Item):

@@ -15,8 +15,10 @@ class TestSpiderSpider(scrapy.Spider):
 
     def parse_weather(self, response):
         item = ItemLoader(item = CityWeather(), response = response)
-        item.add_xpath('city', """//li[contains(@class, "breadcrumbs__item")]/span[contains(@class, "breadcrumbs__title")]/text()""")
-        item.add_xpath('weather', """//div[contains(@class, "temp fact__temp")]/span[contains(@class,"temp__value")]/text()""")
+        item.add_xpath('city', """//li[contains(@class, "breadcrumbs__item")]
+        /span[contains(@class, "breadcrumbs__title")]/text()""")
+        item.add_xpath('weather', """//div[contains(@class, "temp fact__temp")
+        ]/span[contains(@class,"temp__value")]/text()""")
         yield item.load_item()
 
 

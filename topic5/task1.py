@@ -9,7 +9,7 @@ def func_1(name_currency: typing.Optional[str]) -> typing.Optional[float]:
     try:
         response = requests.get(
             url=f"""https://www.nbrb.by/api/exrates/rates/{name_currency}""",
-            params={ 'parammode': 2, 'periodicity': 0,})
+            params={'parammode': 2, 'periodicity': 0})
         response.raise_for_status()
         data = response.json()
         if data['Cur_OfficialRate']:
@@ -20,10 +20,6 @@ def func_1(name_currency: typing.Optional[str]) -> typing.Optional[float]:
         print(f'HTTP error occurred: {http_err}')
     except Exception as err:
         print(f'Other error occurred: {err}')
-
-
-def func_2():
-    pass
 
 
 if __name__ == '__main__':

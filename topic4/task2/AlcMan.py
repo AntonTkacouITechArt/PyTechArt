@@ -1,10 +1,11 @@
 from sqlalchemy import Column, MetaData, Integer, String, Text, ForeignKey, \
-    update, insert, text, create_engine, and_, or_
+    update, insert, text, and_, or_
 from sqlalchemy.orm import Session, sessionmaker
 from models.Items import Items
 from models.Shops import Shops
 from models.Departments import Departments
 from base import Base
+from sqlalchemy.future import create_engine
 import typing
 
 
@@ -183,17 +184,21 @@ class AlchemyManager:
                 and_(Items.price > 500, Items.description.is_(None))
             ),
             lambda x: x.query(Items).filter(
-                Shops.address.is_(None)
+                # Shops.address.is_(None)
+                and_(
+                Items.department_id == Departments.id,
+                Departments.shop_id == Shops.id,
+                Shops.address.is_(None),)
             ),
             lambda x: x.query(Items).filter(
-                text(
-                    """id IN (SELECT id FROM department
-                    WHERE staff_amount < 225 OR staff_amount > 275);""")
-            ).all()
+            Items.department_id == Departments.id,
+            and_(Departments.staff_amount < 225,
+                 Departments.staff_amount > 275),
+            ),
         ]
         if choice in range(1, 4):
-            i = delete_query[choice-1](self.session).delete()
-
+            i = delete_query[choice-1](self.session).delete(synchronize_session=False)
+            # self.session.delete(delete_query)
             # self.session.delete(i)
             self.session.commit()
 

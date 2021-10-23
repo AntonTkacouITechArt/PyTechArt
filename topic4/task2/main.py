@@ -9,7 +9,7 @@ if __name__ == '__main__':
     # m.create_table()
     # m.insert_data()
     # m.drop_tables()
-    m.delete_data(3)
+    # m.delete_data(4)
     # print(m.select_data(5))
 
     # f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',

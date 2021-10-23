@@ -23,18 +23,18 @@ class AlchemyManager:
         self.db_type = db_type
 
         # ENGINE
-        # self.engine = sqlalchemy.create_engine(
-        #     f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
-        #     echo=True,
-        # )
+        self.engine = create_engine(
+            f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
+            echo=True
+        )
         # self.engine = sqlalchemy.create_engine(
         #     f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
         #     echo=True,
         # )
 
-        self.engine = create_engine(
-            f'sqlite:///test.db')
-        self.session = Session(bind=self.engine)
+        # self.engine = create_engine(
+        #     f'sqlite:///test.db')
+        self.session = Session(bind=self.engine, future=True)
 
     # CREATE METHODS
     def create_table(self):
@@ -42,6 +42,7 @@ class AlchemyManager:
 
     # INSERT METHODS
     def insert_data(self):
+        """Insert data into DB"""
         data_insert = [
             Shops(
                 name='Auchan',
@@ -98,8 +99,8 @@ class AlchemyManager:
                 department_id=3,
             ),
         ]
-        self.session.add_all(data_insert)
-        self.session.commit()
+        with self.session.begin() as session:
+            session.session.add_all(data_insert)
 
     # SELECT METHODS
     def select_data(self, choice: typing.Optional[int]):
@@ -158,51 +159,35 @@ class AlchemyManager:
 
     # DELETE METHODS
     def delete_data(self, choice: typing.Optional[int]):
-        # eval with string, idea to use dict
-        # how to use model !!!!
-        # rewrite query 4
-        # query_dict = {
-        #     1: self.session.query(Items).filter(
-        #         and_(Items.price > 500, Items.description is None)
-        #     ).all(),
-        #     2: self.session.query(Items).filter(
-        #         Items.departments.shops.address is None
-        #     ).all(),
-        #     3: self.session.query(Items).filter(
-        #         text(
-        #             """id IN (SELECT id FROM department
-        #             WHERE staff_amount < 225 OR staff_amount > 275);""")
-        #     ).all(),
-        #     4: self.session.execute('''
-        # TRUNCATE TABLE shops CASCADE;
-        # TRUNCATE TABLE departments CASCADE;
-        # TRUNCATE TABLE items CASCADE;
-        # '''),
-        # }
+        """Delete data form DB in tables Items, Departments, Shops"""
         delete_query = [
-            lambda x: x.query(Items).filter(
+            lambda x: x.query(Items).where(
                 and_(Items.price > 500, Items.description.is_(None))
             ),
-            lambda x: x.query(Items).filter(
-                # Shops.address.is_(None)
+            lambda x: x.query(Items).where(
+                and_(
+                        Departments.id == Items.department_id,
+                        Shops.id == Departments.shop_id,
+                        Shops.address.is_(None)
+                )
+            ),
+            lambda x: x.query(Items).where(
                 and_(
                 Items.department_id == Departments.id,
-                Departments.shop_id == Shops.id,
-                Shops.address.is_(None),)
+                or_(Departments.staff_amount < 225,
+                Departments.staff_amount > 275)
+                )
             ),
-            lambda x: x.query(Items).filter(
-            Items.department_id == Departments.id,
-            and_(Departments.staff_amount < 225,
-                 Departments.staff_amount > 275),
-            ),
+            # lambda x: x.execute(table.delete()) for table in Base.metadata.sorted_tables
         ]
         if choice in range(1, 4):
-            i = delete_query[choice-1](self.session).delete(synchronize_session=False)
-            # self.session.delete(delete_query)
-            # self.session.delete(i)
-            self.session.commit()
+            with self.session.begin() as session:
+                delete_query[choice - 1](self.session).delete(
+                    synchronize_session=False
+                )
 
     def drop_tables(self):
+        """Drop tables"""
         Base.metadata.drop_all(bind=self.engine)
 
 

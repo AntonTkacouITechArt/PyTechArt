@@ -13,8 +13,7 @@ class TestSpiderSpider(scrapy.Spider):
             response.follow(
                 url.xpath('@href').get(),
                 callback=self.parse_weather
-            ) for url in response.css('.place-list__item-name')
-            if 'Беларусь' != url.xpath('text()')
+            ) for url in response.css('.place-list__item-name') if 'Беларусь' != url.xpath('text()')
         )
 
     def parse_weather(self, response):

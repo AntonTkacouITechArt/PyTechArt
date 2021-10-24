@@ -6,6 +6,7 @@ from models.Shops import Shops
 from models.Departments import Departments
 from base import Base
 from sqlalchemy.future import create_engine
+from sqlalchemy.sql import func
 import typing
 
 
@@ -25,7 +26,7 @@ class AlchemyManager:
         # ENGINE
         self.engine = create_engine(
             f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
-            echo=True
+            echo=False
         )
         # self.engine = sqlalchemy.create_engine(
         #     f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
@@ -38,6 +39,7 @@ class AlchemyManager:
 
     # CREATE METHODS
     def create_table(self):
+        """Create tables"""
         Base.metadata.create_all(self.engine)
 
     # INSERT METHODS
@@ -107,55 +109,82 @@ class AlchemyManager:
         # eval with string, idea to use dict
         data = None
         query_dict = [
-            self.session.query(Items).filter(
-                text("description is not NULL")).all(),
-            self.session.query(Departments.sphere).distinct(
-                Departments.sphere).filter(Departments.staff_amount > 200
-                                           ).all(),
-        #     # self.session.query(Shops.address).from_statement(
-        #     #     text("SELECT * FROM Shops WHERE name ~ '^(I|i)';")
-        #     # ).all(),
-            self.session.query(Items.name).join(
+            #1
+            lambda x: x.query(Items).filter(
+                Items.description.is_not(None)
+            ).all(),
+            #2
+            lambda x: [y.sphere for y in x.query(Departments).filter(
+                Departments.staff_amount > 200).distinct(Departments.sphere)],
+            #3
+            lambda x: [y.address for y in x.query(Shops).filter(
+                Shops.name.ilike('i%'))],
+            #4
+            lambda x: [y for y in x.query(Items).join(
                 Departments, Departments.id == Items.department_id).filter(
                 Departments.sphere == 'Furniture'
+            )],
+            #5
+            lambda x: [y for y in x.query(Shops).join(
+                Departments, Departments.shop_id == Shops.id
+            ).join(
+                Items, Departments.id == Items.department_id
+            ).filter(
+                Items.description.is_not(None))],
+            #6
+            lambda x: x.query(Items, Departments, Shops).outerjoin(
+                Departments, Departments.id == Items.department_id
+            ).outerjoin(
+                Shops, Shops.id == Departments.shop_id
             ).all(),
-        #     self.session.query(
-        #         Shops.name).join(
-        #         Departments, Departments.shop_id == Shops.id).join(
-        #         Items, Departments.id == Items.department_id).filter(
-        #         Items.description is not None).all(),
-        #     self.session.query(Items, Departments, Shops).from_statement(
-        #         text("""
-        #     SELECT
-        #         Items.name, description, price,
-        #         'department_' || sphere AS dep_sphere,
-        #         'department_' || Departments.staff_amount AS dep_staff,
-        #         'shop_' || Shops.name AS shop_name,
-        #         'shop_' || address AS shop_addr,
-        #         'shop_' || Shops.staff_amount as shop_staff
-        #     FROM Items
-        #     INNER JOIN Departments ON Departments.id = Items.department_id
-        #     INNER JOIN Shops ON Shops.id = Departments.shop_id;
-        # """)
-        #     ).all(),
-            self.session.query(Items.id).order_by(Items.name).limit(
-                2).offset(3).all(),
-            self.session.query(Items.name, Departments.id).join(
-                Departments, Departments.id == Items.department_id).all(),
-        #     self.session.query(Items.name, Departments.id).outerjoin(
-        #         Departments, Departments.id == Items.department_id).all(),
-        #     # 10: self.session.query()
+            #7
+            lambda x: x.query(Items).order_by(
+                Items.name).limit(2).offset(3).all(),
+            #8
+            lambda x: x.query(Items, Departments).join(
+                Departments, Departments.id == Items.department_id
+            ).all(),
+            #9
+            lambda x: x.query(Items, Departments).outerjoin(
+                Departments, Departments.id == Items.department_id
+            ).all(),
+            #10
+            lambda x: x.query(Items, Departments).join(
+                Items, Items.department_id == Departments.id,
+                isouter=True
+            ).all(),
+            #11
+            lambda x: x.query(Items, Departments).join(
+                Departments, full=True
+            ).all(),
+            #12
+            lambda x: x.query(Items, Departments).all(),
+            #13
+            lambda x: self.session.query(
+                # Shops.name,
+                func.count('*').label('count_goods'),
+                func.sum(Items.price),
+                func.max(Items.price),
+                func.min(Items.price),
+                func.avg(Items.price),
+            ).join(
+                Departments, Departments.id == Items.department_id
+            ).join(
+                Shops, Shops.id == Departments.shop_id
+            ).group_by(Shops.name).having(func.count('*') > 1).all(),
+            #14
+            lambda x: [y for y in x.query(Shops, x.query(Items).join(
+                Departments
+                ).join(Shops)
+                )
+                ]
         ]
         if choice in range(1, 15):
-            data = query_dict[choice - 1]
+            data = query_dict[choice - 1](self.session)
+            print(data)
             for row in data:
-                print(row)
-            # data = self.session.query(Items).filter(
-            #         text("description is not NULL")).all()
-            # for row in data:
-            #     print("Name: ", row.name, "Address:", row.description, "Email:",
-            #           row.price)
-        return data
+                print(row.name)
+        return query_dict[choice - 1](self.session)
 
     # DELETE METHODS
     def delete_data(self, choice: typing.Optional[int]):
@@ -173,11 +202,14 @@ class AlchemyManager:
             ),
             lambda x: x.query(Items).where(
                 and_(
-                Items.department_id == Departments.id,
-                or_(Departments.staff_amount < 225,
-                Departments.staff_amount > 275)
+                    Items.department_id == Departments.id,
+                    or_(
+                        Departments.staff_amount < 225,
+                        Departments.staff_amount > 275
+                    )
                 )
             ),
+            # ? how to truncate table
             # lambda x: x.execute(table.delete()) for table in Base.metadata.sorted_tables
         ]
         if choice in range(1, 4):
@@ -186,6 +218,7 @@ class AlchemyManager:
                     synchronize_session=False
                 )
 
+    # DROP METHOD
     def drop_tables(self):
         """Drop tables"""
         Base.metadata.drop_all(bind=self.engine)

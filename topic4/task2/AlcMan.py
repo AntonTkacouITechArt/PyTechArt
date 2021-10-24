@@ -131,9 +131,9 @@ class AlchemyManager:
             ).filter(
                 Items.description.is_not(None))],
             #6
-            lambda x: x.query(Items, Departments, Shops).outerjoin(
+            lambda x: x.query(Items, Departments, Shops).join(
                 Departments, Departments.id == Items.department_id
-            ).outerjoin(
+            ).join(
                 Shops, Shops.id == Departments.shop_id
             ).all(),
             #7

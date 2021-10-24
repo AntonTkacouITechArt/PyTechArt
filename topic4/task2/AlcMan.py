@@ -106,8 +106,7 @@ class AlchemyManager:
 
     # SELECT METHODS
     def select_data(self, choice: typing.Optional[int]):
-        # eval with string, idea to use dict
-        data = None
+        """Select DB"""
         query_dict = [
             #1
             lambda x: x.query(Items).filter(
@@ -210,12 +209,12 @@ class AlchemyManager:
                     )
                 )
             ),
-            # ? how to truncate table
-            # lambda x: x.execute(table.delete()) for table in Base.metadata.sorted_tables
+            # lambda x: x.query(Shops, Departments, Items)
+            lambda x: x.query(Items, Departments, Shops)
         ]
-        if choice in range(1, 4):
+        if choice in range(1, 5):
             with self.session.begin() as session:
-                delete_query[choice - 1](self.session).delete(
+                delete_query[choice - 1](session.session).delete(
                     synchronize_session=False
                 )
 
@@ -223,6 +222,3 @@ class AlchemyManager:
     def drop_tables(self):
         """Drop tables"""
         Base.metadata.drop_all(bind=self.engine)
-
-
-

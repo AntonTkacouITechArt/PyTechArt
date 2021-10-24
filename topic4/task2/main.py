@@ -9,7 +9,7 @@ if __name__ == '__main__':
     # m.create_table()
     # m.insert_data()
     # m.select_data(14)
-    # m.delete_data(4)
+    m.delete_data(4)
     # m.drop_tables()
 
 

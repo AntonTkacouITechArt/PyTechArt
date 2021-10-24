@@ -116,20 +116,20 @@ class AlchemyManager:
             lambda x: [y.sphere for y in x.query(Departments).filter(
                 Departments.staff_amount > 200).distinct(Departments.sphere)],
             #3
-            lambda x: [y.address for y in x.query(Shops).filter(
-                Shops.name.ilike('i%'))],
+            lambda x: x.query(Shops).filter(
+                Shops.name.ilike('i%')).all(),
             #4
-            lambda x: [y for y in x.query(Items).join(
+            lambda x: x.query(Items).join(
                 Departments, Departments.id == Items.department_id).filter(
                 Departments.sphere == 'Furniture'
-            )],
+            ).all(),
             #5
-            lambda x: [y for y in x.query(Shops).join(
+            lambda x: x.query(Shops).join(
                 Departments, Departments.shop_id == Shops.id
             ).join(
                 Items, Departments.id == Items.department_id
             ).filter(
-                Items.description.is_not(None))],
+                Items.description.is_not(None)).all(),
             #6
             lambda x: x.query(Items, Departments, Shops).join(
                 Departments, Departments.id == Items.department_id

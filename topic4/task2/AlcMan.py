@@ -7,6 +7,7 @@ from models.Departments import Departments
 from base import Base
 from sqlalchemy.future import create_engine
 from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import array
 import typing
 
 
@@ -26,15 +27,14 @@ class AlchemyManager:
         # ENGINE
         self.engine = create_engine(
             f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
-            echo=False
+            echo=True
         )
         # self.engine = sqlalchemy.create_engine(
         #     f'{self.db_type}+{self.db_lib}://{self.login}:{self.password}@{self.host}/{self.db_name}',
         #     echo=True,
         # )
 
-        # self.engine = create_engine(
-        #     f'sqlite:///test.db')
+        # self.engine = create_engine(f'sqlite:///test.db')
         self.session = Session(bind=self.engine, future=True)
 
     # CREATE METHODS
@@ -160,8 +160,8 @@ class AlchemyManager:
             #12
             lambda x: x.query(Items, Departments).all(),
             #13
-            lambda x: self.session.query(
-                # Shops.name,
+            lambda x: x.query(
+                Shops.name,
                 func.count('*').label('count_goods'),
                 func.sum(Items.price),
                 func.max(Items.price),
@@ -173,18 +173,19 @@ class AlchemyManager:
                 Shops, Shops.id == Departments.shop_id
             ).group_by(Shops.name).having(func.count('*') > 1).all(),
             #14
-            lambda x: [y for y in x.query(Shops, x.query(Items).join(
-                Departments
-                ).join(Shops)
+            lambda x: x.query(
+                Shops.name,
+                array(
+                    [Items.name, Items.description, Items.price.cast(String)]
                 )
-                ]
+            ).join(
+                Departments, Departments.shop_id == Shops.id
+            ).join(
+                Items, Items.department_id == Departments.id).all()
         ]
         if choice in range(1, 15):
-            data = query_dict[choice - 1](self.session)
-            print(data)
-            for row in data:
-                print(row.name)
-        return query_dict[choice - 1](self.session)
+            return query_dict[choice - 1](self.session)
+
 
     # DELETE METHODS
     def delete_data(self, choice: typing.Optional[int]):

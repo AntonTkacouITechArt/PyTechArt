@@ -8,8 +8,9 @@ if __name__ == '__main__':
                        password='1111', db_name='test')
     # m.create_table()
     # m.insert_data()
-    # m.drop_tables()
+    # m.select_data(14)
     # m.delete_data(4)
-    m.select_data(4)
+    # m.drop_tables()
 
-    # f'postgresql+psycopg2://postgres:1111@127.0.0.1/test',
+
+

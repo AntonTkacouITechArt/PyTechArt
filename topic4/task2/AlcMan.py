@@ -209,14 +209,16 @@ class AlchemyManager:
                     )
                 )
             ),
-            # lambda x: x.query(Shops, Departments, Items)
-            lambda x: x.query(Items, Departments, Shops)
+            lambda x: [x.query(y).delete() for y in [Items, Departments, Shops]]
         ]
         if choice in range(1, 5):
             with self.session.begin() as session:
-                delete_query[choice - 1](session.session).delete(
-                    synchronize_session=False
-                )
+                if choice != 4:
+                    delete_query[choice - 1](session.session).delete(
+                        synchronize_session=False
+                    )
+                else:
+                    delete_query[choice - 1](session.session)
 
     # DROP METHOD
     def drop_tables(self):

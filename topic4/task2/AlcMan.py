@@ -185,7 +185,6 @@ class AlchemyManager:
         if choice in range(1, 15):
             return query_dict[choice - 1](self.session)
 
-
     # DELETE METHODS
     def delete_data(self, choice: typing.Optional[int]):
         """Delete data form DB in tables Items, Departments, Shops"""
@@ -209,7 +208,8 @@ class AlchemyManager:
                     )
                 )
             ),
-            lambda x: [x.query(y).delete() for y in [Items, Departments, Shops]]
+            lambda x: [x.query(y).delete() for y in [
+                Items, Departments, Shops]]
         ]
         if choice in range(1, 5):
             with self.session.begin() as session:

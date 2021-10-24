@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey, Numeric, \
     CheckConstraint
 from sqlalchemy.orm import relationship
 
+
 class Items(Base):
     __tablename__ = 'items'
     id = Column(Integer(), primary_key=True, autoincrement=True)

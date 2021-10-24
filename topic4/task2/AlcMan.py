@@ -116,7 +116,7 @@ class AlchemyManager:
             lambda x: [y.sphere for y in x.query(Departments).filter(
                 Departments.staff_amount > 200).distinct(Departments.sphere)],
             #3
-            lambda x: x.query(Shops).filter(
+            lambda x: x.query(Shops.address).filter(
                 Shops.name.ilike('i%')).all(),
             #4
             lambda x: x.query(Items).join(

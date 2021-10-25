@@ -3,13 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>INDEX</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>INDEX</h1>
-    {% if name %}
-        <h1>Hello, {{ name }}</h1>
-    {% else %}
-        <h1>Hello, world!</h1>
-    {% endif %}
+    <div class="main">
+        <div class="content">
+            <h1 class="currency_title">Converter currency</h1>
+            <div class="form_currency">
+                <form class="form_cur" action="">
+                    <div class="selects_forms">
+                        <div class="options">
+                        <select>
+                            <option>BYN</option>
+                            <option>USD</option>
+                            <option>RUB</option>
+                        </select>
+                        <button>
+                            <img id="img_con" src="/static/convert.png" alt="convert image">
+                        </button>
+                        <select>
+                            <option>BYN</option>
+                            <option>USD</option>
+                            <option>RUB</option>
+                        </select>
+                        </div>
+                        <div class="change_currency">
+                            <input type="text" size="3">
+                            <input type="text" size="3">
+                        </div>
+                        <div class="btn_convert">
+                            <button>Convert</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <form method="POST">
         {% csrf_token %}
         <div class="select_shop">
-            <select name="" id="">
+            <select>
                 {% for shop in shops %}
                     <option value="{{ shop.id }}">{{ shop.name }}</option>
                 {% endfor %}

@@ -26,8 +26,8 @@ class ShopDetailView(DetailView):
 class ItemCreateView(CreateView):
     model = Item
     template_name = 'item_new.html'
-    fields = ['name', 'description', 'is_sold', 'comments']
-    # 'price',
+    fields = ['name', 'description', 'price', 'is_sold', 'comments']
+    #
 
 
 class ItemUpdateView(UpdateView):

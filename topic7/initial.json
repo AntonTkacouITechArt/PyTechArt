@@ -1,0 +1,215 @@
+[
+{
+    "model": "Fins.shop",
+    "pk": 1,
+    "fields": {
+        "name": "IKEA",
+        "address": "Sweden, Stolcholm",
+        "staff_amount": 1000
+    }
+},
+{
+    "model": "Fins.shop",
+    "pk": 2,
+    "fields": {
+        "name": "ITechArt",
+        "address": "Belarus, Misnk",
+        "staff_amount": 500
+    }
+},
+{
+    "model": "Fins.shop",
+    "pk": 3,
+    "fields": {
+        "name": "Tesla",
+        "address": "USA, Los Angeles",
+        "staff_amount": 5000
+    }
+},
+{
+    "model": "Fins.department",
+    "pk": 1,
+    "fields": {
+        "sphere": "Table",
+        "staff_amount": 200,
+        "shop": 1
+    }
+},
+{
+    "model": "Fins.department",
+    "pk": 2,
+    "fields": {
+        "sphere": "Chair",
+        "staff_amount": 800,
+        "shop": 1
+    }
+},
+{
+    "model": "Fins.department",
+    "pk": 3,
+    "fields": {
+        "sphere": "IPO",
+        "staff_amount": 200,
+        "shop": 2
+    }
+},
+{
+    "model": "Fins.department",
+    "pk": 4,
+    "fields": {
+        "sphere": "SOFT",
+        "staff_amount": 300,
+        "shop": 2
+    }
+},
+{
+    "model": "Fins.department",
+    "pk": 5,
+    "fields": {
+        "sphere": "Car",
+        "staff_amount": 3000,
+        "shop": 3
+    }
+},
+{
+    "model": "Fins.department",
+    "pk": 6,
+    "fields": {
+        "sphere": "SOFT",
+        "staff_amount": 2000,
+        "shop": 3
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 1,
+    "fields": {
+        "name": "Black table",
+        "description": "black table",
+        "is_sold": false,
+        "comments": "[]",
+        "department": 1
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 2,
+    "fields": {
+        "name": "White table",
+        "description": "white table",
+        "is_sold": false,
+        "comments": "[\"1) dasdas nlknl\"]",
+        "department": 1
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 3,
+    "fields": {
+        "name": "Red table",
+        "description": "red table",
+        "is_sold": false,
+        "comments": "[\"red table is not bad\"]",
+        "department": 1
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 4,
+    "fields": {
+        "name": "Classpass",
+        "description": "fitness",
+        "is_sold": false,
+        "comments": "[\"do sport now\"]",
+        "department": 3
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 5,
+    "fields": {
+        "name": "Dialog",
+        "description": "Health",
+        "is_sold": false,
+        "comments": "[\"nice app\"]",
+        "department": 3
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 6,
+    "fields": {
+        "name": "MakeItern",
+        "description": "education",
+        "is_sold": false,
+        "comments": "[\"nice programm\"]",
+        "department": 3
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 7,
+    "fields": {
+        "name": "Medical soft",
+        "description": "health soft",
+        "is_sold": false,
+        "comments": "[\"care you healt\"]",
+        "department": 4
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 8,
+    "fields": {
+        "name": "Model X",
+        "description": "car fast",
+        "is_sold": false,
+        "comments": "[]",
+        "department": 5
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 9,
+    "fields": {
+        "name": "Model XS",
+        "description": "car big",
+        "is_sold": false,
+        "comments": "[\"car good car\"]",
+        "department": 5
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 10,
+    "fields": {
+        "name": "Model L",
+        "description": "car little",
+        "is_sold": false,
+        "comments": "[\"fine\"]",
+        "department": 5
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 11,
+    "fields": {
+        "name": "AI eyas",
+        "description": "Robot with AI",
+        "is_sold": false,
+        "comments": "[]",
+        "department": 6
+    }
+},
+{
+    "model": "Fins.item",
+    "pk": 12,
+    "fields": {
+        "name": "OpenCV",
+        "description": "python ML",
+        "is_sold": false,
+        "comments": "[]",
+        "department": 6
+    }
+}
+]

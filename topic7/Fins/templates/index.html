@@ -1,20 +1,31 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
 </head>
 <body>
-    <form method="POST">
+    <div class="content">
+        <form method="POST" id="data" name="company">
         {% csrf_token %}
         <div class="select_shop">
-            <select>
+            <select form="data" name="value" onchange="update(event.target, 'val')">
                 {% for shop in shops %}
                     <option value="{{ shop.id }}">{{ shop.name }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" value="Open" class="btn_select_shop">
+            <input type="submit" value="Open" form="data" class="btn_select_shop">
         </div>
     </form>
+    </div>
 </body>
+<script>
+        function update(e, targetId) {
+      let target = document.getElementById(targetId);
+      let ob = e.options[e.selectedIndex]
+      target.value = ob.value
+    }
+</script>
 </html>

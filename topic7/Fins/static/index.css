@@ -1,0 +1,9 @@
+.content{
+    text-align: center;
+    width:10%;
+    height:20%;
+    margin: auto;
+    margin-top: 20% ;
+    border: 8px solid red;
+    border-radius: 15px;
+}

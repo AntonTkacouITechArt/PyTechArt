@@ -1,51 +1,69 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ shop.name }}</title>
+    <link rel="stylesheet" href="{% static 'shop_detail.css' %}">
 </head>
 <body>
-    <h1>{{ shop.name }}</h1>
-    <p>{{ shop.description }}</p>
-    <table>
-        {% if shop.department_relate %}
-            {% for dep in shop.department_relate %}
-                <tr>
-                    <td colspan="4">Department id:{{ dep.id }}</td>
-                </tr>
-                <tr>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Price</td>
-                    <td>Comments</td>
-                </tr>
-                <tr>
-                {% if dep.item_relate %}
-                    {% for item in dep.item_relate %}
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.description }}</td>
-                        <td>{{ item.price }}</td>
-                        {% comment %}
-                        How to dispaly array in html
-                        {% endcomment %}
-                        <td>
-                        {% if item.comments %}
-                            {% for comment in item.comments %}
-                                <p>{{ comment }}</p>
-                            {% endfor %}
-                        {% else %}
-                            <p>No comments</p>
-                        {% endif %}
+    <div class="container">
+        <div class="title">
+            <h1>{{ shop.name }}</h1>
+            <p>{{ shop.address }}</p>
+        </div>
+        <div class="info">
+            <table>
+            {% if shop.department_relate %}
+                {% for dep in shop.department_relate.all %}
+                    <tr>
+                        <td colspan="4">
+                            Department sphere: {{ dep.sphere }}
+                            <a href="{{dep.id}}/new/">
+                                <input type="button" value="Create new item">
+                            </a>
                         </td>
-                    {% endfor %}
-                {% else %}
-                    <p>No items</p>
-                {% endif %}
-                </tr>
-            {% endfor %}
-        {% else %}
-            <p>No departments</p>
-        {% endif %}
-    </table>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td>Price</td>
+                        <td>Comments</td>
+                    </tr>
+                    {% if dep.item_relate %}
+                            {% for item in dep.item_relate.all %}
+                                <tr>
+                                <td>
+                                    {{ item.name }}
+                                    <a href="{{dep.id}}/{{item.id}}/update">
+                                        <input type="button" value="Update item">
+                                    </a>
+                                    <a href="{{dep.id}}/{{item.id}}/delete">
+                                        <input type="button" value="Delete item">
+                                    </a>
+                                </td>
+                                <td>{{ item.description }}</td>
+                                <td>{{ item.price }}</td>
+                                <td>
+                                {% if item.comments %}
+                                    {% for comment in item.comments %}
+                                        <p>{{ comment }}</p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No comments</p>
+                                {% endif %}
+                                </td>
+                                </tr>
+                            {% endfor %}
+                    {% else %}
+                        <p>No items</p>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No departments</p>
+            {% endif %}
+        </table>
+    </div>
+    </div>
 </body>
 </html>

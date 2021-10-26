@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 
@@ -41,9 +41,10 @@ class Department(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    price = models.DecimalField(max_digits=8, decimal_places=2),
+    price = models.DecimalField(max_digits=8, decimal_places=2, validators = [MinValueValidator(0.00)]),
     is_sold = models.BooleanField(default=False)
-    comments = ArrayField(base_field=models.CharField(max_length=200))
+    comments = ArrayField(base_field=models.CharField(max_length=200),
+                          null=True, blank=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
@@ -52,16 +53,19 @@ class Item(models.Model):
     )
 
     def __str__(self):
-        return f"""id:{self.id} description:{self.description} 
+        return f"""id:{self.id} description:{self.description}
         price:{self.price} is_sold:{self.is_sold} department:{self.department}"""
+    #
+    # def get_absolute_url(self):
+    #     return reverse('so')
 
     class Meta:
         verbose_name = 'Item'
         verbose_name_plural = 'Items'
-        ordering = ['id']
-        constraints = [
-            models.CheckConstraint(
-                check=models.Q('price__gte' == 0),
-                name='price_CK',
-            )
-        ]
+        ordering = ['id',]
+        # constraints = [
+        #     models.CheckConstraint(
+        #         check=models.Q('price__gte' == 0),
+        #         name='price_CK',
+        #     ),
+        # ]

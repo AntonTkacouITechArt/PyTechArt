@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item detail</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ item.name }}</h1>
+        <p>{{ item.description }}</p>
+        <p>{{ item.price }}</p>
+        <p>{{ item.is_sold }}</p>
+        {% if item.comments %}
+            {% for comment in item.comments  %}
+                <p>{{ comment }}</p>
+            {% endfor %}
+        {% else %}
+            <p>No comments</p>
+        {% endif %}
+        <p>{{ item.department }}</p>
+    </div>
+</body>
+</html>

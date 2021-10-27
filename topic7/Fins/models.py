@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from django.core.validators import MinValueValidator
-
-# Create your models here.
+from django.urls import reverse
 
 
 class Shop(models.Model):
@@ -17,6 +15,9 @@ class Shop(models.Model):
         verbose_name = 'Shop'
         verbose_name_plural = 'Shops'
         ordering = ['id']
+
+    def get_absolute_url(self):
+        return reverse('shop_detail', kwargs={'shop_pk': self.id})
 
 
 class Department(models.Model):
@@ -62,7 +63,7 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Item'
         verbose_name_plural = 'Items'
-        ordering = ['id',]
+        ordering = ['id', ]
         # constraints = [
         #     models.CheckConstraint(
         #         check=models.Q('price__gte' == 0),

@@ -55,9 +55,9 @@ class Item(models.Model):
     def __str__(self):
         return f"""id:{self.id} description:{self.description}
         price:{self.price} is_sold:{self.is_sold} department:{self.department}"""
-    #
-    # def get_absolute_url(self):
-    #     return reverse('so')
+
+    def get_absolute_url(self):
+        return reverse('so')
 
     class Meta:
         verbose_name = 'Item'

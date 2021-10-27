@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>INDEX</title>
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
@@ -37,9 +37,9 @@
                             </select>
                         </div>
                         <div class="change_currency">
-                            <input type="number"  min="0"  max="100000000" step=".01" name="cur_val_1"
+                            <input type="number"  min="0"  max="1000000" step=".01" name="cur_val_1"
                                 value="{{ data['cur_val_1'] }}">
-                            <input type="number" min="0" max="100000000" name="cur_val_2"
+                            <input type="number" min="0" max="1000000" step=".01" name="cur_val_2"
                                    disabled value="{{ data['cur_val_2'] }}">
                         </div>
                         <div class="button_container">

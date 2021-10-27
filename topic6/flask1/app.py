@@ -62,15 +62,15 @@ def get_data_from_form(data_currency):
 def foreign_exchange(currency_name: typing.Optional[str],
                      currency_value: typing.Optional[float]) -> float:
     response = get_json_currency(currency_name)
-    return currency_value * float(response['Cur_OfficialRate']) / \
-           float(response['Cur_Scale'])
+    return currency_value * float(response['Cur_OfficialRate']) / float(
+        response['Cur_Scale'])
 
 
 def byn_exchange(currency_name: typing.Optional[str],
                  currency_valueBYN: typing.Optional[float]) -> float:
     response = get_json_currency(currency_name)
-    return currency_valueBYN * float(response['Cur_Scale']) / \
-           float(response['Cur_OfficialRate'])
+    return currency_valueBYN * float(response['Cur_Scale']) / float(
+        response['Cur_OfficialRate'])
 
 
 def get_json_currency(currency_name: typing.Optional[str]):

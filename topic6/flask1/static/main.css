@@ -42,6 +42,8 @@ body{
     margin-bottom:20px;
 }
 .change_currency{
+    display: flex;
     margin-bottom:20px;
+    justify-content: space-between;
 }
 

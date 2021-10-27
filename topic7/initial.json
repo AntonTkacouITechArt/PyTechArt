@@ -1,11 +1,706 @@
 [
 {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2021-10-27T07:50:17.499Z",
+        "user": 1,
+        "content_type": 7,
+        "object_id": "1",
+        "object_repr": "1IKEA with staff 100",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2021-10-27T07:50:31.457Z",
+        "user": 1,
+        "content_type": 7,
+        "object_id": "2",
+        "object_repr": "2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2021-10-27T07:50:42.424Z",
+        "user": 1,
+        "content_type": 7,
+        "object_id": "3",
+        "object_repr": "3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2021-10-27T07:51:00.189Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "1-Table-1IKEA with staff 100",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2021-10-27T07:51:12.565Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "2-Chair-1IKEA with staff 100",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2021-10-27T07:51:25.798Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "3-IPO-2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2021-10-27T07:51:37.422Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "4-SOFT-2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2021-10-27T07:51:51.510Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "5-Car-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2021-10-27T07:52:01.622Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "6",
+        "object_repr": "6-SOFT-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2021-10-27T07:52:32.459Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "1",
+        "object_repr": "id:1 description:Black table\n        price:100 is_sold:False department:1-Table-1IKEA with staff 100",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2021-10-27T07:53:12.650Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "2",
+        "object_repr": "id:2 description:White table\n        price:120 is_sold:False department:1-Table-1IKEA with staff 100",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2021-10-27T07:53:30.335Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "id:3 description:Red table\n        price:200 is_sold:False department:1-Table-1IKEA with staff 100",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2021-10-27T07:53:59.628Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "id:4 description:fitness\n        price:1000 is_sold:False department:3-IPO-2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2021-10-27T07:54:21.989Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "5",
+        "object_repr": "id:5 description:Health\n        price:5000 is_sold:False department:3-IPO-2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2021-10-27T07:54:42.805Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "id:6 description:education\n        price:900 is_sold:False department:3-IPO-2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2021-10-27T07:55:10.216Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "7",
+        "object_repr": "id:7 description:health soft\n        price:3000 is_sold:False department:4-SOFT-2ITechArt with staff 500",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2021-10-27T07:55:32.284Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "id:8 description:car fast\n        price:2000 is_sold:False department:5-Car-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2021-10-27T07:55:55.239Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "9",
+        "object_repr": "id:9 description:car big\n        price:6000 is_sold:False department:5-Car-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2021-10-27T07:56:15.153Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "10",
+        "object_repr": "id:10 description:car little\n        price:1500 is_sold:False department:5-Car-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2021-10-27T07:56:33.337Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "11",
+        "object_repr": "id:11 description:Robot with AI\n        price:8000 is_sold:False department:6-SOFT-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2021-10-27T07:56:49.362Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "id:12 description:python ML\n        price:10000 is_sold:False department:6-SOFT-3Tesla with staff 5000",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 4,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 4,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 4,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 4,
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 5,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 5,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 5,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 5,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 6,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 6,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 6,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 6,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add Shop",
+        "content_type": 7,
+        "codename": "add_shop"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change Shop",
+        "content_type": 7,
+        "codename": "change_shop"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete Shop",
+        "content_type": 7,
+        "codename": "delete_shop"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view Shop",
+        "content_type": 7,
+        "codename": "view_shop"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add Department",
+        "content_type": 8,
+        "codename": "add_department"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change Department",
+        "content_type": 8,
+        "codename": "change_department"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete Department",
+        "content_type": 8,
+        "codename": "delete_department"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view Department",
+        "content_type": 8,
+        "codename": "view_department"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add Item",
+        "content_type": 9,
+        "codename": "add_item"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change Item",
+        "content_type": 9,
+        "codename": "change_item"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete Item",
+        "content_type": 9,
+        "codename": "delete_item"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view Item",
+        "content_type": 9,
+        "codename": "view_item"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$57ge8xSfDMJbveT2IYZ4gl$lHsBR/zGNnQ5r/0uBH97rI5MAdCBrFWqvDG2RXz9fYI=",
+        "last_login": "2021-10-27T07:48:47.369Z",
+        "is_superuser": true,
+        "username": "anton",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-10-27T07:48:41.755Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "Fins",
+        "model": "shop"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "Fins",
+        "model": "department"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "Fins",
+        "model": "item"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "x54eo8wrb7khbcifr5qjjl4yoy393ozp",
+    "fields": {
+        "session_data": ".eJxVjMsOwiAQRf-FtSHtlCng0r3fQGZgkKqBpI-V8d-1SRe6veec-1KBtrWEbZE5TEmdVa9OvxtTfEjdQbpTvTUdW13nifWu6IMu-tqSPC-H-3dQaCnfGsduHMQkHlikt86aDHnwDjIhG8wgDsl3Fr1Dw2BZojECQNgJQfTq_QHYkDev:1mfdfz:gnc9tP59HeSN_DA8Ld7pDwERKx_duZlodxiCV3xl87M",
+        "expire_date": "2021-11-10T07:48:47.371Z"
+    }
+},
+{
     "model": "Fins.shop",
     "pk": 1,
     "fields": {
         "name": "IKEA",
         "address": "Sweden, Stolcholm",
-        "staff_amount": 1000
+        "staff_amount": 100
     }
 },
 {
@@ -85,7 +780,8 @@
     "pk": 1,
     "fields": {
         "name": "Black table",
-        "description": "black table",
+        "description": "Black table",
+        "price": 100,
         "is_sold": false,
         "comments": "[]",
         "department": 1
@@ -96,9 +792,10 @@
     "pk": 2,
     "fields": {
         "name": "White table",
-        "description": "white table",
+        "description": "White table",
+        "price": 120,
         "is_sold": false,
-        "comments": "[\"1) dasdas nlknl\"]",
+        "comments": "[\"nice\"]",
         "department": 1
     }
 },
@@ -107,7 +804,8 @@
     "pk": 3,
     "fields": {
         "name": "Red table",
-        "description": "red table",
+        "description": "Red table",
+        "price": 200,
         "is_sold": false,
         "comments": "[\"red table is not bad\"]",
         "department": 1
@@ -119,6 +817,7 @@
     "fields": {
         "name": "Classpass",
         "description": "fitness",
+        "price": 1000,
         "is_sold": false,
         "comments": "[\"do sport now\"]",
         "department": 3
@@ -130,6 +829,7 @@
     "fields": {
         "name": "Dialog",
         "description": "Health",
+        "price": 5000,
         "is_sold": false,
         "comments": "[\"nice app\"]",
         "department": 3
@@ -141,6 +841,7 @@
     "fields": {
         "name": "MakeItern",
         "description": "education",
+        "price": 900,
         "is_sold": false,
         "comments": "[\"nice programm\"]",
         "department": 3
@@ -152,6 +853,7 @@
     "fields": {
         "name": "Medical soft",
         "description": "health soft",
+        "price": 3000,
         "is_sold": false,
         "comments": "[\"care you healt\"]",
         "department": 4
@@ -163,6 +865,7 @@
     "fields": {
         "name": "Model X",
         "description": "car fast",
+        "price": 2000,
         "is_sold": false,
         "comments": "[]",
         "department": 5
@@ -174,6 +877,7 @@
     "fields": {
         "name": "Model XS",
         "description": "car big",
+        "price": 6000,
         "is_sold": false,
         "comments": "[\"car good car\"]",
         "department": 5
@@ -185,6 +889,7 @@
     "fields": {
         "name": "Model L",
         "description": "car little",
+        "price": 1500,
         "is_sold": false,
         "comments": "[\"fine\"]",
         "department": 5
@@ -196,6 +901,7 @@
     "fields": {
         "name": "AI eyas",
         "description": "Robot with AI",
+        "price": 8000,
         "is_sold": false,
         "comments": "[]",
         "department": 6
@@ -207,6 +913,7 @@
     "fields": {
         "name": "OpenCV",
         "description": "python ML",
+        "price": 10000,
         "is_sold": false,
         "comments": "[]",
         "department": 6

@@ -41,7 +41,7 @@ class Department(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    price = models.DecimalField(max_digits=8, decimal_places=2, validators = [MinValueValidator(0.00)]),
+    price = models.PositiveIntegerField(default=0)
     is_sold = models.BooleanField(default=False)
     comments = ArrayField(base_field=models.CharField(max_length=200),
                           null=True, blank=True)

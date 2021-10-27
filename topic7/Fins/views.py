@@ -1,12 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView,\
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, \
     CreateView
 from Fins.models import Shop, Item
 from django.urls import reverse_lazy
 
-# Create your views here.
 
+# Create your views here.
 
 
 class IndexView(ListView):
@@ -23,22 +23,20 @@ class ShopDetailView(DetailView):
     template_name = 'shop_detail.html'
     context_object_name = 'shop'
 
+
 class ItemCreateView(CreateView):
     model = Item
     template_name = 'item_new.html'
     fields = ['name', 'description', 'price', 'is_sold', 'comments']
-    #
 
 
 class ItemUpdateView(UpdateView):
     model = Item
     template_name = 'item_update.html'
-    fields = ['name', 'description', 'is_sold', 'comments']
-    #  'price'
+    fields = ['name', 'description', 'price', 'is_sold', 'comments']
+
 
 class ItemDeleteView(DeleteView):
     model = Item
     template_name = 'item_delete.html'
     success_url = reverse_lazy('index')
-
-

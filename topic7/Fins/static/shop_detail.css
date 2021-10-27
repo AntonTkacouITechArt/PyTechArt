@@ -6,3 +6,7 @@ td{
     border: solid;
     border-width: 1px;
 }
+
+.sold_item{
+    background-color: lavender;
+}

@@ -16,15 +16,7 @@
                 <form class="form_cur" action="" method="post">
                     <div class="selects_forms">
                         <div class="options">
-                            <select name="currency_1" disabled style="appearance: none">
-                                <option value="BYN">BYN</option>
-                            </select>
-                            <a href="/change/">
-                                <button type="button">
-                                    <img id="img_con" src="/static/convert.png" alt="convert image">
-                                </button>
-                            </a>
-                            <select name="currency_2">
+                            <select name="currency_1">
                                 {% if data %}
                                     {% for el in data['currency'] %}
                                     <option value={{ el }}>
@@ -35,28 +27,34 @@
                                     <p>ERROR NO CURRENCY</p>
                                 {% endif %}
                             </select>
+                            <a href="/">
+                                <button type="button">
+                                    <img id="img_con" src="/static/convert.png" alt="convert image">
+                                </button>
+                            </a>
+                            <select name="currency_2" disabled style="appearance: none">
+                                <option value="BYN">BYN</option>
+                            </select>
                         </div>
                         <div class="change_currency">
-                            <input type="number"  min="0"  max="100000000" step=".01" name="cur_val_1"
+                            <input type="number" min="0" max="100000000" step=".01" name="cur_val_1"
                                 value="{{ data['cur_val_1'] }}">
                             <input type="number" min="0" max="100000000" name="cur_val_2"
                                    disabled value="{{ data['cur_val_2'] }}">
                         </div>
-                        <div class="button_container">
-                            <div class="btn_convert">
-                                <input type="submit" size="3" value="Convert">
-                            </div>
-                            <div class="btn_clear">
-                                <a href="/">
-                                    <input type="button" size="3" value="Clear">
-                                </a>
-                            </div>
-                            <div class="btn_update">
-                                 <a href="/update/">
-                                    <input type="button" size="3" value="Update currency">
-                                 </a>
-                            </div>
+                        <div class="btn_convert">
+                            <input type="submit" size="3" value="Convert">
                         </div>
+                        <a href="/change/">
+                            <div class="btn_clear">
+                                <input type="button" size="3" value="Clear">
+                            </div>
+                        </a>
+                        <a href="/update/">
+                            <div class="btn_update">
+                                <input type="button" size="3" value="Update currency">
+                            </div>
+                        </a>
                     </div>
                 </form>
             </div>

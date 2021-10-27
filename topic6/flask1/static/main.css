@@ -19,6 +19,11 @@ body{
     height: 460px;
     margin: 20px;
 }
+
+.button_container{
+    display:flex;
+}
+
 .currency_title{
     text-align: center;
 }
@@ -28,7 +33,6 @@ body{
     margin: auto;
     align-items: center;
     justify-content: center;
-    margin-bottom:20px;
 }
 #img_con{
     height: 1em;

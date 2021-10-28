@@ -3,13 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ shop.name }}</title>
+    <title>
+        {{ shop.name }}
+    </title>
     <link rel="stylesheet" href="{% static 'shop_detail.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="title">
-            <h1>{{ shop.name }}</h1>
+            <h1>
+                {{ shop.name }}
+                 <a href="department/new/">
+                    <input type="button" value="Create new department">
+                </a>
+            </h1>
             <p>{{ shop.address }}</p>
         </div>
         <div class="info">
@@ -21,6 +28,15 @@
                             Department sphere: {{ dep.sphere }}
                             <a href="{{dep.id}}/item/new/">
                                 <input type="button" value="Create new item">
+                            </a>
+                            <a href="{{dep.id}}/">
+                                <input type="button" value="Show department">
+                            </a>
+                            <a href="{{dep.id}}/update/">
+                                <input type="button" value="Update department">
+                            </a>
+                            <a href="{{dep.id}}/delete/">
+                                <input type="button" value="Delete department">
                             </a>
                         </td>
                     </tr>
@@ -41,6 +57,9 @@
                                         </a>
                                         <a href="{{dep.id}}/{{item.id}}/delete">
                                             <input type="button" value="Delete item">
+                                        </a>
+                                        <a href="{{dep.id}}/{{item.id}}/">
+                                            <input type="button" value="Show item">
                                         </a>
                                     </td>
                                     <td>{{ item.description }}</td>
@@ -64,6 +83,9 @@
                                         </a>
                                         <a href="{{dep.id}}/{{item.id}}/delete">
                                             <input type="button" value="Delete item">
+                                        </a>
+                                         <a href="{{dep.id}}/{{item.id}}/">
+                                            <input type="button" value="Show item">
                                         </a>
                                     </td>
                                     <td>{{ item.description }}</td>

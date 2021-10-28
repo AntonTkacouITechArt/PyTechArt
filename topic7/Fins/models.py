@@ -17,7 +17,7 @@ class Shop(models.Model):
         ordering = ['id']
 
     def get_absolute_url(self):
-        return reverse('shop_detail', kwargs={'shop_pk': self.id})
+        return reverse('shop_detail', kwargs={'pk': self.pk})
 
 
 class Department(models.Model):
@@ -37,6 +37,11 @@ class Department(models.Model):
         verbose_name = 'Department'
         verbose_name_plural = 'Departments'
         ordering = ['id']
+
+    def get_absolute_url(self):
+        return reverse('detail_item', kwargs={
+            'shop_pk': self.shop.id,
+            'pk': self.id})
 
 
 class Item(models.Model):
@@ -58,7 +63,10 @@ class Item(models.Model):
         price:{self.price} is_sold:{self.is_sold} department:{self.department}"""
 
     def get_absolute_url(self):
-        return reverse('so')
+        return reverse('detail_item', kwargs={
+            'shop_pk': self.department.shop.id,
+            'dep_pk': self.department.id,
+            'pk': self.pk})
 
     class Meta:
         verbose_name = 'Item'

@@ -39,7 +39,7 @@ class Department(models.Model):
         ordering = ['id']
 
     def get_absolute_url(self):
-        return reverse('detail_item', kwargs={
+        return reverse('department_detail', kwargs={
             'shop_pk': self.shop.id,
             'pk': self.id})
 
@@ -63,10 +63,11 @@ class Item(models.Model):
         } is_sold:{self.is_sold} department:{self.department} """
 
     def get_absolute_url(self):
-        return reverse('detail_item', kwargs={
+        return reverse('item_detail', kwargs={
             'shop_pk': self.department.shop.id,
             'dep_pk': self.department.id,
             'pk': self.pk})
+
 
     class Meta:
         verbose_name = 'Item'

@@ -1,4 +1,5 @@
 # Department
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
 from Fins.models import Department
@@ -27,3 +28,4 @@ class DepartmentDeleteView(DeleteView):
     template_name = 'department/department_delete.html'
     fields = ['sphere', 'staff_amount', 'shop']
     context_object_name = 'department'
+    success_url = reverse_lazy('index')

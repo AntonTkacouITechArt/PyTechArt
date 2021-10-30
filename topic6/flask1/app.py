@@ -4,8 +4,12 @@ from flask.json import jsonify
 import requests
 import json
 
-
 app = Flask(__name__)
+
+URLHTTMLDICT = {
+    '/': 'index.html',
+    '/change/': 'index_change.html',
+}
 
 
 @app.before_first_request
@@ -26,11 +30,8 @@ def exchange_currency():
         'cur_val_2': 0,
     }
     if request.method == 'GET':
-        if request.path == '/':
-            return render_template('index.html', data=data)
-        elif request.path == '/change/':
-            return render_template('index_change.html', data=data)
-    if request.method == 'POST':
+        return render_template(URLHTTMLDICT.get(request.path), data=data)
+    elif request.method == 'POST':
         data = request.get_json()
         if request.path == '/':
             data['cur_val_2'] = round(
@@ -42,17 +43,16 @@ def exchange_currency():
         elif request.path == '/change/':
             data['cur_val_2'] = round(
                 [
-                    foreign_exchange(data['currency_1'], float(data['cur_val_1']))
+                    foreign_exchange(data['currency_1'],
+                                     float(data['cur_val_1']))
                     for cur in data_currency
                     if data['currency_1'] == cur['Cur_Abbreviation']
                 ][0], 2)
-        res = make_response(jsonify(data))
-        return res
+        return make_response(jsonify(data))
 
 
 def foreign_exchange(currency_name: typing.Optional[str],
                      currency_value: typing.Optional[float]) -> float:
-    print(currency_name, currency_value)
     response = get_json_currency(currency_name)
     return currency_value * float(response['Cur_OfficialRate']) / float(
         response['Cur_Scale'])

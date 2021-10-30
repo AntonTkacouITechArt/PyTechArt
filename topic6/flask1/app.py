@@ -1,7 +1,9 @@
 import typing
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, make_response
+from flask.json import jsonify
 import requests
 import json
+
 
 app = Flask(__name__)
 
@@ -29,38 +31,28 @@ def exchange_currency():
         elif request.path == '/change/':
             return render_template('index_change.html', data=data)
     if request.method == 'POST':
-        data = get_data_from_form(data_currency)
+        data = request.get_json()
         if request.path == '/':
             data['cur_val_2'] = round(
                 [
-                    byn_exchange(data['currency_2'], data['cur_val_1'])
+                    byn_exchange(data['currency_2'], float(data['cur_val_1']))
                     for cur in data_currency
                     if data['currency_2'] == cur['Cur_Abbreviation']
                 ][0], 2)
-            return render_template('index.html', data=data)
         elif request.path == '/change/':
             data['cur_val_2'] = round(
                 [
-                    foreign_exchange(data['currency_1'], data['cur_val_1'])
+                    foreign_exchange(data['currency_1'], float(data['cur_val_1']))
                     for cur in data_currency
                     if data['currency_1'] == cur['Cur_Abbreviation']
                 ][0], 2)
-            return render_template('index_change.html', data=data)
-
-
-def get_data_from_form(data_currency):
-    data = {
-        'currency': [cur['Cur_Abbreviation'] for cur in data_currency],
-        'currency_1': request.form.get('currency_1'),
-        'currency_2': request.form.get('currency_2'),
-        'cur_val_1': float(
-            request.form.get('cur_val_1').replace(',', '.')),
-    }
-    return data
+        res = make_response(jsonify(data))
+        return res
 
 
 def foreign_exchange(currency_name: typing.Optional[str],
                      currency_value: typing.Optional[float]) -> float:
+    print(currency_name, currency_value)
     response = get_json_currency(currency_name)
     return currency_value * float(response['Cur_OfficialRate']) / float(
         response['Cur_Scale'])
@@ -81,6 +73,7 @@ def get_json_currency(currency_name: typing.Optional[str]):
 
 @app.route('/update/')
 def update_currency():
+    print('update currency')
     get_data_currency()
     return redirect('/', code=302)
 

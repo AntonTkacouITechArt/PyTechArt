@@ -6,6 +6,8 @@ import json
 
 app = Flask(__name__)
 
+
+# CONSTANTS
 URLHTTMLDICT = {
     '/': 'index.html',
     '/change/': 'index_change.html',
@@ -14,6 +16,7 @@ URLHTTMLDICT = {
 
 @app.before_first_request
 def get_data_currency():
+    """Get data currency from api nbrb"""
     with open('currency.json', 'w') as json_file:
         json_file.write(requests.get(
             'https://www.nbrb.by/api/exrates/currencies/').text)
@@ -22,6 +25,7 @@ def get_data_currency():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/change/', methods=['GET', 'POST'])
 def exchange_currency():
+    """Main function of sites"""
     with open('currency.json', 'r') as json_file:
         data_currency = json.load(json_file)
     data = {
@@ -53,19 +57,22 @@ def exchange_currency():
 
 def foreign_exchange(currency_name: typing.Optional[str],
                      currency_value: typing.Optional[float]) -> float:
+    """Exchange foreign currency to BYN"""
     response = get_json_currency(currency_name)
     return currency_value * float(response['Cur_OfficialRate']) / float(
         response['Cur_Scale'])
 
 
 def byn_exchange(currency_name: typing.Optional[str],
-                 currency_valueBYN: typing.Optional[float]) -> float:
+                 currency_value: typing.Optional[float]) -> float:
+    """Exchange BYN currency to foreign currency"""
     response = get_json_currency(currency_name)
-    return currency_valueBYN * float(response['Cur_Scale']) / float(
+    return currency_value * float(response['Cur_Scale']) / float(
         response['Cur_OfficialRate'])
 
 
 def get_json_currency(currency_name: typing.Optional[str]):
+    """Get data about currency"""
     return requests.get(
         url=f"""https://www.nbrb.by/api/exrates/rates/{currency_name}""",
         params={'parammode': 2, 'periodicity': 0}).json()

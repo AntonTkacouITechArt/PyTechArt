@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, F
 from django.shortcuts import render
 from django.views import View
 
@@ -35,10 +35,9 @@ class FilterItemView(View):
                 )),
             # 6 (5)
             lambda x: x.objects.filter(
-                price_exact=department_staff_amount + 10
+                Q(price__exact=F('department_staff_amount')+10)
             )
         ]
-        print(kwargs)
         context = {'data': query[kwargs['number']](Item)}
         return render(request, 'filter/filter_item.html', context=context)
 

@@ -1,6 +1,7 @@
 # Shop
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 
 from Fins.models import Shop
 
@@ -18,3 +19,21 @@ class ShopDetailView(DetailView):
     model = Shop
     template_name = 'shop/shop_detail.html'
     context_object_name = 'shop'
+
+
+class ShopDetailView2(DetailView):
+    model = Shop
+    template_name = 'shop/shop_detail2.html'
+    context_object_name = 'shop'
+
+
+class ShopUpdateView(UpdateView):
+    model = Shop
+    template_name = 'shop/shop_update.html'
+    fields = ['name', 'address', 'staff_amount']
+
+
+class ShopDeleteView(DeleteView):
+    model = Shop
+    template_name = 'shop/shop_delete.html'
+    success_url = reverse_lazy('index')

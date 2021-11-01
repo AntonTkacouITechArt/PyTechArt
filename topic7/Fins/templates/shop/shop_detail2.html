@@ -1,10 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ shop.name }}</title>
+    <link rel="stylesheet" href="{% static 'shop_detail.css' %}">
 </head>
 <body>
-
+    <h1>{{ shop.name }}</h1>
+    <a href="{% url 'shop_update' shop.id %}">
+        <input type="button" value="Update shop">
+    </a>
+    <a href="{% url 'shop_delete' shop.id %}">
+        <input type="button" value="Delete shop">
+    </a>
+    <table>
+        <tr>
+            <td>
+                id
+            </td>
+            <td>
+                {{ shop.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                name
+            </td>
+            <td>
+                {{ shop.name }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                address
+            </td>
+            <td>
+                {{ shop.address }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                staff_amount
+            </td>
+            <td>
+                {{ shop.staff_amount }}
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

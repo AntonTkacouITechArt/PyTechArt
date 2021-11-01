@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Item</title>
+    <title>Title</title>
 </head>
 <body>
-    <h1>Delete item</h1>
+    <h1>Delete shop</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        <p>Delete item: {{ item.name }}</p>
+        <p>Delete item: {{ shop.name }}</p>
         <input type="submit" value="Submit">
     </form>
 </body>

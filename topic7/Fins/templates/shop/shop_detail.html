@@ -12,9 +12,17 @@
     <div class="container">
         <div class="title">
             <h1>
-                {{ shop.name }}
+                 <a href="detail/">
+                     {{ shop.name }}
+                 </a>
                  <a href="department/new/">
                     <input type="button" value="Create new department">
+                </a>
+                <a href="{% url 'shop_update' %}">
+                    <input type="button" value="Update shop">
+                </a>
+                <a href="delete/">
+                    <input type="button" value="Delete shop">
                 </a>
             </h1>
             <p>{{ shop.address }}</p>

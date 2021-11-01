@@ -5,7 +5,8 @@ from Fins.views.department_views import DepartmentDetailView, \
 from Fins.views.filter_views import FilterShopView, FilterItemView
 from Fins.views.item_views import ItemDetail, ItemCreateView, ItemUpdateView, \
     ItemDeleteView
-from Fins.views.shop_views import ShopListView, ShopDetailView
+from Fins.views.shop_views import ShopListView, ShopDetailView, \
+    ShopDetailView2, ShopUpdateView, ShopDeleteView
 
 urlpatterns = [
     # shop
@@ -13,10 +14,12 @@ urlpatterns = [
          ShopListView.as_view(), name='index'),
     path('index/<int:pk>/',
          ShopDetailView.as_view(), name='shop_detail'),
-
-    # ???????
-    # path('index/<int:pk>/detail/',
-    #      ShopDetailView.as_view(), name='shop_detail2'),
+    path('index/<int:pk>/detail/',
+         ShopDetailView2.as_view(), name='shop_detail2'),
+    path('index/<int:pk>/update/',
+         ShopUpdateView.as_view(), name='shop_update'),
+    path('index/<int:pk>/delete/',
+         ShopDeleteView.as_view(), name='shop_delete'),
 
     # department
     path('index/<int:shop_pk>/<int:pk>/',

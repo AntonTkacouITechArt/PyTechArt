@@ -18,11 +18,14 @@
                  <a href="department/new/">
                     <input type="button" value="Create new department">
                 </a>
-                <a href="{% url 'shop_update' %}">
+                <a href="{% url 'shop_update' shop.id %}">
                     <input type="button" value="Update shop">
                 </a>
                 <a href="delete/">
                     <input type="button" value="Delete shop">
+                </a>
+                <a href="compare/">
+                    <input type="button" value="Compare department">
                 </a>
             </h1>
             <p>{{ shop.address }}</p>

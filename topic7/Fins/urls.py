@@ -3,6 +3,7 @@ from django.urls import path
 from Fins.views.department_views import DepartmentDetailView, \
     DepartmentCreateView, DepartmentUpdateView, DepartmentDeleteView
 from Fins.views.filter_views import FilterShopView, FilterItemView
+from Fins.views.forms_view import CompareFormView
 from Fins.views.item_views import ItemDetail, ItemCreateView, ItemUpdateView, \
     ItemDeleteView
 from Fins.views.shop_views import ShopListView, ShopDetailView, \
@@ -46,5 +47,9 @@ urlpatterns = [
          FilterItemView.as_view(), name='filter_item'),
     path('filter/shop/<int:number>/',
          FilterShopView.as_view(), name='filter_shop'),
+
+    # compare
+    path('index/<int:shop_pk>/compare/',
+         CompareFormView.as_view(), name='compare_form')
 
 ]

@@ -17,7 +17,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'description', 'price', 'is_sold',
+    list_display = ('id', 'name', 'description', 'price', 'is_sold',
                     'comments', 'department')
     list_display_links = ('id',)
     search_fields = ('description', 'department', 'comments')

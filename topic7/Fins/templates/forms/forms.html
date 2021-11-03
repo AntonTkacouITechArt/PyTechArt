@@ -6,54 +6,9 @@
 </head>
 <body>
     <div class="container">
-{#        <form action="" method="post" class="main_form">#}
-{#            <div class="select_container">#}
-{#                <select form="data" name="value">#}
-{#                    {% for shop in shops %}#}
-{#                        <option value="{{ department.id }}">{{ department.sphere }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
-{#                <select form="data" name="value">#}
-{#                    {% for shop in shops %}#}
-{#                        <option value="{{ department.id }}">{{ department.sphere }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
-{#            </div>#}
-{#            <div class="check_box_container">#}
-{#                <div>#}
-{#                    <label for="staff_amount">Staff_amount</label>#}
-{#                    <input type="checkbox" id="staff_amount" name="staff_amount">#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="total_sold_goods">Total cost of goods sold</label>#}
-{#                    <input type="checkbox" id="total_sold_goods" name="total_sold_goods">#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="total_unsold_goods">Total cost of unsold goods</label>#}
-{#                    <input type="checkbox" id="total_unsold_goods" name="total_unsold_goods">#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="total_cost_goods">Total cost goods</label>#}
-{#                    <input type="checkbox" id="total_cost_goods" name="total_cost_goods">#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="total_sold_goods">Total sold goods</label>#}
-{#                    <input type="checkbox" id="total_sold_goods" name="total_sold_goods">#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="total_unsold_goods">Total unsold goods</label>#}
-{#                    <input type="checkbox" id="total_unsold_goods" name="total_unsold_goods">#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="total_goods">Total goods</label>#}
-{#                    <input type="checkbox" id="total_goods" name="total_goods">#}
-{#                </div>#}
-{#            </div>#}
-{#            <input type="submit" name="submit" value="Search">#}
-{#        </form>#}
         <form action="" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+                {{ form.as_p }}
             <input type="submit" name="submit" value="Search">
         </form>
     </div>

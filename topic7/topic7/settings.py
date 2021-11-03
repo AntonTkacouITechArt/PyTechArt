@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'bootstrap4',
     'Fins.apps.FinsConfig',
 ]
 
@@ -49,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Fins.middleware.NoItemsMiddleware',
+    'Fins.middleware.CountURLMiddleware',
 ]
 
 ROOT_URLCONF = 'topic7.urls'

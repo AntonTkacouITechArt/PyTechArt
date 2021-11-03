@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New Item</title>
-</head>
-<body>
+
+{% extends 'base.html' %}
+
+{% block title %}
+    New Item
+{% endblock %}
+{% block container %}
   <h1>New Item</h1>
   <form method="POST">
     {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" class="btn btn-success">
   </form>
-</body>
-</html>
+{% endblock %}

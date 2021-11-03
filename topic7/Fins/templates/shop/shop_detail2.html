@@ -1,18 +1,23 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ shop.name }}</title>
-    <link rel="stylesheet" href="{% static 'shop_detail.css' %}">
-</head>
-<body>
+
+
+{% block title %}
+    {{ shop.name }}
+{% endblock %}
+
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'shop_detail.css' %}">
+    {% endblock %}
+
+
+{% block container %}
     <h1>{{ shop.name }}</h1>
     <a href="{% url 'shop_update' shop.id %}">
-        <input type="button" value="Update shop">
+        <input type="button" value="Update shop" class="btn btn-primary">
     </a>
     <a href="{% url 'shop_delete' shop.id %}">
-        <input type="button" value="Delete shop">
+        <input type="button" value="Delete shop" class="btn btn-danger">
     </a>
     <table>
         <tr>
@@ -48,5 +53,7 @@
             </td>
         </tr>
     </table>
+{% endblock %}
+
 </body>
 </html>

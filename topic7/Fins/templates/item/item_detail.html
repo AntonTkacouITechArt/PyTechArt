@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Item detail</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    Item detail
+{% endblock %}
+
+
+{% block container %}
     <div class="container">
         <h1>{{ item.name }}</h1>
         <p>{{ item.description }}</p>
@@ -19,5 +20,4 @@
         {% endif %}
         <p>{{ item.department }}</p>
     </div>
-</body>
-</html>
+{% endblock %}

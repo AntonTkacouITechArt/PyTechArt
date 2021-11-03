@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete Item</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete Item
+{% endblock %}
+
+
+{% block container %}
     <h1>Delete item</h1>
     <form action="" method="POST">
         {% csrf_token %}
         <p>Delete item: {{ item.name }}</p>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class="btn btn-danger">
     </form>
-</body>
-</html>
+{% endblock %}

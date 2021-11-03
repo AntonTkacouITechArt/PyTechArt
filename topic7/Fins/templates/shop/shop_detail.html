@@ -1,14 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        {{ shop.name }}
-    </title>
+
+
+{% block title %}
+    {{ shop.name }}
+{% endblock %}
+
+{% block head %}
     <link rel="stylesheet" href="{% static 'shop_detail.css' %}">
-</head>
-<body>
+{% endblock %}
+
+{% block container %}
     <div class="container">
         <div class="title">
             <h1>
@@ -16,16 +18,16 @@
                      {{ shop.name }}
                  </a>
                  <a href="department/new/">
-                    <input type="button" value="Create new department">
+                    <input type="button" value="Create new department" class="btn btn-primary">
                 </a>
                 <a href="{% url 'shop_update' shop.id %}">
-                    <input type="button" value="Update shop">
+                    <input type="button" value="Update shop" class="btn btn-success">
                 </a>
                 <a href="delete/">
-                    <input type="button" value="Delete shop">
+                    <input type="button" value="Delete shop" class="btn btn-danger">
                 </a>
                 <a href="compare/">
-                    <input type="button" value="Compare department">
+                    <input type="button" value="Compare department" class="btn btn-info">
                 </a>
             </h1>
             <p>{{ shop.address }}</p>
@@ -38,16 +40,16 @@
                         <td colspan="4">
                             Department sphere: {{ dep.sphere }}
                             <a href="{{dep.id}}/item/new/">
-                                <input type="button" value="Create new item">
+                                <input type="button" value="Create new item" class="btn btn-primary">
                             </a>
                             <a href="{{dep.id}}/">
-                                <input type="button" value="Show department">
+                                <input type="button" value="Show department" class="btn btn-info">
                             </a>
                             <a href="{{dep.id}}/update/">
-                                <input type="button" value="Update department">
+                                <input type="button" value="Update department" class="btn btn-success">
                             </a>
                             <a href="{{dep.id}}/delete/">
-                                <input type="button" value="Delete department">
+                                <input type="button" value="Delete department" class="btn btn-danger">
                             </a>
                         </td>
                     </tr>
@@ -64,13 +66,13 @@
                                     <td>
                                         {{ item.name }}
                                         <a href="{{dep.id}}/{{item.id}}/update">
-                                            <input type="button" value="Update item">
+                                            <input type="button" value="Update item" class="btn btn-success">
                                         </a>
                                         <a href="{{dep.id}}/{{item.id}}/delete">
-                                            <input type="button" value="Delete item">
+                                            <input type="button" value="Delete item" class="btn btn-danger">
                                         </a>
                                         <a href="{{dep.id}}/{{item.id}}/">
-                                            <input type="button" value="Show item">
+                                            <input type="button" value="Show item" class="btn btn-info">
                                         </a>
                                     </td>
                                     <td>{{ item.description }}</td>
@@ -90,13 +92,13 @@
                                     <td>
                                         {{ item.name }}
                                         <a href="{{dep.id}}/{{item.id}}/update">
-                                            <input type="button" value="Update item">
+                                            <input type="button" value="Update item" class="btn btn-success">
                                         </a>
                                         <a href="{{dep.id}}/{{item.id}}/delete">
-                                            <input type="button" value="Delete item">
+                                            <input type="button" value="Delete item" class="btn btn-danger">
                                         </a>
                                          <a href="{{dep.id}}/{{item.id}}/">
-                                            <input type="button" value="Show item">
+                                            <input type="button" value="Show item" class="btn btn-info">
                                         </a>
                                     </td>
                                     <td>{{ item.description }}</td>
@@ -123,5 +125,4 @@
         </table>
     </div>
     </div>
-</body>
-</html>
+{% endblock %}

@@ -6,6 +6,7 @@ from Fins.views.filter_views import FilterShopView, FilterItemView
 from Fins.views.forms_view import CompareFormView
 from Fins.views.item_views import ItemDetail, ItemCreateView, ItemUpdateView, \
     ItemDeleteView
+from Fins.views.no_goods_views import NoGoodsView
 from Fins.views.shop_views import ShopListView, ShopDetailView, \
     ShopDetailView2, ShopUpdateView, ShopDeleteView
 
@@ -50,6 +51,10 @@ urlpatterns = [
 
     # compare
     path('index/<int:shop_pk>/compare/',
-         CompareFormView.as_view(), name='compare_form')
+         CompareFormView.as_view(), name='compare_form'),
+
+    # no goods
+    path('nogoods/',
+         NoGoodsView.as_view(), name='no_goods'),
 
 ]

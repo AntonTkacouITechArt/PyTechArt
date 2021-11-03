@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Item</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Update Item
+{% endblock %}
+
+{% block container %}
   <h1>Update Item</h1>
   <form method="POST">
     {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" class="btn btn-success">
   </form>
-</body>
-</html>
+{% endblock %}

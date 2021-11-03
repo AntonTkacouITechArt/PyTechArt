@@ -1,13 +1,19 @@
 {% load static %}
+{% load bootstrap4 %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery=True %}
     <link rel="stylesheet" href="{% static 'index.css' %}">
 </head>
 <body>
-<p>amount products {{ ITEMS_AMOUNT }}</p>
+    <header style="margin:auto; text-align:center">
+        <h1> Amount goods in shops {{ ITEMS_AMOUNT }}</h1>
+    </header>
     <div class="content">
         <form method="POST" id="data" name="company">
         {% csrf_token %}

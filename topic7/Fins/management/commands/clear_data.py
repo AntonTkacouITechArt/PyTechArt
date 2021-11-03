@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from Fins.models import Shop, Item, Department
 
+
 class Command(BaseCommand):
     help = "Delete all data from database"
 

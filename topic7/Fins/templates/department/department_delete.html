@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete Department</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete Department
+{% endblock %}
+
+{% block container %}
     <h1>Delete department</h1>
     <form action="" method="POST">
         {% csrf_token %}
         <p>Delete department: {{ department.sphere }}</p>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class="btn btn-danger">
     </form>
-</body>
-</html>
+{% endblock %}

@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
-from Fins.models import Shop, Department, Item
+from Fins.models import Shop, Department, Item, Statistics
 
 
 class ShopAdmin(admin.ModelAdmin):
@@ -23,6 +22,13 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields = ('description', 'department', 'comments')
 
 
+class StatisticsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'url', 'amount')
+    list_display_links = ('id', 'url')
+    search_fields = ('url',)
+
+
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Statistics, StatisticsAdmin)

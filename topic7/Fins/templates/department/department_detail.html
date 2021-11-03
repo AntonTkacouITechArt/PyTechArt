@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Department detail</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    Department detail
+{% endblock %}
+
+{% block container %}
     <div class="container">
         <h1>{{ department.id }}</h1>
         <p>{{ department.sphere }}</p>
         <p>{{ department.staff_amount }}</p>
         <p>{{ department.shop }}</p>
     </div>
-</body>
-</html>
+{% endblock %}

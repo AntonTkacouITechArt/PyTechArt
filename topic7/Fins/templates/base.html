@@ -1,0 +1,29 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery=True %}
+    <title>
+    {% block title %}
+        BLOCK TITLE
+    {% endblock %}
+    </title>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <header style="margin:auto; text-align:center">
+        <h1> Amount goods in shops {{ ITEMS_AMOUNT }}</h1>
+    </header>
+    <main style="margin-left: 20px;">
+    {% block container %}
+        BLOCK CONTAINER
+    {% endblock %}
+    </main>
+</body>
+{% block sripts %}
+{% endblock %}
+</html>

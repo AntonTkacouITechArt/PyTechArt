@@ -68,7 +68,6 @@ class Item(models.Model):
             'dep_pk': self.department.id,
             'pk': self.pk})
 
-
     class Meta:
         verbose_name = 'Item'
         verbose_name_plural = 'Items'
@@ -79,3 +78,9 @@ class Item(models.Model):
         #         name='price_CK',
         #     ),
         # ]
+
+
+class Statistics(models.Model):
+    url = models.CharField(max_length=300)
+    amount = models.PositiveIntegerField(default=0)
+

@@ -145,7 +145,10 @@ class CompareFormView(FormView):
 
     # & Q(item_filter__is_sold__exact=True)
 
-    # def form_valid(self, form):
+    def form_valid(self):
+        print(self)
+        pass
+
 
     # def get(self, request, *args, **kwargs):
     #     form = self.get_form(kwargs.get('shop_pk'))

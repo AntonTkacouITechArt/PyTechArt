@@ -19,8 +19,8 @@
             <thead>
                 <tr>
                     <td>Clause</td>
-                    <td>{{ department_1 }}</td>
-                    <td>{{ department_2 }}</td>
+                    <td>{{ department_1|upper }}</td>
+                    <td>{{ department_2|upper }}</td>
                 </tr>
             </thead>
             {% for clause, value in data.items %}

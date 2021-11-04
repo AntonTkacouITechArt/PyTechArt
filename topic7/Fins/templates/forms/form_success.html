@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'form_success.css' %}">
+{% endblock %}
+
+{% block title %}
+    Result of compare
+{% endblock %}
+
+
+{% block container %}
+    <div class="title-main" style="text-align: center">
+        <h1>Compare Departments</h1>
+    </div>
+    <table>
+        {% if data  %}
+            <thead>
+                <tr>
+                    <td>Clause</td>
+                    <td>{{ department_1 }}</td>
+                    <td>{{ department_2 }}</td>
+                </tr>
+            </thead>
+            {% for clause, value in data.items %}
+                <tr>
+                    <td>{{ clause }}</td>
+                    {% if value.0 >= value.1 %}
+                        <td style="background-color:green">{{ value.0 }}</td>
+                        <td>{{ value.1 }}</td>
+                    {% else %}
+                        <td>{{ value.0 }}</td>
+                        <td style="background-color:green">{{ value.1 }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td>
+                <h1>You are not compare departments</h1>
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+{% endblock %}

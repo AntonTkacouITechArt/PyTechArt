@@ -10,7 +10,114 @@ class CompareFormView(FormView):
     template_name = 'forms/forms.html'
     success_url = 'forms/form_success.html'
 
-    # def get(self, request, *args, **kwargs):
+    def get_form(self, *args, **kwargs):
+        department = Department.objects.filter(
+            shop__exact=self.kwargs['shop_pk']).all()
+        data = [(dep.id, dep.sphere) for dep in department]
+        form = super().get_form(*args, **kwargs)
+        form.fields['department_1'].choices = data
+        form.fields['department_2'].choices = data
+        return form
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('department_1') == request.POST.get(
+                'department_2'):
+            return render(request, 'forms/form_isnotvalid.html')
+        else:
+            data = {}
+            dep1 = Department.objects.filter(
+                id__exact=request.POST.get('department_1'))
+            dep2 = Department.objects.filter(
+                id__exact=request.POST.get('department_2'))
+
+            # get data if POST have value
+            if request.POST.get('staff_amount'):
+                data.update(
+                    {'staff_amount': [
+                        dep1.get(
+                            id=request.POST.get('department_1')
+                        ).staff_amount,
+                        dep2.get(
+                            id=request.POST.get('department_2')
+                        ).staff_amount,
+                    ]}
+                )
+            if request.POST.get('total_sold_goods'):
+                data.update(
+                    {'total_sold_goods': [
+                        dep1.filter(
+                            item_filter__is_sold__exact=True,
+                        ).aggregate(
+                            sum=Sum('item_filter__price')).get('sum'),
+                        dep2.filter(
+                            item_filter__is_sold__exact=True,
+                        ).aggregate(
+                            sum=Sum('item_filter__price')).get('sum'), ]}
+                )
+            if request.POST.get('total_unsold_goods'):
+                data.update({'total_unsold_goods': [
+                    dep1.filter(
+                        item_filter__is_sold__exact=False,
+                    ).aggregate(
+                        sum=Sum('item_filter__price')).get('sum'),
+                    dep2.filter(
+                        item_filter__is_sold__exact=False,
+                    ).aggregate(
+                        sum=Sum('item_filter__price')
+                    ).get('sum'),
+                ]})
+            if request.POST.get('total_cost_goods'):
+                data.update(
+                    {'total_cost_goods': [
+                        dep1.aggregate(
+                            sum=Sum('item_filter__price')).get('sum'),
+                        dep2.aggregate(
+                            sum=Sum('item_filter__price')).get('sum'),
+                    ]}
+                )
+            if request.POST.get('count_sold_goods'):
+                data.update(
+                    {'count_sold_goods': [
+                        dep1.filter(
+                            item_filter__is_sold__exact=True,
+                        ).aggregate(
+                            cnt=Count('item_filter__id')).get('cnt'),
+                        dep2.filter(
+                            item_filter__is_sold__exact=True,
+                        ).aggregate(
+                            cnt=Count('item_filter__id')).get('cnt'),
+                    ]})
+            if request.POST.get('count_unsold_goods'):
+                data.update(
+                    {'count_unsold_goods': [
+                        dep1.filter(
+                            item_filter__is_sold__exact=False,
+                        ).aggregate(
+                            cnt=Count('item_filter__id')).get('cnt'),
+                        dep2.filter(
+                            item_filter__is_sold__exact=False,
+                        ).aggregate(
+                            cnt=Count('item_filter__id')).get('cnt'),
+                    ]})
+            if request.POST.get('count_goods'):
+                data.update({
+                    'total_goods': [
+                        dep1.aggregate(
+                            cnt=Count('item_filter__id')
+                        ).get('cnt'),
+                        dep2.aggregate(
+                            cnt=Count('item_filter__id')
+                        ).get('cnt')
+                    ]
+                })
+            return render(request, 'forms/form_success.html',
+                          context={
+                              'data': data,
+                              'department_1': dep1[0].sphere,
+                              'department_2': dep2[0].sphere,
+                          })
+
+    # def get(self,  request, *args, **kwargs):
     #     form = self.get_form()
     #     return render(request, 'forms/forms.html', {'form': form})
     #
@@ -27,128 +134,9 @@ class CompareFormView(FormView):
     #
     # return render(request, 'forms/forms.html', {'form':1})
 
-    def get_form(self, *args, **kwargs):
-        department = Department.objects.filter(
-            shop__exact=self.kwargs['shop_pk']).all()
-        data = [(dep.id, dep.sphere) for dep in department]
-        form = super().get_form(*args, **kwargs)
-        form.fields['department_1'].choices = data
-        form.fields['department_2'].choices = data
-        return form
-
-    def post(self, request, *args, **kwargs):
-        print(request.POST)
-        # form = CompareForm(request.POST)
-        # print(form)
-        if request.POST.get('department_1') == request.POST.get(
-                'department_2'):
-            return render(request, 'forms/form_isnotvalid.html')
-        else:
-            data = {}
-            dep1 = Department.objects.get(id=request.POST.get('department_1'))
-            dep2 = Department.objects.get(id=request.POST.get('department_2'))
-            qdep1 = Department.objects.filter(
-                id__exact=request.POST.get('department_1')
-            )
-
-            if request.POST.get('staff_amount'):
-                data.update(
-                    {'staff_amount': [dep1.staff_amount, dep2.staff_amount]}
-                )
-            if request.POST.get('total_sold_goods'):
-                data.update(
-                    {'total_sold_goods': [
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_1'),
-                            item_filter__is_sold__exact=True,
-                        ).aggregate(
-                            sum=Sum('item_filter__price')),
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_2'),
-                            item_filter__is_sold__exact=True,
-                        ).aggregate(
-                            sum=Sum('item_filter__price')),
-                    ]}
-                )
-            if request.POST.get('total_unsold_goods'):
-                data.update({'total_unsold_goods': [
-                    Department.objects.filter(
-                        id__exact=request.POST.get('department_1'),
-                        item_filter__is_sold__exact=False,
-                    ).aggregate(
-                        sum=Sum('item_filter__price')),
-                    Department.objects.filter(
-                        id__exact=request.POST.get('department_2'),
-                        item_filter__is_sold__exact=False,
-                    ).aggregate(
-                        sum=Sum('item_filter__price')),
-                ]})
-            if request.POST.get('total_cost_goods'):
-                data.update(
-                    {'total_cost_goods': [
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_1')
-                        ).aggregate(
-                            sum=Sum('item_filter__price')),
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_2')
-                        ).aggregate(
-                            sum=Sum('item_filter__price')),
-                    ]}
-                )
-            if request.POST.get('count_sold_goods'):
-                data.update(
-                    {'count_sold_goods': [
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_1'),
-                            item_filter__is_sold__exact=True,
-                        ).aggregate(
-                            cnt=Count('item_filter__id')),
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_2'),
-                            item_filter__is_sold__exact=True,
-                        ).aggregate(
-                            cnt=Count('item_filter__id')),
-                    ]})
-            if request.POST.get('count_unsold_goods'):
-                data.update(
-                    {'count_unsold_goods': [
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_1'),
-                            item_filter__is_sold__exact=False,
-                        ).aggregate(
-                            cnt=Count('item_filter__id')),
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_2'),
-                            item_filter__is_sold__exact=False,
-                        ).aggregate(
-                            cnt=Count('item_filter__id')),
-                    ]})
-            if request.POST.get('count_goods'):
-                data.update({
-                    'total_goods': [
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_1')
-                        ).aggregate(cnt=Count('item_filter__id')),
-                        Department.objects.filter(
-                            id__exact=request.POST.get('department_2')
-                        ).aggregate(cnt=Count('item_filter__id'))
-                    ]
-                })
-
-            return render(request, 'forms/form_success.html',
-                          context={
-                              'data': data,
-                              'department_1': dep1.sphere,
-                              'department_2': dep2.sphere,
-                          })
-
-    # & Q(item_filter__is_sold__exact=True)
-
-    def form_valid(self):
-        print(self)
-        pass
-
+    # def form_valid(self):
+    #     print(self)
+    #     pass
 
     # def get(self, request, *args, **kwargs):
     #     form = self.get_form(kwargs.get('shop_pk'))

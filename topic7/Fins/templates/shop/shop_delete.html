@@ -11,12 +11,13 @@
 
 {% block container %}
     <div class="content">
-    <h1>Delete shop</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <p>Delete item: {{ shop|url }}</p>
-        <input type="submit" value="Submit" class="btn btn-danger">
-    </form>
+    <h1>Delete shop {{ shop|url }}</h1>
+{#    <form action="" method="POST">#}
+{#        {% csrf_token %}#}
+{#        <p>Delete item: {{ shop|url }}</p>#}
+{#        <input type="submit" value="Submit" class="btn btn-danger">#}
+{#    </form>#}
+    {% include 'templates_forms/form_template.html' with form=form button_label="Delete" btn_type="btn btn-danger"%}
     </div>
 {% endblock %}
 

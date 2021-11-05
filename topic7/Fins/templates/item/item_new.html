@@ -5,10 +5,11 @@
     New Item
 {% endblock %}
 {% block container %}
-  <h1>New Item</h1>
-  <form method="POST">
-    {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" value="Submit" class="btn btn-success">
-  </form>
+    <h1>New Item</h1>
+    {% include 'templates_forms/form_template.html' with form=form button_label="Create" btn_type="btn btn-success" %}
+{#  <form method="POST">#}
+{#    {% csrf_token %}#}
+{#      {{ form.as_p }}#}
+{#      <input type="submit" value="Submit" class="btn btn-success">#}
+{#  </form>#}
 {% endblock %}

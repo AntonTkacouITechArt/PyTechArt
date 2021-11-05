@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
+{% load url_filter %}
 
 {% block title %}
     Update Shop
 {% endblock %}
 
 {% block container %}
-    <h1>Update Shop</h1>
-      <form method="POST">
-        {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" value="Submit" class="btn btn-success">
-      </form>
+    <h1>Update Shop {{ shop|url }}</h1>
+{#      <form method="POST">#}
+{#        {% csrf_token %}#}
+{#          {{ form.as_p }}#}
+{#          <input type="submit" value="Submit" class="btn btn-success">#}
+{#      </form>#}
+    {% include 'templates_forms/form_template.html' with form=form button_label="Update" btn_type="btn btn-success" %}
 {% endblock %}

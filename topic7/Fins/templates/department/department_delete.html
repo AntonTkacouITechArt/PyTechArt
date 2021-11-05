@@ -6,10 +6,12 @@
 {% endblock %}
 
 {% block container %}
-    <h1>Delete department</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <p>Delete department: {{ department|url }}</p>
-        <input type="submit" value="Submit" class="btn btn-danger">
-    </form>
+    <h1>Delete department: {{ department|url }}</h1>
+    {% include 'templates_forms/form_template.html' with form=form button_label="Delete" btn_type="btn btn-danger" %}
+{#    <form action="" method="POST">#}
+{#        {% csrf_token %}#}
+{#        <p>Delete department: {{ department|url }}</p>#}
+{#        <input type="submit" value="Submit" class="btn btn-danger">#}
+{#    #}
+{#    </form>#}
 {% endblock %}

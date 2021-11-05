@@ -7,10 +7,13 @@
 
 
 {% block container %}
-    <h1>Delete item</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <p>Delete item: {{ item|url }}</p>
-        <input type="submit" value="Submit" class="btn btn-danger">
-    </form>
+    <h1>Delete item: {{ item|url }}</h1>
+    {% include 'templates_forms/form_template.html' with form=form button_label="Delete" btn_type="bnt btn-danger"%}
+
+{#    <form action="" method="POST">#}
+{#        {% csrf_token %}#}
+{#        <p>Delete item: {{ item|url }}</p>#}
+{#        <input type="submit" value="Submit" class="btn btn-danger">#}
+{##}
+{#    </form>#}
 {% endblock %}

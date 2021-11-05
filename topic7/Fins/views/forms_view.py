@@ -7,8 +7,8 @@ from Fins.forms import CompareForm
 
 class CompareFormView(FormView):
     form_class = CompareForm
-    template_name = 'forms/forms.html'
-    success_url = 'forms/form_success.html'
+    template_name = 'forms_to_compare/form_to_compare.html'
+    success_url = 'forms_to_compare/form_success.html'
 
     def get_form(self, *args, **kwargs):
         department = Department.objects.filter(
@@ -22,7 +22,7 @@ class CompareFormView(FormView):
     def post(self, request, *args, **kwargs):
         if request.POST.get('department_1') == request.POST.get(
                 'department_2'):
-            return render(request, 'forms/form_isnotvalid.html')
+            return render(request, 'forms_to_compare/form_isnotvalid.html')
         else:
             data = {}
             dep1 = Department.objects.filter(
@@ -102,7 +102,7 @@ class CompareFormView(FormView):
                         query.get('count_goods')(dep2)
                     ]
                 })
-            return render(request, 'forms/form_success.html',
+            return render(request, 'forms_to_compare/form_success.html',
                           context={
                               'data': data,
                               'department_1': dep1[0],
@@ -111,7 +111,7 @@ class CompareFormView(FormView):
 
     # def get(self,  request, *args, **kwargs):
     #     form = self.get_form()
-    #     return render(request, 'forms/forms.html', {'form': form})
+    #     return render(request, 'forms_to_compare/form_to_compare.html', {'form': form})
     #
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
@@ -124,7 +124,7 @@ class CompareFormView(FormView):
     # else:
     #     print('not valid')
     #
-    # return render(request, 'forms/forms.html', {'form':1})
+    # return render(request, 'forms_to_compare/form_to_compare.html', {'form':1})
 
     # def form_valid(self):
     #     print(self)
@@ -132,7 +132,7 @@ class CompareFormView(FormView):
 
     # def get(self, request, *args, **kwargs):
     #     form = self.get_form(kwargs.get('shop_pk'))
-    #     return render(request, 'forms/forms.html', {'form': form})
+    #     return render(request, 'forms_to_compare/form_to_compare.html', {'form': form})
 
     # def get_form(self, shop_pk, *args, **kwargs):
     #     department = Department.objects.filter(
@@ -149,12 +149,12 @@ class CompareFormView(FormView):
     #     deps = Department.objects.filter(
     #         shop__exact=kwargs['shop_pk'])
     #     form = CompareForm(initial={'department_1': deps})
-    #     return render(request, 'forms/forms.html', {'form': form})
+    #     return render(request, 'forms_to_compare/form_to_compare.html', {'form': form})
 
     # def get(self, request, *args, **kwargs):
     #     # form = self.get_form(kwargs.get('shop_pk'))
     #     form = CompareForm()
-    #     return render(request, 'forms/forms.html', {'form': form})
+    #     return render(request, 'forms_to_compare/form_to_compare.html', {'form': form})
     #
 
     # def get_initial(self):
@@ -175,7 +175,7 @@ class CompareFormView(FormView):
     # def get(self, request, *args, **kwargs):
     #     initial = self.get_initial(kwargs.get('shop_pk'))
     #     form = CompareForm(initial=initial)
-    #     return render(request, 'forms/forms.html', {'form': form})
+    #     return render(request, 'forms_to_compare/form_to_compare.html', {'form': form})
 
     #
     # def get_initial(self, shop_id):

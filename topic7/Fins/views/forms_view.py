@@ -105,8 +105,8 @@ class CompareFormView(FormView):
             return render(request, 'forms/form_success.html',
                           context={
                               'data': data,
-                              'department_1': dep1[0].sphere,
-                              'department_2': dep2[0].sphere,
+                              'department_1': dep1[0],
+                              'department_2': dep2[0],
                           })
 
     # def get(self,  request, *args, **kwargs):

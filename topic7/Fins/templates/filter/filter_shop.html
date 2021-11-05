@@ -6,14 +6,11 @@
 </head>
 <body>
     <h1>
-        {% if data %}
-            {% for el in data %}
-                <p>{{ el }}</p>
-            {% endfor %}
-        {% else %}
-            No query
-        {% endif %}
-
+        {% for el in data %}
+            <p>{{ el }}</p>
+            {% empty %}
+            <p>No query</p>
+        {% endfor %}
     </h1>
 </body>
 </html>

@@ -8,6 +8,8 @@
     <h1>
         {% for el in data %}
             <p>{{ el }}</p>
+            {% empty %}
+            <p>No items</p>
         {% endfor %}
     </h1>
 </body>

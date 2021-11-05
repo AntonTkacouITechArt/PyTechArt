@@ -7,7 +7,7 @@
 {% block container %}
     <div class="container">
         <h1>{{ department.id }}</h1>
-        <p>{{ department.sphere }}</p>
+        <p>{{ department|url }}</p>
         <p>{{ department.staff_amount }}</p>
         <p>{{ department.shop }}</p>
     </div>

@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.urls import reverse
@@ -49,7 +50,8 @@ class Item(models.Model):
     description = models.TextField()
     # price = models.PositiveIntegerField(default=0)
     # price = models.FloatField()
-    price = models.DecimalField(max_digits=100000000, decimal_places=3, validators=[validators.MinValueValidator()])
+    price = models.DecimalField(max_digits=20, decimal_places=3,
+                                validators=[MinValueValidator(1)])
     is_sold = models.BooleanField(default=False)
     comments = ArrayField(base_field=models.CharField(max_length=200),
                           null=True, blank=True)

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load url_filter %}
 
 {% block title %}
     Item detail
@@ -7,17 +8,15 @@
 
 {% block container %}
     <div class="container">
-        <h1>{{ item.name }}</h1>
+        <h1>{{ item|url }}</h1>
         <p>{{ item.description }}</p>
         <p>{{ item.price }}</p>
         <p>{{ item.is_sold }}</p>
-        {% if item.comments %}
-            {% for comment in item.comments  %}
-                <p>{{ comment }}</p>
-            {% endfor %}
-        {% else %}
+        {% for comment in item.comments  %}
+            <p>{{ comment }}</p>
+            {% empty %}
             <p>No comments</p>
-        {% endif %}
+        {% endfor %}
         <p>{{ item.department }}</p>
     </div>
 {% endblock %}

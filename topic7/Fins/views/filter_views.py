@@ -1,8 +1,8 @@
-from django.db.models import Q, F, Sum, Count, IntegerField
+from django.db.models import Q, F, Sum
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
-from Fins.models import Item, Shop, Department
+from Fins.models import Item, Shop
 
 
 class FilterItemView(View):
@@ -95,7 +95,6 @@ class FilterShopView(View):
         if kwargs['number'] in range(1, 5):
             if kwargs['number'] in [3, 4]:
                 context = {'data': query[kwargs['number'] - 1]}
-                print(context)
             else:
                 context = {'data': query[kwargs['number'] - 1].all()}
             return render(request, 'filter/filter_shop.html', context=context)

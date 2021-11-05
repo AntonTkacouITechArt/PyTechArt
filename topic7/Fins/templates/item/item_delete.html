@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load url_filter %}
 
 {% block title %}
     Delete Item
@@ -9,7 +10,7 @@
     <h1>Delete item</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        <p>Delete item: {{ item.name }}</p>
+        <p>Delete item: {{ item|url }}</p>
         <input type="submit" value="Submit" class="btn btn-danger">
     </form>
 {% endblock %}

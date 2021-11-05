@@ -17,7 +17,6 @@ class NoItemsMiddleware:
         if 'admin' not in request.path and item.get('cnt') == 0:
             return render(request, 'no_goods/no_goods.html')
         response = self._get_response(request)
-        print('>Work no_items_middleware')
         return response
 
 

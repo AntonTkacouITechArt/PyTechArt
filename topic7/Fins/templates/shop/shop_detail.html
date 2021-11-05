@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load url_filter %}
 {% load static %}
 
 
@@ -14,9 +15,7 @@
     <div class="container">
         <div class="title">
             <h1>
-                 <a href="detail/">
-                     {{ shop.name }}
-                 </a>
+                {{ shop|url }}
                  <a href="department/new/">
                     <input type="button" value="Create new department" class="btn btn-primary">
                 </a>
@@ -38,7 +37,7 @@
                 {% for dep in shop.department_relate.all %}
                     <tr>
                         <td colspan="4">
-                            Department sphere: {{ dep.sphere }}
+                            Department sphere: {{ dep|url }}
                             <a href="{{dep.id}}/item/new/">
                                 <input type="button" value="Create new item" class="btn btn-primary">
                             </a>
@@ -64,7 +63,7 @@
                                 {% if item.is_sold %}
                                 <tr class="sold_item">
                                     <td>
-                                        {{ item.name }}
+                                        {{ item|url }}
                                         <a href="{{dep.id}}/{{item.id}}/update">
                                             <input type="button" value="Update item" class="btn btn-success">
                                         </a>
@@ -90,7 +89,7 @@
                                 {% else %}
                                  <tr>
                                     <td>
-                                        {{ item.name }}
+                                        {{ item|url }}
                                         <a href="{{dep.id}}/{{item.id}}/update">
                                             <input type="button" value="Update item" class="btn btn-success">
                                         </a>

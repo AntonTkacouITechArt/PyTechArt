@@ -1,5 +1,4 @@
 from django.urls import path
-
 from Fins.views.department_views import DepartmentDetailView, \
     DepartmentCreateView, DepartmentUpdateView, DepartmentDeleteView
 from Fins.views.filter_views import FilterShopView, FilterItemView

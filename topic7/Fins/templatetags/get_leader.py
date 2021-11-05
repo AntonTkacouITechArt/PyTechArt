@@ -59,5 +59,3 @@ def get_leader(dep1, dep2, field: str):
         else:
             result = f'<tr><td>{field}</td><td>{d1}</td><td class="more_than_another">{d2}</td></tr>'
     return format_html(result)
-
-

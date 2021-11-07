@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Unsold items
+{% endblock %}
+
+{% block container %}
+    <h1>Unsold items</h1>
+
+    {% for item in items %}
+        <p>id:{{ item.id }} -> name:{{ item.name }}</p>
+    {% empty %}
+        <p>No items</p>
+    {% endfor %}
+    <form action="" method="post">
+        {% csrf_token %}
+{#        <button type="submit" value="True">Detele</button>#}
+        <input type="submit" value="True" placeholder="Delete" class="btn btn-danger" name="Delete">
+    </form>
+{% endblock %}

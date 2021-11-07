@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Sum, Q, Count
 from django.shortcuts import render
 from django.views.generic import FormView
@@ -5,10 +6,11 @@ from Fins.models import Department
 from Fins.forms import CompareForm
 
 
-class CompareFormView(FormView):
+class CompareFormView(PermissionRequiredMixin, FormView):
     form_class = CompareForm
     template_name = 'forms_to_compare/form_to_compare.html'
     success_url = 'forms_to_compare/form_success.html'
+    permission_required = 'Fins.view_department'
 
     def get_form(self, *args, **kwargs):
         department = Department.objects.filter(

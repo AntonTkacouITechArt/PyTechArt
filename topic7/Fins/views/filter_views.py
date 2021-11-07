@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, F, Sum
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -5,7 +6,9 @@ from django.views import View
 from Fins.models import Item, Shop
 
 
-class FilterItemView(View):
+class FilterItemView(PermissionRequiredMixin, View):
+    permission_required = 'Fins.view_item'
+
     def get(self, request, *args, **kwargs):
         query = [
             # 1 (0)
@@ -46,7 +49,9 @@ class FilterItemView(View):
             return HttpResponse('<h1>No such query</h1>')
 
 
-class FilterShopView(View):
+class FilterShopView(PermissionRequiredMixin, View):
+    permission_required = 'Fins.view_shop'
+
     def get(self, request, *args, **kwargs):
         query = [
             # 1 (0)

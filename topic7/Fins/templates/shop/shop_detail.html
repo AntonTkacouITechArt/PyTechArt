@@ -16,102 +16,134 @@
         <div class="title">
             <h1>
                 {{ shop|url }}
-                 <a href="{% url 'department_create' shop.id %}">
-                    <input type="button" value="Create new department" class="btn btn-primary">
-                </a>
-                <a href="{% url 'shop_update' shop.id %}">
-                    <input type="button" value="Update shop" class="btn btn-success">
-                </a>
-                <a href="{% url 'shop_delete' shop.id %}">
-                    <input type="button" value="Delete shop" class="btn btn-danger">
-                </a>
-                <a href="{% url 'compare_form' shop.id %}">
-                    <input type="button" value="Compare department" class="btn btn-info">
-                </a>
+                {% if user.is_staff %}
+                     <a href="{% url 'department_create' shop.id %}">
+                        <input type="button" value="Create new department" class="btn btn-primary">
+                    </a>
+                    <a href="{% url 'shop_update' shop.id %}">
+                        <input type="button" value="Update shop" class="btn btn-success">
+                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'shop_delete' shop.id %}">
+                            <input type="button" value="Delete shop" class="btn btn-danger">
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'compare_form' shop.id %}">
+                        <input type="button" value="Compare department" class="btn btn-info">
+                    </a>
+                {% endif %}
             </h1>
             <p>{{ shop.address }}</p>
         </div>
         <div class="info">
             <table>
                 {% for dep in shop.department_relate.all %}
-                    <tr>
-                        <td colspan="4">
-                            Department sphere: {{ dep|url }}
-                            <a href="{% url 'create_item_into_department' shop.id dep.id %}">
-                                <input type="button" value="Create new item" class="btn btn-primary">
-                            </a>
-                            <a href="{% url 'department_detail' shop.id dep.id %}">
-                                <input type="button" value="Show department" class="btn btn-info">
-                            </a>
-                            <a href="{% url 'department_update' shop.id dep.id %}">
-                                <input type="button" value="Update department" class="btn btn-success">
-                            </a>
-                            <a href="{% url 'department_delete' shop.id dep.id %}">
-                                <input type="button" value="Delete department" class="btn btn-danger">
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>Description</td>
-                        <td>Price</td>
-                        <td>Comments</td>
-                    </tr>
-                    {% for item in dep.item_relate.all %}
-                        {% if item.is_sold %}
-                        <tr class="sold_item">
-                            <td>
-                                {{ item|url }}
-                                <a href="{% url 'update_item_into_department' shop.id dep.id item.id %}">
-                                    <input type="button" value="Update item" class="btn btn-success">
-                                </a>
-                                <a href="{% url 'delete_item_into_department' shop.id dep.id item.id %}">
-                                    <input type="button" value="Delete item" class="btn btn-danger">
-                                </a>
-                                <a href="{% url 'item_detail' shop.id dep.id item.id %}">
-                                    <input type="button" value="Show item" class="btn btn-info">
-                                </a>
-                            </td>
-                            <td>{{ item.description }}</td>
-                            <td>{{ item.price|floatformat }}</td>
-                            <td>
-                            {% for comment in item.comments %}
-                                <p>{{ comment }}</p>
-                                {% empty %}
-                                 <p>No comments</p>
-                            {% endfor %}
+{#                    {% if dep.item_relate.all %}#}
+                        <tr>
+                            <td colspan="4">
+                            {% if not user.is_anonymous  %}
+                                Department sphere: {{ dep|url }}
+                                {% if user.is_staff %}
+                                    <a href="{% url 'create_item_into_department' shop.id dep.id %}">
+                                        <input type="button" value="Create new item" class="btn btn-primary">
+                                    </a>
+                                    <a href="{% url 'department_detail' shop.id dep.id %}">
+                                        <input type="button" value="Show department" class="btn btn-info">
+                                    </a>
+                                    <a href="{% url 'department_update' shop.id dep.id %}">
+                                        <input type="button" value="Update department" class="btn btn-success">
+                                    </a>
+                                    {% if user.is_superuser %}
+                                        <a href="{% url 'department_delete' shop.id dep.id %}">
+                                            <input type="button" value="Delete department" class="btn btn-danger">
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
                             </td>
                         </tr>
-                        {% else %}
-                         <tr>
-                            <td>
-                               {{ item|url }}
-                                <a href="{% url 'update_item_into_department' shop.id dep.id item.id %}">
-                                    <input type="button" value="Update item" class="btn btn-success">
-                                </a>
-                                <a href="{% url 'delete_item_into_department' shop.id dep.id item.id %}">
-                                    <input type="button" value="Delete item" class="btn btn-danger">
-                                </a>
-                                <a href="{% url 'item_detail' shop.id dep.id item.id %}">
-                                    <input type="button" value="Show item" class="btn btn-info">
-                                </a>
-                            </td>
-                            <td>{{ item.description }}</td>
-                            <td>{{ item.price|floatformat }}</td>
-                            <td>
-                            {% for comment in item.comments %}
-                                <p>{{ comment }}</p>
-                                {% empty %}
-                                <p>No comments</p>
-                            {% endfor %}
-                            </td>
+                        <tr>
+                            <td>Name</td>
+                            <td>Description</td>
+                            <td>Price</td>
+                            <td>Comments</td>
                         </tr>
-                        {% endif %}
+                        {% for item in dep.item_relate.all %}
+                            {% if item.is_sold %}
+                                {% if user.is_staff %}
+                                    <tr class="sold_item">
+                                        <td>
+                                            {{ item|url }}
+                                            <a href="{% url 'update_item_into_department' shop.id dep.id item.id %}">
+                                                <input type="button" value="Update item" class="btn btn-success">
+                                            </a>
+                                            {% if user.is_superuser %}
+                                                <a href="{% url 'delete_item_into_department' shop.id dep.id item.id %}">
+                                                    <input type="button" value="Delete item" class="btn btn-danger">
+                                                </a>
+                                            {% endif %}
+                                            <a href="{% url 'item_detail' shop.id dep.id item.id %}">
+                                                <input type="button" value="Show item" class="btn btn-info">
+                                            </a>
+                                        </td>
+                                        <td>{{ item.description }}</td>
+                                        <td>{{ item.price|floatformat }}</td>
+                                        <td>
+                                        {% for comment in item.comments %}
+                                            <p>{{ comment }}</p>
+                                            {% empty %}
+                                             <p>No comments</p>
+                                        {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% else %}
+                                 <tr>
+                                    <td>
+                                       {{ item|url }}
+                                        {% if user.is_staff %}
+                                            <a href="{% url 'update_item_into_department' shop.id dep.id item.id %}">
+                                                <input type="button" value="Update item" class="btn btn-success">
+                                            </a>
+                                                {% if user.is_superuser %}
+                                                    <a href="{% url 'delete_item_into_department' shop.id dep.id item.id %}">
+                                                        <input type="button" value="Delete item" class="btn btn-danger">
+                                                    </a>
+                                                {% endif %}
+                                            <a href="{% url 'item_detail' shop.id dep.id item.id %}">
+                                                <input type="button" value="Show item" class="btn btn-info">
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.description }}</td>
+                                    {% if user.is_authenticated and user.get_full_name or user.is_staff %}
+                                        <td>{{ item.price|floatformat }}</td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                    {% if user.is_authenticated %}
+                                        <td>
+                                            {% for comment in item.comments %}
+                                                <p>{{ comment }}</p>
+                                                {% empty %}
+                                                <p>No comments</p>
+                                            {% endfor %}
+                                        </td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                            {% empty %}
+                            <td>
+                                <p>No items</p>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        {% endfor %}
                         {% empty %}
-                        <p>No items</p>
-                    {% endfor %}
-                    {% empty %}
-                    <p>No departments</p>
+                        <p>No departments</p>
                 {% endfor %}
             </table>
         </div>

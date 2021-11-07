@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load url_filter %}
 
 {% block title %}
     Department detail
@@ -8,7 +9,9 @@
     <div class="container">
         <h1>{{ department.id }}</h1>
         <p>{{ department|url }}</p>
-        <p>{{ department.staff_amount }}</p>
+        {% if user.get_full_name %}
+            <p>{{ department.staff_amount }}</p>
+        {% endif %}
         <p>{{ department.shop }}</p>
     </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.urls import path
+from Fins.views.AuthViews import AuthLoginView, AuthLogoutView
 from Fins.views.department_views import DepartmentDetailView, \
     DepartmentCreateView, DepartmentUpdateView, DepartmentDeleteView
 from Fins.views.filter_views import FilterShopView, FilterItemView
@@ -8,6 +9,7 @@ from Fins.views.item_views import ItemDetail, ItemCreateView, ItemUpdateView, \
 from Fins.views.no_goods_views import NoGoodsView
 from Fins.views.shop_views import ShopListView, ShopDetailView, \
     ShopDetailView2, ShopUpdateView, ShopDeleteView
+from Fins.views.unsold_item import UnSoldItemView
 
 urlpatterns = [
     # shop
@@ -42,6 +44,12 @@ urlpatterns = [
     path('index/<int:shop_pk>/<int:dep_pk>/<int:pk>/delete/',
          ItemDeleteView.as_view(), name='delete_item_into_department'),
 
+    # login
+    path('login/',
+         AuthLoginView.as_view(), name='login'),
+    path('logout/',
+         AuthLogoutView.as_view(), name='logout'),
+
     # filter
     path('filter/item/<int:number>/',
          FilterItemView.as_view(), name='filter_item'),
@@ -55,5 +63,9 @@ urlpatterns = [
     # no goods
     path('nogoods/',
          NoGoodsView.as_view(), name='no_goods'),
+
+    # unsold_items
+    path('unsold_items/',
+         UnSoldItemView.as_view(), name="unsold_items")
 
 ]

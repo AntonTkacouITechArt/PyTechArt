@@ -13,12 +13,16 @@
 
 {% block container %}
     <h1>{{ shop.name }}</h1>
-    <a href="{% url 'shop_update' shop.id %}">
-        <input type="button" value="Update shop" class="btn btn-primary">
-    </a>
-    <a href="{% url 'shop_delete' shop.id %}">
-        <input type="button" value="Delete shop" class="btn btn-danger">
-    </a>
+    {% if user.is_staff %}
+        <a href="{% url 'shop_update' shop.id %}">
+            <input type="button" value="Update shop" class="btn btn-primary">
+        </a>
+        {% if user.is_superuser %}
+            <a href="{% url 'shop_delete' shop.id %}">
+                <input type="button" value="Delete shop" class="btn btn-danger">
+            </a>
+        {% endif %}
+    {% endif %}
     <table>
         <tr>
             <td>
@@ -44,14 +48,16 @@
                 {{ shop.address }}
             </td>
         </tr>
-        <tr>
-            <td>
-                staff_amount
-            </td>
-            <td>
-                {{ shop.staff_amount }}
-            </td>
-        </tr>
+        {% if user.get_full_name %}
+            <tr>
+                <td>
+                    staff_amount
+                </td>
+                <td>
+                    {{ shop.staff_amount }}
+                </td>
+            </tr>
+        {% endif %}
     </table>
 {% endblock %}
 

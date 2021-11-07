@@ -15,11 +15,23 @@ class CompareFormView(PermissionRequiredMixin, FormView):
     def get_form(self, *args, **kwargs):
         department = Department.objects.filter(
             shop__exact=self.kwargs['shop_pk']).all()
-        data = [(dep.id, dep.sphere) for dep in department]
+        # data = [(dep.id, dep.sphere) for dep in department]
         form = super().get_form(*args, **kwargs)
-        form.fields['department_1'].choices = data
-        form.fields['department_2'].choices = data
+        form.fields['department_1'].queryset = department
+        form.fields['department_2'].queryset = department
         return form
+
+    # def get_initial(self):
+    #     print(self.request)
+    #     print(self.request.__dict__)
+    #     initial = super().get_initial()
+    #     department = Department.objects.filter(
+    #                 shop__exact=self.kwargs['shop_pk']).all()
+    #     print(department)
+    #     self.initial['department_1'] = department
+    #     initial['department_2'] = department
+    #     initial['total_cost_goods'] = True
+    #     return initial
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('department_1') == request.POST.get(

@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'bootstrap4',
     'Fins.apps.FinsConfig',
-    'rest_auth.apps.RestAuthConfig',
 ]
 
 MIDDLEWARE = [

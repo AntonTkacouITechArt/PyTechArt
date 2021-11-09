@@ -2,7 +2,7 @@ from django.db.models import Count, IntegerField, Q
 from Fins.models import Item
 
 
-def items_amount_processor(request):
+def items_amount_processor(request) -> dict:
     ITEMS_AMOUNT = Item.objects.aggregate(cnt_item=Count(
         'id',
         filter=Q(is_sold__iexact='false'),

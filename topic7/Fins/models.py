@@ -9,7 +9,7 @@ class Shop(models.Model):
     address = models.CharField(max_length=200)
     staff_amount = models.PositiveIntegerField(default=0)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.id}{self.name} with staff {self.staff_amount}'
 
     class Meta:
@@ -31,7 +31,7 @@ class Department(models.Model):
         related_query_name='department_filter',
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.id}-{self.sphere}-{self.shop}'
 
     class Meta:
@@ -62,7 +62,7 @@ class Item(models.Model):
         related_query_name='item_filter'
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"""id:{self.id} description:{self.description}price:{self.price
         } is_sold:{self.is_sold} department:{self.department} """
 

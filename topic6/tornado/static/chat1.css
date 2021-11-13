@@ -2,9 +2,16 @@ body{
   font-family: 'Mohave', sans-serif;
 }
 
+.content{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 .container {
   position: relative;
   width: 50%;
+  flex-basis: 25%;
 }
 
 .image {

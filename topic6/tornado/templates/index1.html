@@ -15,48 +15,14 @@
         </header>
 {#        <form action="" method="POST">#}
             <div class="card-img">
-                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
+                {% for i in range(1,12) %}
+                     <div class="container">
+                        <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
+                        <div class="middle">
+                            <input type="button" class="c-button" name="Chat" value="Join chat {{ i }}" style="font-family: 'Mohave', sans-serif;">
+                        </div>
                     </div>
-                </div>
-                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
-                    </div>
-                </div>
-                                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
-                    </div>
-                </div>
-                                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
-                    </div>
-                </div>
-                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
-                    </div>
-                </div>
-                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
-                    </div>
-                </div>
-                 <div class="container">
-                    <img src="{{ static_url("img/passport.png") }}" alt="Avatar" class="image" style="width:40%">
-                    <div class="middle">
-                        <input type="button" class="c-button" name="Chat" value="Join chat 1" style="font-family: 'Mohave', sans-serif;">
-                    </div>
-                </div>
+                {% end %}
             </div>
 {#        </form>#}
     </div>

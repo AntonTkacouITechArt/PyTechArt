@@ -1,0 +1,35 @@
+header{
+  text-align: center;
+}
+.content{
+  width: 100%;
+}
+
+.container{
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
+.chat{
+  text-align: center;
+  background: url("../img/passport.PNG") no-repeat;
+  background-size: 100%;
+  padding-top: 20px;
+  width:200px;
+  height: 100px;
+  margin: 20px;
+}
+.chat_content{
+  padding-top: 30px;
+}
+a{
+  color:white;
+}
+/*img{*/
+/*  height: 200px;*/
+/*  width: 200px;*/
+/*}*/

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static_url("css/chat.css") }}" type="text/css">
+{% end %}
+
+{% block content %}
+    <div class="content">
+        <div class="chatview" id="chatview">
+            <p>test</p>
+            {% for message in messages %}
+              {% module Template("message.html", message=message) %}
+            {% end %}
+        </div>
+        <div class="chat_fun">
+            <input id="message" type="text" placeholder="Hello world!">
+            <button type="button" id="send"> Send </button>
+        </div>
+    </div>
+    <script src="{{ static_url("js/chat.js") }}"></script>
+{% end %}

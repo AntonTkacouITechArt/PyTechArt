@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin panel
+{% end %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static_url("css/admin.css") }}">
+{% end %}
+
+{% block content %}
+    <div class="content">
+        <div class="head_content">
+            <h1>Admin Panel</h1>
+        </div>
+        <div class="select_content">
+            <form method="post">
+                {% module xsrf_form_html() %}
+                <select name="chatroom" id="sel_chatroom">
+                    {% for x in range(1,11) %}
+                        <option value="{{ x }}">Chat room #{{ x }}</option>
+                    {% end %}
+                </select>
+                <button type="submit" name="Clear" id="clear" value="True">Clear chat</button>
+                <button type="submit" name="Reload" id="reload" value="True">Reload chat</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ static_url("js/admin.js") }}"></script>
+{% end %}

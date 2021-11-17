@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% end %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static_url("css/login.css") }}" type="text/css">
+{% end %}
+
+{% block content %}
+    <div class="content">
+        <img src="{{ static_url("img/logo.svg") }}" alt="logo"/>
+        <h1>Sign in</h1>
+        <form action="/login" method="post">
+            {% module xsrf_form_html() %}
+            <input name="name" placeholder="Name(ex:Anton)" type="text">
+    {#        <input name="value" placeholder="Value of your cookies(ex:Anton)" type="text">#}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% end %}

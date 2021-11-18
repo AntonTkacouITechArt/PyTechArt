@@ -1,11 +1,26 @@
 import logging
 import tornado.websocket
-
-# from DB_manager import manager
+from sqlalchemy import and_
+from DB_manager import Session
 from models.Messages import Messages
+from models.Online import Online
 
 
-class MessageWebSocket(tornado.websocket.WebSocketHandler):
+class BaseWebSocket(tornado.websocket.WebSocketHandler):
+    @classmethod
+    def send_updates(cls, chatroom: str, msg: str) -> None:
+        for waiter in cls.waiters.get(chatroom):
+            try:
+                waiter.write_message(msg)
+            except:
+                logging.error("Error sending message", exc_info=True)
+                raise
+
+    def check_origin(self, origin):
+        return True
+
+
+class MessageWebSocket(BaseWebSocket):
     waiters = {
         '1': [],
         '2': [],
@@ -19,47 +34,105 @@ class MessageWebSocket(tornado.websocket.WebSocketHandler):
         '10': [],
     }
 
-    @classmethod
-    def send_updates(cls, chatroom: str, msg: str):
-        for waiter in cls.waiters.get(chatroom):
-            try:
-                waiter.write_message(msg)
-            except:
-                logging.error("Error sending message", exc_info=True)
-                raise
-
-    def open(self, *args):
+    def open(self, *args, **kwargs):
         self.request.chatroom = args[0][0]
         self.current_user = self.get_secure_cookie('user').decode("utf-8")
         if self.current_user in [x.current_user for x in
-                                 MessageWebSocket.waiters[args[0][0]]]:
+                                 MessageWebSocket.waiters[
+                                     self.request.chatroom]]:
             self.write_message("ERROR >>> Sorry, but user with such name "
                                "connected!!")
-            self.on_close(two_same_username=True)
+            self.close()
         else:
-            MessageWebSocket.waiters[args[0][0]].append(self)
+            MessageWebSocket.waiters[self.request.chatroom].append(self)
 
-    def on_message(self, message, *args):
-
-        # >>>>>>
-        # add code about add message in DB
-        msg = Messages(
-            username=self.get_secure_cookie("user"),
-            text_message=message,
-            id_chatroom=self.request.chatroom,
-        )
-        # with manager.session.begin() as session:
-        #     session.session.add(msg)
-
-        # <<<<<<<
-
+    def on_message(self, message, *args, **kwargs):
+        MessageWebSocket.add_message(self.current_user, message,
+                                     self.request.chatroom)
         output = self.current_user + u": " + message
         MessageWebSocket.send_updates(self.request.chatroom, output)
 
-    def on_close(self, two_same_username=False):
-        if not two_same_username and self.current_user in [x.current_user for x in
-                                 MessageWebSocket.waiters[self.request.chatroom]]:
-            MessageWebSocket.waiters[self.request.chatroom].pop(self)
+    def on_close(self, *args, **kwargs):
+        if self.current_user in [x.current_user for x in
+                                 MessageWebSocket.waiters[
+                                     self.request.chatroom]]:
+            self.add_message(self.current_user, u": disconnect from chatroom ",
+                             self.request.chatroom)
+            MessageWebSocket.waiters[self.request.chatroom].remove(self)
+            MessageWebSocket.send_updates(self.request.chatroom,
+                                          self.current_user + u": disconnect from chatroom ")
 
-    def check_origin(self, origin):
-        return True
+    @staticmethod
+    def add_message(username: str, message: str, chatroom: str) -> None:
+        msg = Messages(
+            username=username,
+            text_message=message,
+            id_chatroom=chatroom,
+        )
+        with Session() as session:
+            with session.begin():
+                try:
+                    session.add(msg)
+                except:
+                    session.rollback()
+                    raise
+
+
+class ChatRoomWebSocket(BaseWebSocket):
+    waiters = {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+        '7': [],
+        '8': [],
+        '9': [],
+        '10': [],
+    }
+
+    def open(self, *args, **kwargs):
+        self.request.chatroom = args[0][0]
+        self.current_user = self.get_secure_cookie('user').decode("utf-8")
+        ChatRoomWebSocket.waiters[self.request.chatroom].append(self)
+        ChatRoomWebSocket.add_online(self.current_user, self.request.chatroom)
+        ChatRoomWebSocket.send_updates(self.request.chatroom,
+                                       self.current_user)
+
+    def on_message(self, message, *args, **kwargs):
+        # ChatRoomWebSocket.add_online(self.current_user, self.request.chatroom)
+        # ChatRoomWebSocket.send_updates(self.request.chatroom, self.current_user)
+        pass
+
+    def on_close(self):
+        ChatRoomWebSocket.delete_online(self.current_user,
+                                        self.request.chatroom)
+        ChatRoomWebSocket.waiters[self.request.chatroom].remove(self)
+
+    @staticmethod
+    def add_online(username: str, chatroom: str) -> None:
+        msg = Online(
+            username=username,
+            id_chatroom=chatroom,
+        )
+        with Session() as session:
+            with session.begin():
+                try:
+                    session.add(msg)
+                except:
+                    session.rollback()
+                    raise
+
+    @staticmethod
+    def delete_online(username: str, chatroom: str) -> None:
+        with Session() as session:
+            with session.begin():
+                try:
+                    session.query(Online).filter(
+                        and_(Online.username == username,
+                             Online.id_chatroom == chatroom)
+                    ).delete()
+                except:
+                    session.rollback()
+                    raise

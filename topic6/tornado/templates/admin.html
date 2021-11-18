@@ -14,7 +14,7 @@
             <h1>Admin Panel</h1>
         </div>
         <div class="select_content">
-            <form method="post">
+            <form action="/admin/" method="post">
                 {% module xsrf_form_html() %}
                 <select name="chatroom" id="sel_chatroom">
                     {% for x in range(1,11) %}

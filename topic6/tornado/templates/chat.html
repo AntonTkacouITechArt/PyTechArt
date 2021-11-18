@@ -6,15 +6,30 @@
 
 {% block content %}
     <div class="content">
-        <div class="chatview" id="chatview">
-            <p>test</p>
-            {% for message in messages %}
-              {% module Template("message.html", message=message) %}
-            {% end %}
+        <div class="left_bar bar">
         </div>
-        <div class="chat_fun">
-            <input id="message" type="text" placeholder="Hello world!">
-            <button type="button" id="send"> Send </button>
+        <div class="center_bar bar">
+            <div class="chatview bar" id="chatview">
+{#                <div class="info">#}
+{#                    <p>Online: {{ len(online[chatroom]) }}</p>#}
+{#                </div>#}
+                {% for message in messages %}
+{#                  {% module Template("message.html", message=message) %}#}
+                    <div class="message" >{{ message }}</div>
+                {% end %}
+            </div>
+            <div class="chat_fun">
+                <input id="message" type="text" placeholder="Hello world!">
+                <button type="button" id="send"> Send </button>
+            </div>
+        </div>
+        <div class="right_bar bar">
+            <h1>Online in chat: <span id="online_count">{{ len(online[chatroom]) }}</span></h1>
+            <div class="user_online" id="online">
+{#                {% for client in online[chatroom] %}#}
+{#                    <p>{{ client.current_user }}</p>#}
+{#                {% end %}#}
+            </div>
         </div>
     </div>
     <script src="{{ static_url("js/chat.js") }}"></script>

@@ -1,27 +1,12 @@
-import typing
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 from models.base import Base
 
+engine = create_engine('postgresql+psycopg2://postgres:1111@127.0.0.1/test2',
+                       echo=False)
 
-class Manager:
-    def __init__(self, db_user: str, db_password: str, db_host: str,
-                 db_name: str):
-        self.engine = create_engine(
-            f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}/{db_name}',
-            echo=True,
-        )
-        self.session = Session(bind=self.engine, future=True)
+Session = sessionmaker(bind=engine)
 
-    def create_tables(self) -> None:
-        """Create table"""
-        Base.metadata.create_all(self.engine)
 
-manager = None
-
-def connect_db(db_user: str, db_password: str, db_host: str,
-               db_name: str) -> None:
-    """Connect to DB"""
-    global manager
-    manager = Manager(db_user, db_password, db_host, db_name)
-    manager.create_tables()
+def create_tables() -> None:
+    Base.metadata.create_all(engine)

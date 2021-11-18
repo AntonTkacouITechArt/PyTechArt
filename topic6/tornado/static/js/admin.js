@@ -1,12 +1,14 @@
 // const btn_clear = document.getElementById('clear');
 // const btn_reload = document.getElementById('reload');
 //
-// btn_clear.addEventListener('click', () => {
+// btn_clear.addEventListener('click', (event) => {
+//     event.preventDefault();
 //     let data = {
 //         chatroom: document.getElementById('sel_chatroom').value,
 //         clear: true,
 //     };
-//
+//     console.log(data)
+//     console.log(window.location.href)
 //     fetch(`${window.location.href}`, {
 //         method: "POST",
 //         credentials: "include",
@@ -26,7 +28,9 @@
 //     })
 // })
 //
-// btn_reload.addEventListener('click', () => {
+// btn_reload.addEventListener('click', (event) => {
+//     event.preventDefault();
+//
 //     let data = {
 //         chatroom: document.getElementById('sel_chatroom').value,
 //         reload: true,

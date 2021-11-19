@@ -51,7 +51,7 @@ class ChatHandler(BaseHandler):
                 messages = [msg.username + ': ' + msg.text_message for msg in
                             session.query(Messages).filter(
                                 Messages.id_chatroom == chatroom)]
-            print(ChatRoomWebSocket.waiters)
+
             self.render('chat.html', name=self.current_user,
                         messages=messages, online=ChatRoomWebSocket.waiters,
                         chatroom=chatroom)
@@ -80,8 +80,6 @@ class AdminHandler(BaseHandler):
                         session.rollback()
                         raise
         elif self.get_body_argument('Reload', "False") == "True":
-            users = []
-            for y in range(1, 11):
-                for x in MessageWebSocket.waiters[str(y)]:
-                    x.close()
+            for x in MessageWebSocket.waiters[self.get_body_argument('chatroom')]:
+                x.close()
         self.redirect(self.reverse_url('admin'))

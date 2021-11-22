@@ -28,12 +28,13 @@ socket_chatroom.onopen = function() {
 socket_user.onclose = function(event) {
 
   if (event.wasClean) {
-      socket_user.send("disconnect success")
+      alert(`Success disconnect!`)
   } else {
     alert('Обрыв соединения');
   }
   if (event.reason == ''){
-    alert('Код: ' + event.code + ' причина: Admin reload chat' );
+      window.location.replace('http://127.0.0.1:8000/');
+      alert('Код: ' + event.code + ' причина: Admin reload chat' );
   }
   else {
       alert('Код: ' + event.code + ' причина: ' + event.reason);
@@ -48,6 +49,7 @@ socket_chatroom.onclose = function(event) {
   }
   if (event.reason == ''){
     alert('Код: ' + event.code + ' причина: Admin reload chat' );
+
   }
   else{
     alert('Код: ' + event.code + ' причина: ' + event.reason);

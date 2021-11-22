@@ -14,7 +14,7 @@
         <h1>Sign in</h1>
         <form action="/login" method="post">
             {% module xsrf_form_html() %}
-            <input name="name" placeholder="Name(ex:Anton)" type="text">
+            <input name="name" placeholder="Name(ex:Anton)" type="text" pattern="[A-Z]{1}[a-z]{1,20}">
     {#        <input name="value" placeholder="Value of your cookies(ex:Anton)" type="text">#}
             <button type="submit">Submit</button>
         </form>

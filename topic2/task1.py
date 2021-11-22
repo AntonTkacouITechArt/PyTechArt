@@ -26,7 +26,7 @@ class Department:
             return other
 
     def __add__(self, other: 'Department') -> 'Department':
-        return Department.merge_departments([self,other])
+        return Department.merge_departments(self,other)
 
 
     def get_budget_plan(self) -> float:

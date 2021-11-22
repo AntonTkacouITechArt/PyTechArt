@@ -47,8 +47,8 @@ class MessageWebSocket(BaseWebSocket):
             MessageWebSocket.waiters[self.request.chatroom].append(self)
 
     def on_message(self, message, *args, **kwargs):
-        MessageWebSocket.add_message(self.current_user, message,
-                                     self.request.chatroom)
+        MessageWebSocket.add_message(self.current_user,
+                                     message, self.request.chatroom)
         output = self.current_user + u": " + message
         MessageWebSocket.send_updates(self.request.chatroom, output)
 
@@ -64,6 +64,7 @@ class MessageWebSocket(BaseWebSocket):
 
     @staticmethod
     def add_message(username: str, message: str, chatroom: str) -> None:
+        """Add message to DataBase"""
         msg = Messages(
             username=username,
             text_message=message,

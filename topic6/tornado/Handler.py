@@ -1,3 +1,4 @@
+import typing
 import tornado
 import tornado.websocket
 from DB_manager import Session
@@ -46,18 +47,25 @@ class ChatHandler(BaseHandler):
         elif int(chatroom) not in range(1, 11):
             self.write_error(f"Chatroom not found")
         else:
-            messages = None
-            with Session() as session:
-                messages = [msg.username + ': ' + msg.text_message for msg in
-                            session.query(Messages).filter(
-                                Messages.id_chatroom == chatroom)]
-
-            self.render('chat.html', name=self.current_user,
-                        messages=messages, online=ChatRoomWebSocket.waiters,
-                        chatroom=chatroom)
+            # get messages from DataBase
+            messages = ChatHandler.get_messages_from_db(chatroom)
+            self.render(
+                'chat.html',
+                name=self.current_user,
+                messages=messages,
+                online=ChatRoomWebSocket.waiters,
+                chatroom=chatroom
+            )
 
     def post(self, *args, **kwargs):
         self.redirect(self.reverse_url('index'))
+
+    @staticmethod
+    def get_messages_from_db(chatroom: str) -> typing.List[str]:
+        with Session() as session:
+            return [msg.username + ': ' + msg.text_message for msg in
+                    session.query(Messages).filter(
+                        Messages.id_chatroom == chatroom)]
 
 
 class AdminHandler(BaseHandler):
@@ -69,17 +77,20 @@ class AdminHandler(BaseHandler):
 
     def post(self, *args, **kwargs):
         if self.get_body_argument('Clear', "False") == "True":
-            with Session() as session:
-                with session.begin():
-                    try:
-                        session.query(Messages).filter(
-                            Messages.id_chatroom == self.get_body_argument(
-                                'chatroom')
-                        ).delete()
-                    except:
-                        session.rollback()
-                        raise
+            self.clear_chatroom()
         elif self.get_body_argument('Reload', "False") == "True":
             for x in MessageWebSocket.waiters[self.get_body_argument('chatroom')]:
                 x.close()
         self.redirect(self.reverse_url('admin'))
+
+    def clear_chatroom(self) -> None:
+        with Session() as session:
+            with session.begin():
+                try:
+                    session.query(Messages).filter(
+                        Messages.id_chatroom == self.get_body_argument(
+                            'chatroom')
+                    ).delete()
+                except:
+                    session.rollback()
+                    raise

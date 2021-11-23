@@ -18,9 +18,9 @@
         <form method="POST" id="data" name="company">
         {% csrf_token %}
         <div class="select_shop">
-            <select form="data" name="value" onchange="update(event.target, 'val')">
+            <select form="data" name="value" onchange="update(event.target, 'val')" class="selections">
                 {% for shop in shops %}
-                    <option value="{{ shop.id }}">{{ shop.name }}</option>
+                    <option value="{{ shop.id }}" id="option_{{ shop.id }}">{{ shop.name }}</option>
                 {% endfor %}
             </select>
             <input type="submit" value="Open" form="data" class="btn_select_shop">

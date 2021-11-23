@@ -1,5 +1,7 @@
 from django.db.models import Count, Q
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+
 from Fins.models import Item, Statistics
 
 
@@ -14,8 +16,8 @@ class NoItemsMiddleware:
                 filter=Q(is_sold__exact=False),
             )
         )
-        if 'admin' not in request.path and item.get('cnt') == 0:
-            return render(request, 'no_goods/no_goods.html')
+        if 'admin' not in request.path and item.get('cnt') == 0 and 'nogoods' not in request.path:
+            return redirect(reverse_lazy('no_goods'))
         response = self._get_response(request)
         return response
 

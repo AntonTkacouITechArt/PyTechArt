@@ -1,87 +1,94 @@
+from django.core.management import call_command
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.urls import reverse
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 class TestStatusCodePages(TestCase):
     """Test status code different pages """
+    # multi_db = True
+    fixtures = ['initial.json']
 
-    # моя ошибка что не использовал reverse!!!
 
     def test_index_page(self):
-        resp = self.client.get('/index/')
+        resp = self.client.get(reverse('index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_detail_page(self):
-        resp = self.client.get('/index/1/')
+        resp = self.client.get(reverse('shop_detail',args=(1,)))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_detail2_page(self):
-        resp = self.client.get('/index/1/detail/')
+        resp = self.client.get(reverse('shop_detail2',args=(1,)))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_update_page(self):
-        resp = self.client.get('/index/1/update/')
+        resp = self.client.get('shop_update_page', args=(1,))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_delete_page(self):
-        resp = self.client.get('/index/1/delete/')
+        resp = self.client.get('shop_delete', args=(1,))
         self.assertEqual(resp.status_code, 200)
 
     def test_department_detail_page(self):
-        resp = self.client.get('/index/1/1/')
+        resp = self.client.get('department_detail', kwargs={'shop_pk':1, 'pk':1})
         self.assertEqual(resp.status_code, 200)
 
     def test_department_create_page(self):
-        resp = self.client.get('/index/1/department/new/')
+        resp = self.client.get(reverse('department_create', kwargs={'shop_pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_department_update_page(self):
-        resp = self.client.get('/index/1/1/update/')
+        resp = self.client.get(reverse('department_update', kwargs={'shop_pk':1, 'pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_department_delete_page(self):
-        resp = self.client.get('/index/1/1/delete/')
+        resp = self.client.get(reverse('department_delete', kwargs={'shop_pk':1, 'pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_detail_page(self):
-        resp = self.client.get('/index/1/1/1/')
+        resp = self.client.get(reverse('item_detail', kwargs={'shop_pk':1, 'dep_pk':1, 'pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_create_page(self):
-        resp = self.client.get('/index/1/1/item/new/')
+        resp = self.client.get(reverse('create_item_into_department', kwargs={'shop_pk':1, 'dep_pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_update_page(self):
-        resp = self.client.get('/index/1/1/1/update/')
+        resp = self.client.get(reverse('update_item_into_department', kwargs={'shop_pk':1, 'dep_pk':1, 'pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_delete_page(self):
-        resp = self.client.get('/index/1/1/1/delete/')
+        resp = self.client.get(reverse('delete_item_into_department', kwargs={'shop_pk':1, 'dep_pk':1, 'pk':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_login_page(self):
-        resp = self.client.get('/login/')
+        resp = self.client.get(reverse('login'))
         self.assertEqual(resp.status_code, 200)
 
     def test_logout_page(self):
-        resp = self.client.get('/logout/')
+        resp = self.client.get(reverse('logout'))
         self.assertEqual(resp.status_code, 200)
 
     def test_filter_item_page(self):
-        resp = self.client.get('/filter/item/1/')
+        resp = self.client.get(reverse('filter_item', kwargs={'number':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_filter_shop_page(self):
-        resp = self.client.get('/filter/shop/1/')
+        resp = self.client.get(reverse('filter_shop', kwargs={'number':1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_compare_page(self):
-        resp = self.client.get('/nogoods/')
+        resp = self.client.get(reverse('compare_form', kwargs={'shop_pk':1}))
         self.assertEqual(resp.status_code, 200)
 
+    def test_nogoods_page(self):
+        resp = self.client.get(reverse('no_goods'))
+        self.assertEquals(resp.status_code, 200)
+
     def test_unsold_items(self):
-        resp = self.client.get('/unsold_items/')
+        resp = self.client.get(reverse('unsold_items'))
         self.assertEqual(resp.status_code, 200)
 
 
@@ -89,23 +96,24 @@ class TestAmountGoods(TestCase):
     """Test amount goods"""
 
     def setUp(self):
-        # create instance, why?
-        pass
+        call_command('clear_data', verbosity=0,)
 
     def test_amounts_goods_1(self):
-        resp = self.client.get('/index/1/')
-        self.assertContains(resp, 'Amount goods in shops = 0')
-        self.assertContains(resp, 'Sorry, but all goods are sold')
+        resp = self.client.get(reverse('index'))
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.url, reverse('no_goods'))
 
     def test_amounts_goods_2(self):
-        resp = self.client.get('/index/1/1/')
-        self.assertContains(resp, 'Amount goods in shops = 0')
-        self.assertContains(resp, 'Sorry, but all goods are sold')
+        resp = self.client.get(reverse('shop_detail2', kwargs={'pk':1}))
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.url, reverse('no_goods'))
 
     def test_amounts_goods_3(self):
-        resp = self.client.get('/index/')
-        self.assertContains(resp, 'Amount goods in shops = 0')
-        self.assertContains(resp, 'Sorry, but all goods are sold')
+        resp = self.client.get(reverse('department_detail', kwargs={'shop_pk':1,'pk':1}))
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.url, reverse('no_goods'))
+
+
 
 
 class TestSelenium(StaticLiveServerTestCase):

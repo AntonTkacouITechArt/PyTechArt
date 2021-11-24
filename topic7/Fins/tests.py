@@ -10,17 +10,16 @@ class TestStatusCodePages(TestCase):
     # multi_db = True
     fixtures = ['initial.json']
 
-
     def test_index_page(self):
         resp = self.client.get(reverse('index'))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_detail_page(self):
-        resp = self.client.get(reverse('shop_detail',args=(1,)))
+        resp = self.client.get(reverse('shop_detail', args=(1,)))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_detail2_page(self):
-        resp = self.client.get(reverse('shop_detail2',args=(1,)))
+        resp = self.client.get(reverse('shop_detail2', args=(1,)))
         self.assertEqual(resp.status_code, 200)
 
     def test_shop_update_page(self):
@@ -32,35 +31,46 @@ class TestStatusCodePages(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_department_detail_page(self):
-        resp = self.client.get('department_detail', kwargs={'shop_pk':1, 'pk':1})
+        resp = self.client.get('department_detail',
+                               kwargs={'shop_pk': 1, 'pk': 1})
         self.assertEqual(resp.status_code, 200)
 
     def test_department_create_page(self):
-        resp = self.client.get(reverse('department_create', kwargs={'shop_pk':1}))
+        resp = self.client.get(
+            reverse('department_create', kwargs={'shop_pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_department_update_page(self):
-        resp = self.client.get(reverse('department_update', kwargs={'shop_pk':1, 'pk':1}))
+        resp = self.client.get(
+            reverse('department_update', kwargs={'shop_pk': 1, 'pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_department_delete_page(self):
-        resp = self.client.get(reverse('department_delete', kwargs={'shop_pk':1, 'pk':1}))
+        resp = self.client.get(
+            reverse('department_delete', kwargs={'shop_pk': 1, 'pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_detail_page(self):
-        resp = self.client.get(reverse('item_detail', kwargs={'shop_pk':1, 'dep_pk':1, 'pk':1}))
+        resp = self.client.get(reverse('item_detail',
+                                       kwargs={'shop_pk': 1, 'dep_pk': 1,
+                                               'pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_create_page(self):
-        resp = self.client.get(reverse('create_item_into_department', kwargs={'shop_pk':1, 'dep_pk':1}))
+        resp = self.client.get(reverse('create_item_into_department',
+                                       kwargs={'shop_pk': 1, 'dep_pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_update_page(self):
-        resp = self.client.get(reverse('update_item_into_department', kwargs={'shop_pk':1, 'dep_pk':1, 'pk':1}))
+        resp = self.client.get(reverse('update_item_into_department',
+                                       kwargs={'shop_pk': 1, 'dep_pk': 1,
+                                               'pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_item_delete_page(self):
-        resp = self.client.get(reverse('delete_item_into_department', kwargs={'shop_pk':1, 'dep_pk':1, 'pk':1}))
+        resp = self.client.get(reverse('delete_item_into_department',
+                                       kwargs={'shop_pk': 1, 'dep_pk': 1,
+                                               'pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_login_page(self):
@@ -72,15 +82,15 @@ class TestStatusCodePages(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_filter_item_page(self):
-        resp = self.client.get(reverse('filter_item', kwargs={'number':1}))
+        resp = self.client.get(reverse('filter_item', kwargs={'number': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_filter_shop_page(self):
-        resp = self.client.get(reverse('filter_shop', kwargs={'number':1}))
+        resp = self.client.get(reverse('filter_shop', kwargs={'number': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_compare_page(self):
-        resp = self.client.get(reverse('compare_form', kwargs={'shop_pk':1}))
+        resp = self.client.get(reverse('compare_form', kwargs={'shop_pk': 1}))
         self.assertEqual(resp.status_code, 200)
 
     def test_nogoods_page(self):
@@ -96,7 +106,7 @@ class TestAmountGoods(TestCase):
     """Test amount goods"""
 
     def setUp(self):
-        call_command('clear_data', verbosity=0,)
+        call_command('clear_data', verbosity=0, )
 
     def test_amounts_goods_1(self):
         resp = self.client.get(reverse('index'))
@@ -104,16 +114,15 @@ class TestAmountGoods(TestCase):
         self.assertEqual(resp.url, reverse('no_goods'))
 
     def test_amounts_goods_2(self):
-        resp = self.client.get(reverse('shop_detail2', kwargs={'pk':1}))
+        resp = self.client.get(reverse('shop_detail2', kwargs={'pk': 1}))
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp.url, reverse('no_goods'))
 
     def test_amounts_goods_3(self):
-        resp = self.client.get(reverse('department_detail', kwargs={'shop_pk':1,'pk':1}))
+        resp = self.client.get(
+            reverse('department_detail', kwargs={'shop_pk': 1, 'pk': 1}))
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp.url, reverse('no_goods'))
-
-
 
 
 class TestSelenium(StaticLiveServerTestCase):
@@ -122,34 +131,65 @@ class TestSelenium(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = WebDriver(executable_path=r'D:\PyTechArt\topic7\Fins\chromedriver.exe')
+        cls.selenium = WebDriver(
+            executable_path=r'D:\PyTechArt\topic7\Fins\chromedriver.exe')
         cls.selenium.implicitly_wait(60)
 
     def tearDown(self):
         self.selenium.close()
         super().tearDown()
 
-    def test_login(self):
+    def test_item(self):
         # Login
-        self.selenium.get(self.live_server_url+'/fins/login/')
+        self.selenium.get(self.live_server_url + '/fins/login/')
+        self.assertURLEqual(self.selenium.current_url, self.live_server_url+'/fins/login/')
         self.selenium.find_element_by_id("id_username").send_keys('anton')
         self.selenium.find_element_by_id("id_password").send_keys('1111')
         self.selenium.find_element_by_class_name('btn-success').click()
-
         # Main index
         self.selenium.get(self.live_server_url + '/fins/index/')
+        self.assertURLEqual(self.selenium.current_url, self.live_server_url+'/fins/index/')
         self.selenium.find_element_by_class_name('selections').click()
         self.selenium.find_element_by_id('option_2').click()
         self.selenium.find_element_by_class_name('btn_select_shop').click()
-
+        self.assertURLEqual(self.selenium.current_url, self.live_server_url+'/fins/index/2/')
         # Detail shop
-        self.selenium.find_element_by_css_selector('input[value="Create new item"]').click()
+        self.selenium.find_element_by_css_selector(
+            'input[value="Create new item"]').click()
+        self.assertURLEqual(self.selenium.current_url, self.live_server_url+'/fins/index/2/3/item/new/')
         self.selenium.find_element_by_id('id_name').send_keys('Maksim')
-        self.selenium.find_element_by_id('id_description').send_keys('BSTU 3 course 6 poit')
+        self.selenium.find_element_by_id('id_description').send_keys(
+            'BSTU 3 course 6 poit')
         self.selenium.find_element_by_id('id_comments').send_keys('Nice guy')
         self.selenium.find_element_by_id('id_price').send_keys(777.777)
-        self.selenium.find_element_by_css_selector('input[value="Create"]').click()
-        self.selenium.get('%s%s' % (self.live_server_url, '/fins/index/2/'))
+        self.selenium.find_element_by_css_selector(
+            'input[value="Create"]').click()
+        self.assertURLEqual(self.selenium.current_url, self.live_server_url+'/fins/index/2/')
+        # self.assertContains(self.selenium.page_source, "Maksim")
+        text = self.selenium.page_source
+        self.assertTrue('Maksim' in text)
+        self.assertTrue('<td>BSTU 3 course 6 poit</td>' in text)
+        self.assertTrue('777.8' in text)
+        self.assertTrue('Nice guy' in text)
 
+        #Admin panel
+        self.selenium.get(self.live_server_url + '/admin/')
+        self.assertURLEqual(self.selenium.current_url, self.live_server_url + '/admin/')
+        self.selenium.find_element_by_link_text('Items').click()
+        self.assertTrue('<tr><td class="action-checkbox"><input '
+                         'type="checkbox" name="_selected_action" value="13" '
+                         'class="action-select"></td><th class="field-id"><a '
+                         'href="/admin/Fins/item/13/change/">13</a></th><td '
+                         'class="field-name">Maksim</td><td '
+                         'class="field-description">BSTU 3 course 6 '
+                         'poit</td><td class="field-price">777.777</td><td '
+                         'class="field-is_sold"><img '
+                         'src="/static/admin/img/icon-no.svg" '
+                         'alt="False"></td><td class="field-comments">Nice '
+                         'guy</td><td class="field-department '
+                         'nowrap">3-IPO-2ITechArt with staff 500</td></tr>'
+                         in self.selenium.page_source)
+        self.assertTrue('Maksim' in self.selenium.page_source)
+        self.assertTrue('BSTU 3 course 6 poit' in self.selenium.page_source)
 
-
+        # self.selenium.get(self.live_server_url +  '/fins/index/2/')

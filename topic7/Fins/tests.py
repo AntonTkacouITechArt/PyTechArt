@@ -8,7 +8,12 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 class TestStatusCodePages(TestCase):
     """Test status code different pages """
     # multi_db = True
-    fixtures = ['initial.json']
+    # fixtures = ['initial.json',]
+    # fixtures = ['Fins/fixtures/initial.json',]
+    #
+    # def setUp(self):
+    #     # Load fixtures
+    #     call_command('loaddata', 'Fins/fixtures/initial.json', verbosity=0)
 
     def test_index_page(self):
         resp = self.client.get(reverse('index'))

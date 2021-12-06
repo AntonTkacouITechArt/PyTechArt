@@ -34,10 +34,9 @@ main{
 
 .task{
     font-size: 14px;
+    overflow-wrap: break-word;
 }
-.task>p{
-    width:inherit;
-}
+
 
 .title{
     display: flex;

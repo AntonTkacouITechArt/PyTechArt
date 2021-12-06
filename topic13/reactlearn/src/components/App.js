@@ -1,6 +1,8 @@
 import React from "react";
+import ToDoList from './ToDoList';
+import ToDoForm from "./ToDoForm";
 
-class App extends React.Component{
+export default class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -36,7 +38,6 @@ class App extends React.Component{
     handlerChangeTitle(event) {
         if (event.target.value.length < 25) {
             this.setState({title: event.target.value});
-
         }
         else {
             alert("so big text  in title");
@@ -86,40 +87,6 @@ class App extends React.Component{
                     <h1>Good luck</h1>
                 </footer>
             </app>
-        )
-    }
-}
-
-
-function ToDoList(props){
-    return(
-        props.messages.map((message) =>
-            <div className={"task_id_" + message.id + " task"}>
-                <div className={"title"}>
-                    <button id="delete-button" value={message.id} onClick={props.handleDelete} >Delete</button>
-                    <h1>{message.title}</h1>
-                </div>
-                <div className={"description"}>
-                    <p>{message.description}</p>
-                </div>
-            </div>
-        )
-    );
-
-}
-
-function ToDoForm (props){
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <label>
-                Title:
-                <input type="text" value={props.title} onChange={props.handlerChangeTitle}/>
-            </label>
-            <label>
-                Description:
-                <textarea value={props.description} onChange={props.handlerChangeDescription} />
-            </label>
-            <input type="submit" value="New ToDo"/>
-        </form>
-    )
-}
+        );
+    };
+};

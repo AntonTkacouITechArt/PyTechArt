@@ -1,24 +1,23 @@
+import typing
+import json
+from openpyxl import load_workbook
 result = {}
 
 
-def merge_students_data(csv_file: typing.Optional[typing.IO],
-                        xlsx_workbook: typing.Optional[typing.IO],
+def merge_students_data(xlsx_workbook: typing.Optional[typing.IO],
                         json_file: typing.Optional[typing.IO], ):
-    data_from_csv = csv.reader(csv_file, delimiter=',')
-    next(data_from_csv, None)
-    result = {' '.join(row[0:2]): {'age': int(row[2])} for row in
-              data_from_csv}
-    list1 = xlsx_workbook['List1']
+    list1 = xlsx_workbook['Pi']
+    last_row_key = ''
     for row in list1.rows:
-        result[row[0].value]['marks'] = []
-        for col in row[1:]:
-            if col.value is not None:
-                result[row[0].value]['marks'].append(col.value)
+        if row[0].value:
+            last_row_key = row[0].value
+            result[row[0].value] = {row[1].value: row[2].value}
+        else:
+            result[last_row_key].update({row[1].value: row[2].value})
     json.dump(result, json_file, indent=0)
-
 
 if __name__ == '__main__':
     xlsx_workbook = load_workbook('empty_book.xlsx', )
-    csv_file = open('datacsv.csv', 'r')
+    # csv_file = open('datacsv.csv', 'r')
     json_file = open('exmaple.json', 'w')
-    merge_students_data(csv_file, xlsx_workbook, json_file)
+    merge_students_data(xlsx_workbook, json_file)

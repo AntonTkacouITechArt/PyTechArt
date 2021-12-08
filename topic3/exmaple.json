@@ -1,33 +1,15 @@
 {
-"Anton Tkachou": {
-"age": 18,
-"marks": [
-1,
-2,
-3,
-4
-]
+"anton": {
+"fiz": 5,
+"math": 2,
+"col1": 1
 },
-"Nikita Soveliev": {
-"age": 29,
-"marks": [
-11,
-11,
-11,
-11,
-11,
-11
-]
+"vlad": {
+"fiz": 10,
+"math": 5,
+"col1": 6
 },
-"Egor Gorynovich": {
-"age": 23,
-"marks": [
-5,
-6,
-7,
-8,
-9,
-10
-]
+"sergay": {
+"fiz": 11
 }
 }

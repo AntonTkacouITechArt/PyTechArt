@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Teacher detail
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="content">
+        <p>Name: {{ teacher.name }}</p>
+        <p>Surname: {{ teacher.surname }}</p>
+        <p>Rank: {{ teacher.rank }}</p>
+    </div>
+    <hr>
+    <br>
+    <table>
+        <tr>
+            <td>date</td>
+            <td>student</td>
+            <td>mark</td>
+        </tr>
+        {% for mark in marks %}
+            <tr>
+                <td>{{ mark.date }}</td>
+                <td>{{ mark.name }} {{ mark.surname }}</td>
+                <td>{{ mark.mark }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    <br>
+    <p>AVG marks = {{ avg_mark.mark__avg }}</p>
+    <p>Count marks = {{ mark_count }}</p>
+
+{% endblock %}

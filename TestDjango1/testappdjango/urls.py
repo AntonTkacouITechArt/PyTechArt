@@ -2,7 +2,8 @@ from django.urls import path
 
 from testappdjango.views import IndexView, StudentDetailView, \
     TeacherDetailView, StudentUpdateView, TeacherUpdateView, StudentDeleteView, \
-    TeacherDeleteView, StudentCreateView, TeacherCreateView, MarksMoreThan20
+    TeacherDeleteView, StudentCreateView, TeacherCreateView, MarksMoreThan20, \
+    TeacherAddMarkView, StudentAddMarkView
 
 urlpatterns = [
     path('index/', IndexView.as_view(), name='index'),
@@ -20,5 +21,9 @@ urlpatterns = [
          name='teacher_delete'),
     path('teacher/create', TeacherCreateView.as_view(), name='teacher_create'),
 
-    path('overloaded', MarksMoreThan20.as_view(), name='MarksMoreThan20')
+    path('overloaded', MarksMoreThan20.as_view(), name='MarksMoreThan20'),
+    path('teacher/<int:pk>/add_mark', TeacherAddMarkView.as_view(), name='teacher_add_mark'),
+    path('student/<int:pk>/add_mark', StudentAddMarkView.as_view(),
+         name='student_add_mark'),
+
 ]

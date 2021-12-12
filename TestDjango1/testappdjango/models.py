@@ -40,7 +40,7 @@ class Mark(models.Model):
     date = models.DateField()
     teacher = models.ForeignKey(
         Teacher,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='teacher_relate',
         related_query_name='teacher_filter'
     )

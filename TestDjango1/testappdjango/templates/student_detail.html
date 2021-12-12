@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load url_filter %}
+{% load pluralize_ru %}
 
 {% block title %}
     Student detail
@@ -17,6 +18,13 @@
         <p>Surname: {{ student.surname }}</p>
         <p>B-day: {{ student.b_day }}</p>
     </div>
+    <hr>
+    <br>
+    <a href="{% url 'student_add_mark' student.id %}">
+        <button>Add mark</button>
+    </a>
+    <br>
+    <hr>
     <table>
         <tr>
             <td>Date</td>
@@ -27,7 +35,7 @@
             <tr>
                 <td>{{ mark.date }}</td>
                 <td>{{ mark.name }} {{ mark.surname }}</td>
-                <td>{{ mark.mark }}</td>
+                <td>{{ mark.mark }} балл{{ mark.mark|pluralize_rus}}</td>
             </tr>
         {% endfor %}
     </table>

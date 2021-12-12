@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load url_filter %}
+
+{% block title %}
+    Add mark
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <select name="select_student" id="select_student">
+            {% for student in students %}
+                <option value="{{ student.id }}">{{ student.name }} {{ student.surname }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="mark" min="0" max="10">
+        <button type="submit">Add</button>
+    </form>
+{% endblock %}

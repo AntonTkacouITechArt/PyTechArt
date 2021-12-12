@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db.models import Count, Q, Avg
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -87,9 +89,9 @@ class TeacherDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         return render(request, 'teacher_detail.html',
                       context={
-                        'teacher': Teacher.objects.get(pk=kwargs['pk']),
-                        'marks': Mark.objects.raw(
-                            f"""
+                          'teacher': Teacher.objects.get(pk=kwargs['pk']),
+                          'marks': Mark.objects.raw(
+                              f"""
                             SELECT
                             "testappdjango_mark".id,
                             "testappdjango_mark".date as date,
@@ -101,7 +103,7 @@ class TeacherDetailView(DetailView):
                             INNER JOIN "testappdjango_teacher" ON "testappdjango_teacher".id = "testappdjango_mark".teacher_id
                             WHERE "testappdjango_mark".teacher_id = {kwargs['pk']};
                             """
-                        ),
+                          ),
                           'mark_count': Mark.objects.filter(
                               teacher_id__exact=kwargs['pk']
                           ).count()
@@ -110,7 +112,7 @@ class TeacherDetailView(DetailView):
                               teacher_id__exact=kwargs['pk'],
                           ).aggregate(Avg('mark'))
                       }
-      )
+                      )
 
 
 class TeacherUpdateView(UpdateView):
@@ -142,3 +144,41 @@ class TeacherCreateView(CreateView):
 
 class MarksMoreThan20(TemplateView):
     template_name = 'marksmorethan.html'
+
+
+class TeacherAddMarkView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        students = Student.objects.all()
+        return render(request, 'teacher_add_mark.html',
+                      context={
+                          'students': students,
+                      })
+
+    def post(self, request, *args, **kwargs):
+        mark = Mark(
+            date=date.today(),
+            teacher=Teacher.objects.get(pk=kwargs.get('pk')),
+            student=Student.objects.get(pk=request.POST.get('select_student')),
+            mark=request.POST.get('mark')
+        )
+        mark.save()
+        return HttpResponseRedirect(reverse_lazy('index'))
+
+
+class StudentAddMarkView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'student_add_mark.html',
+                      context={
+                          'teachers': Teacher.objects.all()
+                      })
+
+    def post(self, request, *args, **kwargs):
+        mark = Mark(
+            date=date.today(),
+            teacher=Teacher.objects.get(pk=request.POST.get('select_teacher')),
+            student=Student.objects.get(pk=kwargs.get('pk')),
+            mark=request.POST.get('mark')
+        )
+        mark.save()
+        return HttpResponseRedirect(reverse_lazy('index'))
+

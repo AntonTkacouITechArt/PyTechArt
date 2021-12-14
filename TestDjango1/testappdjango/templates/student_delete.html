@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load url_filter %}
+
+{% block title %}
+    Student delete
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+    <p>Delete Student: {{ student|url }}</p>
+    <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+         <input type="submit" value="Delete" >
+    </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load url_filter %}
+
+{% block title %}
+    Teacher create
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+    <p>Crate Teacher</p>
+    <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+         <input type="submit" value="Create" >
+    </form>
+{% endblock %}

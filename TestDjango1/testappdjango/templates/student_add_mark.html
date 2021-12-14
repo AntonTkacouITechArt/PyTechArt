@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load url_filter %}
+
+{% block title %}
+    Add mark
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <select name="select_teacher" id="select_teacher">
+            {% for teacher in teachers %}
+                <option value="{{ teacher.id }}">{{ teacher.name }} {{ teacher.surname }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="mark" min="0" max="10">
+        <button type="submit">Add</button>
+    </form>
+{% endblock %}

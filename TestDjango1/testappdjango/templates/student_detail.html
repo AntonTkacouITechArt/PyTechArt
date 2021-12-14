@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load url_filter %}
+{% load pluralize_ru %}
+
+{% block title %}
+    Student detail
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="content">
+        <p>Name: {{ student.name }}</p>
+        <p>Surname: {{ student.surname }}</p>
+        <p>B-day: {{ student.b_day }}</p>
+    </div>
+    <hr>
+    <br>
+    <a href="{% url 'student_add_mark' student.id %}">
+        <button>Add mark</button>
+    </a>
+    <br>
+    <hr>
+    <table>
+        <tr>
+            <td>Date</td>
+            <td>Teacher</td>
+            <td>Mark</td>
+        </tr>
+        {% for mark in marks  %}
+            <tr>
+                <td>{{ mark.date }}</td>
+                <td>{{ mark.name }} {{ mark.surname }}</td>
+                <td>{{ mark.mark }} балл{{ mark.mark|pluralize_rus}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    <p>AVG marks = {{ avg_mark.mark__avg }}</p>
+    <p>Count marks = {{ mark_count }}</p>
+
+
+
+{% endblock %}

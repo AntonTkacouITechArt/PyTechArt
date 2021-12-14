@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load url_filter %}
+
+{% block title %}
+    UPDATE STUDENT
+{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+ <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+     <input type="submit" value="Update" >
+ </form>
+{% endblock %}

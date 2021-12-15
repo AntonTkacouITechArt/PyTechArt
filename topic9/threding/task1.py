@@ -36,7 +36,7 @@ def download_url(url: str, filename: str) -> None:
 
 def main_concurrent() -> None:
     """multithreading or asyncore"""
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(thread_name_prefix="thread i or ?? ") as executor:
         futures = []
         futures.extend([
             executor.submit(download_url, url, filename) for url, filename

@@ -6,21 +6,20 @@ barrier = threading.Barrier(5)
 
 
 def roller_coaster():
-    global barrier
     print(f'Thread {threading.current_thread().name} в ожидании барьера с {barrier.n_waiting} другими')
     try:
         barrier.wait(timeout=4)
     except threading.BrokenBarrierError:
         barrier.reset()
+    print(threading.currentThread().getName)
 
-    print(f"Thread {threading.currentThread().getName}\n")
-    pass
 
 
 if __name__ == '__main__':
-
+    threads = []
     for i in range(1, 36):
-        t = Thread(target=roller_coaster, name=f"{i}")
+        t = Thread(target=roller_coaster, name=f"thread: {i}")
+        threads.append(t)
         t.start()
         if i in range(1, 21):
             sleep(0.5)
@@ -28,4 +27,4 @@ if __name__ == '__main__':
             sleep(1)
         else:
             sleep(2)
-
+    [thread.join() for thread in threads]

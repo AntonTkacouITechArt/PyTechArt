@@ -1,12 +1,9 @@
-import asyncio
+import concurrent.futures
 import os
 import re
 import time
 import typing
 from collections import Counter
-
-import aiofiles
-import aiohttp
 import requests
 from bs4 import BeautifulSoup
 
@@ -30,23 +27,34 @@ def get_urls() -> typing.List[typing.Tuple[str, str]]:
     return list(zip(urls, named_files))
 
 
-async def download_url(url: str, filename: str) -> None:
-    """download flags"""
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as resp:
-            if resp.status == 200:
-                f = await aiofiles.open(f"flags/{filename}", mode='wb')
-                await f.write(await resp.read())
-                await f.close()
-                print(f"write {filename}")
+def download_url(url: str, filename: str) -> None:
+    resp = requests.get(url)
+    if resp.status_code == 200:
+        with open(f'flags/{filename}', mode="wb") as f:
+            f.write(resp.content)
 
 
-async def main() -> None:
-    coros = [download_url(url, filename) for url, filename in get_urls()]
+def main_concurrent() -> None:
+    """multithreading or asyncore"""
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = []
+        futures.extend([
+            executor.submit(download_url, url, filename) for url, filename
+            in get_urls()
+        ])
+        start = time.time()
+        result = [_ for _ in concurrent.futures.as_completed(futures)]
+        end = time.time()
+        print(f"Threading:  {end - start}")
+
+
+def main_native() -> None:
+    """only one thread"""
     start = time.time()
-    await asyncio.gather(*coros)
+    for url, filename in get_urls():
+        download_url(url, filename)
     end = time.time()
-    print(end - start)
+    print(f"Native:  {end - start}")
 
 
 if __name__ == '__main__':
@@ -54,5 +62,5 @@ if __name__ == '__main__':
         os.mkdir('flags')
     except OSError:
         print("Folder flags is created")
-    loop = asyncio.get_event_loop()
-    status = loop.run_until_complete(main())
+    main_concurrent()
+    # main_native()

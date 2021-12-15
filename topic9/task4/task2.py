@@ -8,6 +8,7 @@ def tourist():
 
 
 def main():
+
     for i in range(1, 7):
         t = Thread(target=tourist, args=(), name=f"thread {i}")
     sleep(3)

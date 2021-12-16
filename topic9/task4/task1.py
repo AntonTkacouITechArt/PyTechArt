@@ -9,7 +9,7 @@ import typing
 
 def client(semaphore: typing.Optional[threading.Semaphore]):
     semaphore.acquire()
-    print(threading.current_thread().getName)
+    print(threading.current_thread().name)
     print("sleep")
     sleep(2)
     print("wake up")

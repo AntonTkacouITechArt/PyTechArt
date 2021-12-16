@@ -29,12 +29,12 @@ def main():
     threads = []
     for i in range(1, 7):
         t = Thread(target=tourist, args=(i,), name=f"thread {i}")
-        threads.append(t)
         t.start()
+        threads.append(t)
     sleep(3)
     thread_border_guard = Thread(target=border_guard)
-    threads.append(thread_border_guard)
     thread_border_guard.start()
+    threads.append(thread_border_guard)
     join_thread = lambda x: x.join()
     [join_thread(thread) for thread in threads]
 
